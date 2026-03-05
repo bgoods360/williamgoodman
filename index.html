@@ -193,6 +193,7 @@ nav.scrolled { background: rgba(8,8,12,0.85); backdrop-filter: blur(12px); }
   width: clamp(90px, 13vw, 175px); height: auto; display: block;
   filter: drop-shadow(0 8px 20px rgba(0,0,0,0.45));
   transform-origin: bottom center;
+  transition: opacity 0.3s ease;
 }
 @keyframes billyBounce {
   0%   { transform: translateY(0px)   rotate(-2deg) scaleX(1.00); }
@@ -879,7 +880,7 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
     <div id="billy-scene">
       <div id="speech-bubble">I turn people into customers and customers into fans</div>
       <div id="billy-wrap">
-        <img id="billy-img" src="images/YOUR_IMAGE_01.png" data-original-format="png" alt="Billy Goodman" />
+        <img id="billy-img" src="images/YOUR_IMAGE_01.png" alt="Billy Goodman" />
       </div>
     </div>
 
@@ -938,9 +939,9 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
         <div class="work-group-company">Amazon</div>
         <div class="work-group-tenure">2015 – 2024</div>
       </div>
-      <div class="work-grid" style="grid-template-columns: 1fr;">
+      <div class="work-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="work-card work-card--anchor" onclick="navigate('amazon-music')">
-          <div class="work-card-logo logo-img"><img src="images/YOUR_IMAGE_02.webp" data-original-format="webp" alt="Amazon Music" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;" /></div>
+          <div class="work-card-logo logo-img"><img src="images/YOUR_IMAGE_02.webp" alt="Amazon Music" style="width:100%;height:100%;object-fit:cover;object-position:center 30%;" /></div>
           <div class="work-card-top"><div class="work-card-index">01</div><div class="work-card-arrow">→</div></div>
           <div class="work-card-bottom">
             <div class="work-card-label">Amazon Music · 2015 – 2019</div>
@@ -949,7 +950,7 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
           </div>
         </div>
         <div class="work-card" onclick="navigate('amazon-global')">
-          <div class="work-card-logo logo-img"><img src="images/YOUR_IMAGE_03.webp" data-original-format="webp" alt="Amazon Global Selling" style="width:100%;height:100%;object-fit:contain;object-position:center;background:#fff;" /></div>
+          <div class="work-card-logo logo-img"><img src="images/YOUR_IMAGE_03.webp" alt="Amazon Global Selling" style="width:100%;height:100%;object-fit:contain;object-position:center;background:#fff;" /></div>
           <div class="work-card-top"><div class="work-card-index">03</div><div class="work-card-arrow">→</div></div>
           <div class="work-card-bottom">
             <div class="work-card-label">Global Brand Selling · 2022 – 2024</div>
@@ -958,7 +959,7 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
           </div>
         </div>
         <div class="work-card" onclick="navigate('amazon-devices')">
-          <div style="width:100%;height:200px;margin-bottom:20px;border-radius:4px;overflow:hidden;"><img src="images/YOUR_IMAGE_04.webp" data-original-format="webp" alt="Amazon Devices" style="width:100%;height:100%;object-fit:contain;background:#0a0a14;" /></div>
+          <div style="width:100%;height:200px;margin-bottom:20px;border-radius:4px;overflow:hidden;"><img src="images/YOUR_IMAGE_04.webp" alt="Amazon Devices" style="width:100%;height:100%;object-fit:contain;background:#0a0a14;" /></div>
           <div class="work-card-top"><div class="work-card-index">02</div><div class="work-card-arrow">→</div></div>
           <div class="work-card-bottom">
             <div class="work-card-label">Devices &amp; Services · 2020 – 2022</div>
@@ -1035,7 +1036,7 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
         <div class="work-group-company">Ticketmaster · Fuse TV · SPIN · Rolling Stone</div>
         <div class="work-group-tenure">2005 – 2015</div>
       </div>
-      <div class="work-grid" style="grid-template-columns: 1fr;">
+      <div class="work-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="work-card work-card--anchor" onclick="navigate('ticketmaster')">
           <div style="width:100%;height:200px;margin-bottom:20px;border-radius:4px;overflow:hidden;background-image:url(https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=800&q=80&fit=crop);background-size:cover;background-position:center top;"></div>
           <div class="work-card-top"><div class="work-card-index">04</div><div class="work-card-arrow">→</div></div>
@@ -1047,7 +1048,7 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
         </div>
         <div class="work-card" onclick="navigate('jameson')">
           <div class="work-card-top"><div class="work-card-index">10</div><div class="work-card-arrow">→</div></div>
-          <div class="work-card-logo logo-img"><img src="images/YOUR_IMAGE_05.webp" data-original-format="webp" alt="Jameson Irish Whiskey" /></div>
+          <div class="work-card-logo logo-img"><img src="images/YOUR_IMAGE_05.webp" alt="Jameson Irish Whiskey" /></div>
           <div class="work-card-bottom">
             <div class="work-card-label">Night After Night · 2016 – 2017</div>
             <div class="work-card-title">Jameson<br>Irish Whiskey</div>
@@ -1056,7 +1057,7 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
         </div>
         <div class="work-card" onclick="navigate('kol')">
           <div class="work-card-top"><div class="work-card-index">09</div><div class="work-card-arrow">→</div></div>
-          <div class="work-card-logo logo-img"><img  style="width:100%;height:100%;object-fit:cover;object-position:center 30%;transform:scale(0.85);transform-origin:center;" src="images/YOUR_IMAGE_06.webp" data-original-format="webp" alt="Kings of Leon" /></div>
+          <div class="work-card-logo logo-img"><img  style="width:100%;height:100%;object-fit:cover;object-position:center 30%;transform:scale(0.85);transform-origin:center;" src="images/YOUR_IMAGE_06.webp" alt="Kings of Leon" /></div>
           <div class="work-card-bottom">
             <div class="work-card-label">Night After Night · 2016 – 2017</div>
             <div class="work-card-title">Kings of Leon</div>
@@ -1073,7 +1074,7 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
           </div>
         </div>
         <div class="work-card" onclick="navigate('spin')">
-          <div style="width:100%;height:200px;margin-bottom:20px;border-radius:4px;overflow:hidden;position:relative;"><img src="images/YOUR_IMAGE_07.webp" data-original-format="webp" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;object-position:center;background:#000;" /></div>
+          <div style="width:100%;height:200px;margin-bottom:20px;border-radius:4px;overflow:hidden;position:relative;"><img src="images/YOUR_IMAGE_07.webp" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain;object-position:center;background:#000;" /></div>
           
           <div class="work-card-top"><div class="work-card-index">06</div><div class="work-card-arrow">→</div></div>
           <div class="work-card-bottom">
@@ -1109,7 +1110,7 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
         <div class="work-group-company" style="color:rgba(200,160,255,0.85);">AI &amp; New Ventures</div>
         <div class="work-group-tenure" style="color:rgba(180,120,255,0.5);">2024 – Present</div>
       </div>
-      <div class="work-grid" style="grid-template-columns: 1fr;">
+      <div class="work-grid" style="grid-template-columns: 1fr 1fr;">
         <div class="work-card" onclick="navigate('ai')" style="background:rgba(255,255,255,0.04);">
           <div class="work-card-top">
             <div class="work-card-index" style="color:rgba(180,120,255,0.4);">08</div>
@@ -1228,7 +1229,7 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
 
       <div class="role-gallery cols-1 reveal">
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_08.jpg" data-original-format="jpg" alt="Amazon Music Live" onerror="this.parentElement.style.display='none'" />
+          <img src="images/YOUR_IMAGE_08.jpg" alt="Amazon Music Live" onerror="this.parentElement.style.display='none'" />
         </div>
       </div>
       <div class="gallery-caption">Amazon Music Live — the concert series in partnership with Prime Video and the NFL, one of the key content programs I tracked and sourced assets from for paid social campaigns.</div>
@@ -1245,7 +1246,7 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
 
       <div class="role-gallery cols-1 reveal">
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_09.webp" data-original-format="webp" alt="Kendrick Lamar's Pop Out — Amazon Music" onerror="this.parentElement.style.display='none'" />
+          <img src="images/YOUR_IMAGE_09.webp" alt="Kendrick Lamar's Pop Out — Amazon Music" onerror="this.parentElement.style.display='none'" />
         </div>
       </div>
       <div class="gallery-caption">Kendrick Lamar's Pop Out — Amazon Music partnership content that drove significant engagement across paid and organic social channels.</div>
@@ -1329,10 +1330,10 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
 
       <div class="role-gallery cols-2 reveal">
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_10.webp" data-original-format="webp" alt="Amazon Devices Sustainability — Investing in Clean Energy" />
+          <img src="images/YOUR_IMAGE_10.webp" alt="Amazon Devices Sustainability — Investing in Clean Energy" />
         </div>
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_11.webp" data-original-format="webp" alt="Amazon Devices Sustainability — A More Sustainable Design" />
+          <img src="images/YOUR_IMAGE_11.webp" alt="Amazon Devices Sustainability — A More Sustainable Design" />
         </div>
       </div>
       <div class="gallery-caption">Amazon Devices sustainability landing page — "Investing in Clean Energy" and "A More Sustainable Design." Content Strategy shaped the full narrative architecture and customer journey across the page.</div>
@@ -1381,19 +1382,19 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
 
       <div class="role-gallery cols-2 reveal">
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_12.webp" data-original-format="webp" alt="Amazon Devices Annual Launch — Art Direction" />
+          <img src="images/YOUR_IMAGE_12.webp" alt="Amazon Devices Annual Launch — Art Direction" />
         </div>
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_13.webp" data-original-format="webp" alt="Amazon Devices Annual Launch — Approved Proof of Concept" />
+          <img src="images/YOUR_IMAGE_13.webp" alt="Amazon Devices Annual Launch — Approved Proof of Concept" />
         </div>
       </div>
 
       <div class="role-gallery cols-2 reveal">
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_14.webp" data-original-format="webp" alt="Better Together — Amazon Annual Launch Homepage" />
+          <img src="images/YOUR_IMAGE_14.webp" alt="Better Together — Amazon Annual Launch Homepage" />
         </div>
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_15.webp" data-original-format="webp" alt="Better Together — Reimagine What's Possible campaign" />
+          <img src="images/YOUR_IMAGE_15.webp" alt="Better Together — Reimagine What's Possible campaign" />
         </div>
       </div>
       <div class="gallery-caption">"Reimagine What's Possible with Amazon and Alexa" — the annual launch campaign creative direction and Better Together narrative. Art direction representing a future state of optimism, spanning Echo, Fire TV, Luna, Halo, Eero, and Amazon's full device portfolio. The approved proof of concept evolved into the live Amazon.com homepage and category pages.</div>
@@ -1474,23 +1475,23 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
 
       <div class="role-gallery cols-1 reveal">
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_16.webp" data-original-format="webp" alt="Amazon Global Selling — Sell worldwide with Amazon landing page" />
+          <img src="images/YOUR_IMAGE_16.webp" alt="Amazon Global Selling — Sell worldwide with Amazon landing page" />
         </div>
       </div>
       <div class="role-gallery cols-2 reveal">
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_17.webp" data-original-format="webp" alt="Amazon Global Selling — Accelerate your international sales" />
+          <img src="images/YOUR_IMAGE_17.webp" alt="Amazon Global Selling — Accelerate your international sales" />
         </div>
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_18.webp" data-original-format="webp" alt="Amazon Global Selling — Grow and diversify your sales" />
+          <img src="images/YOUR_IMAGE_18.webp" alt="Amazon Global Selling — Grow and diversify your sales" />
         </div>
       </div>
       <div class="role-gallery cols-2 reveal">
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_19.webp" data-original-format="webp" alt="Amazon Global Selling — Where to expand: Europe, Asia-Pacific, Emerging" />
+          <img src="images/YOUR_IMAGE_19.webp" alt="Amazon Global Selling — Where to expand: Europe, Asia-Pacific, Emerging" />
         </div>
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_20.webp" data-original-format="webp" alt="Amazon Global Selling — Learn how to expand globally" />
+          <img src="images/YOUR_IMAGE_20.webp" alt="Amazon Global Selling — Learn how to expand globally" />
         </div>
       </div>
       <div class="gallery-caption">Sell.Amazon.com — the redesigned Amazon Global Selling landing page and supporting content. Copy, UX architecture, and messaging strategy owned by my team, focused on the US-to-EU expansion narrative.</div>
@@ -1501,12 +1502,12 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
 
       <div class="role-gallery cols-1 reveal">
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_21.webp" data-original-format="webp" alt="Amazon Seller Central — Start selling with Amazon" />
+          <img src="images/YOUR_IMAGE_21.webp" alt="Amazon Seller Central — Start selling with Amazon" />
         </div>
       </div>
       <div class="role-gallery cols-1 reveal">
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_22.webp" data-original-format="webp" alt="Amazon Seller Central — For beginners: Seller University" />
+          <img src="images/YOUR_IMAGE_22.webp" alt="Amazon Seller Central — For beginners: Seller University" />
         </div>
       </div>
       <div class="gallery-caption">Seller Central redesign — revised help articles, Brand Registry guidance, EU enrolment guidelines, and Seller University resources. The 54-step master narrative reduced friction and confusion across the entire US-to-EU expansion journey.</div>
@@ -1849,7 +1850,7 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
 
       <div class="role-gallery cols-1 reveal">
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_23.webp" data-original-format="webp" alt="SPIN Play iPad App — song streams, video, daily news" />
+          <img src="images/YOUR_IMAGE_23.webp" alt="SPIN Play iPad App — song streams, video, daily news" />
         </div>
       </div>
       <div class="gallery-caption">SPIN Play iPad app — featuring song streams, video clips, daily music news, and cutting-edge journalism. Built as part of a tiger team pioneering new digital products for the SPIN brand.</div>
@@ -2046,17 +2047,17 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
 
       <div class="role-gallery cols-1 reveal" style="margin-bottom:4px;">
         <div class="gallery-item" style="border-radius:10px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,0.16);">
-          <img src="images/YOUR_IMAGE_24.webp" data-original-format="webp" alt="Conductor homepage" />
+          <img src="images/YOUR_IMAGE_24.webp" alt="Conductor homepage" />
         </div>
       </div>
       <div class="gallery-caption">Conductor v1 — "Your label. Your rules." Six core modules: Streaming Analytics, Creative Studio, Revenue Tracking, AI Booking Agent, Sync Licensing, Task Management.</div>
 
       <div class="role-gallery cols-2 reveal">
         <div class="gallery-item" style="border-radius:10px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,0.13);">
-          <img src="images/YOUR_IMAGE_25.webp" data-original-format="webp" alt="Conductor onboarding" />
+          <img src="images/YOUR_IMAGE_25.webp" alt="Conductor onboarding" />
         </div>
         <div class="gallery-item" style="border-radius:10px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,0.13);">
-          <img src="images/YOUR_IMAGE_26.webp" data-original-format="webp" alt="Conductor email verification" />
+          <img src="images/YOUR_IMAGE_26.webp" alt="Conductor email verification" />
         </div>
       </div>
       <div class="gallery-caption">3-step onboarding — artist profile creation and Clerk-powered email verification. Fast, mobile-first, no friction.</div>
@@ -2414,7 +2415,7 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
 
       <div class="role-gallery cols-1 reveal">
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_27.webp" data-original-format="webp" alt="Hole's Celebrity Skin Turns 20 — Billboard, by William Goodman" />
+          <img src="images/YOUR_IMAGE_27.webp" alt="Hole's Celebrity Skin Turns 20 — Billboard, by William Goodman" />
         </div>
       </div>
       <div class="gallery-caption">Hole's 'Celebrity Skin' Turns 20: Reflecting on the Glistening Pop-Rock Tribute to LA — Billboard.com, September 2018.</div>
@@ -2576,13 +2577,13 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
 
       <div class="role-gallery cols-3 reveal">
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_28.webp" data-original-format="webp" alt="Jameson Black Barrel — Walnut Old Fashioned" />
+          <img src="images/YOUR_IMAGE_28.webp" alt="Jameson Black Barrel — Walnut Old Fashioned" />
         </div>
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_29.webp" data-original-format="webp" alt="Jameson — Summer Paloma" />
+          <img src="images/YOUR_IMAGE_29.webp" alt="Jameson — Summer Paloma" />
         </div>
         <div class="gallery-item">
-          <img src="images/YOUR_IMAGE_30.webp" data-original-format="webp" alt="Jameson — Fall Sangria" />
+          <img src="images/YOUR_IMAGE_30.webp" alt="Jameson — Fall Sangria" />
         </div>
       </div>
       <div class="gallery-caption">Jameson cocktail and lifestyle content — Black Barrel Walnut Old Fashioned, Summer Paloma, and Fall Sangria. Product photography produced for the always-on "Sine Metu" social campaign across Facebook and Instagram.</div>
@@ -2622,7 +2623,7 @@ footer .ft-links a:hover { color: rgba(240,242,245,0.6); }
       </div>
       <div>
         <div class="about-photo-wrap reveal">
-          <img src="https://images.squarespace-cdn.com/content/v1/5cae448c7a1fbd208cbe1ce0/b18b6249-cc9c-4c12-b714-48fb2597c9e6/Laughing+in+Whistler.jpg" alt="Billy Goodman in Whistler" onerror="this.src='https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=800&q=80'" />
+          <img src="images/billy-stained-glass.jpg" alt="Billy Goodman" />
         </div>
         <div style="margin-top:40px;padding:28px;background:#f0eee8;border-left:3px solid #0e1018;">
           <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(14,16,24,0.4);margin-bottom:12px;">MIT Certificates</div>
@@ -2997,14 +2998,25 @@ const BUBBLE_MESSAGES = [
   '20+ years defining voice, building teams, and shaping strategy for top tech and entertainment brands.',
   "Leveraging AI to build content systems for what's next",
 ];
+const BILLY_POSES = [
+  'images/YOUR_IMAGE_01.png',
+  'images/billy-pose-pointing.png',
+  'images/billy-pose-clapping.png',
+  'images/YOUR_IMAGE_01.png',
+];
+BILLY_POSES.forEach(url => { const i = new Image(); i.src = url; });
 let bubbleIndex = 0;
 function rotateBubble() {
   const b = document.getElementById('speech-bubble');
+  const billyImg = document.getElementById('billy-img');
   b.style.opacity = '0'; b.style.transform = 'scale(0.9)';
+  billyImg.style.opacity = '0';
   setTimeout(() => {
     bubbleIndex = (bubbleIndex + 1) % BUBBLE_MESSAGES.length;
     b.textContent = BUBBLE_MESSAGES[bubbleIndex];
+    billyImg.src = BILLY_POSES[bubbleIndex];
     b.style.opacity = '1'; b.style.transform = 'scale(1)';
+    billyImg.style.opacity = '1';
     if (bubbleIndex % 2 === 0) {
       b.style.left = '63%'; b.style.right = 'auto';
       b.classList.remove('bubble-left');
