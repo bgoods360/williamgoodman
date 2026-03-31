@@ -62,6 +62,12 @@ body:has(button:hover) #cursor-dot { transform: translate(-50%,-50%) scale(2.5);
   filter: brightness(0.72) saturate(1.1);
   animation: skyFade 2.5s ease 0.3s both;
 }
+/* On mobile: pause video, show poster instantly for performance */
+@media (max-width: 768px) {
+  #sky-bg video {
+    animation: skyFade 0.5s ease 0s both;
+  }
+}
 @keyframes skyFade { from { opacity:0; } to { opacity:1; } }
 #sky-vignette {
   position: fixed; inset: 0; z-index: 1; pointer-events: none;
@@ -798,80 +804,98 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
 
 /* ── MOBILE FIXES ── */
 @media (max-width: 768px) {
-  /* Hero — use min-height so content isn't clipped; dvh avoids iOS Safari URL bar overlap */
-  .hero { height: auto; min-height: 100vh; min-height: 100dvh; padding: 180px 24px 48px; }
+  /* Hero — push content down to give Billy clear space from nav */
+  .hero { height: auto; min-height: 100svh; padding: 120px 24px 48px; justify-content: flex-start; }
 
-  /* Billy — slightly larger on tablets so he's not tiny */
-  #billy-img { width: clamp(100px, 18vw, 160px); }
+  /* Billy — bigger on mobile so he reads clearly */
+  #billy-img { width: clamp(130px, 28vw, 200px); }
+  #billy-scene { margin-bottom: 8px; }
 
-  /* GOODMAN — prevent text overflow when fonts shuffle to wider families */
-  .hero-goodman { font-size: clamp(48px, 14vw, 200px); max-width: 100%; overflow: hidden; }
+  /* Speech bubble — center it above Billy */
+  #speech-bubble { left: 50%; right: auto; transform: translateX(-50%); bottom: 85%; width: clamp(200px, 65vw, 280px); font-size: clamp(12px, 3vw, 15px); }
 
-  /* Nav - tighter spacing */
+  /* GOODMAN — prevent overflow when fonts shuffle */
+  .hero-goodman { font-size: clamp(52px, 15vw, 200px); max-width: 100%; }
+
+  /* Nav */
   .nav-links { gap: 20px; }
   .nav-links a { font-size: 9px; letter-spacing: 0.15em; }
 
-  /* Video section */
-  .video-section { padding: 48px 24px; }
-  .video-inner { padding: 24px; }
-  .work-section { padding: 48px 24px; }
-  .video-caption { font-size: 13px; }
+  /* Sections */
+  .video-section { padding: 40px 16px; }
+  .video-inner { padding: 24px 20px; }
+  .work-section { padding: 40px 16px; }
+  .about-strip-home { padding: 40px 16px; }
+  .about-inner { padding: 32px 20px; grid-template-columns: 1fr; gap: 32px; }
+  .about-photo-col { height: 260px; }
+  .about-photo-col img { width: 110%; height: 110%; margin-left: -5%; }
 
-  /* Carousel controls */
+  /* Video carousel */
+  .video-caption { font-size: 13px; }
   .video-carousel-controls { margin-top: 16px; gap: 10px; }
   .video-carousel-btn { width: 36px; height: 36px; font-size: 16px; }
 
-  /* About strip photo */
-  .about-photo-col { height: 300px; }
-  .about-photo-col img { width: 120%; height: 120%; margin-left: -10%; margin-top: -5%; }
-
-  /* About page hero */
+  /* About page */
   .about-page-hero { padding: 90px 24px 48px; }
   .about-photo-wrap { height: 350px; }
   .about-photo-wrap img { width: 120%; height: 120%; margin-left: -10%; }
 
-  /* Role meta wrapping */
+  /* Role pages */
   .role-meta { flex-wrap: wrap; gap: 20px; }
 
-  /* Contact buttons stack */
+  /* Contact */
   .contact-strip-links { flex-wrap: wrap; gap: 12px; }
   .contact-btn { padding: 12px 20px; font-size: 9px; }
 
-  /* Work card images */
-  .work-card { padding: 24px 20px 20px; min-height: 180px; }
+  /* Work cards */
+  .work-card { padding: 20px 16px 16px; min-height: 160px; }
   .work-card:first-child { min-height: 200px; }
+  .work-group { padding: 0 16px; }
 
-  /* Work group padding */
-  .work-group { padding: 0 24px; }
-
-  /* Billboard articles */
+  /* Billboard */
   .bb-article-title { font-size: 13px; }
 }
 
 @media (max-width: 480px) {
   /* Very small screens */
-  .hero { padding: 160px 16px 40px; }
+  .hero { padding: 100px 16px 40px; }
 
   .nav-links { gap: 14px; }
   .nav-links a { font-size: 8px; letter-spacing: 0.12em; }
   .nav-logo { font-size: 18px; }
 
-  /* Billy — ensure full figure is visible */
-  #billy-img { width: clamp(80px, 22vw, 120px); }
+  /* Billy */
+  #billy-img { width: clamp(110px, 30vw, 150px); }
   #billy-scene { margin-bottom: 0; }
 
-  /* GOODMAN — scale down further for small phones */
-  .hero-goodman { font-size: clamp(36px, 12vw, 120px); }
+  /* Speech bubble */
+  #speech-bubble { left: 50%; transform: translateX(-50%); bottom: 80%; width: clamp(180px, 70vw, 260px); font-size: clamp(11px, 3vw, 14px); }
 
-  /* Speech bubble repositioning */
-  #speech-bubble { left: 50%; transform: translateX(-50%); bottom: 80%; width: clamp(180px, 60vw, 260px); font-size: clamp(11px, 3vw, 14px); }
+  /* GOODMAN */
+  .hero-goodman { font-size: clamp(40px, 13vw, 120px); }
 
-  .work-grid { padding: 0 16px; }
-  .work-card { padding: 20px 16px 16px; min-height: 160px; }
+  .work-grid { padding: 0 12px; }
+  .work-card { padding: 16px 12px 12px; min-height: 140px; }
 
   .role-hero { padding: 80px 16px 40px; }
-  .role-body { padding: 32px 16px; }
+  .role-body { padding: 28px 16px; }
   .role-title { font-size: clamp(40px, 12vw, 80px); }
+
+  .video-inner { padding: 16px; }
+  .video-title { margin-bottom: 16px; font-size: clamp(28px, 8vw, 48px); }
+
+  .about-inner, .about-page-body { padding: 0 16px; gap: 32px; }
+  .about-photo-col { height: 220px; }
+  .about-photo-wrap { height: 260px; }
+
+  .contact-strip { padding: 36px 16px; }
+  .contact-strip-links { flex-direction: column; align-items: flex-start; width: 100%; }
+  .contact-btn { width: 100%; text-align: center; }
+
+  .role-continue { padding: 28px 0; }
+  .role-continue a { font-size: 9px; }
+  .gallery-caption { font-size: 9px; margin-bottom: 24px; }
+}
 
   .video-inner { padding: 0 16px; }
   .video-title { margin-bottom: 20px; }
@@ -892,7 +916,6 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
 
 @media (max-width: 768px) {
   nav { padding: 18px 24px; }
-  .hero { padding: 0 24px; }
   .work-grid, .about-inner, .role-intro, .about-page-body { padding: 0 24px; grid-template-columns: 1fr; gap: 40px; }
   .role-hero { padding: 90px 24px 48px; }
   .role-body { padding: 40px 24px; }
@@ -1064,7 +1087,7 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
 
 <!-- SKY BG — looping video background -->
 <div id="sky-bg">
-  <video id="sky-video-a" autoplay muted loop playsinline>
+  <video id="sky-video-a" autoplay muted loop playsinline poster="images/SPACE_IMAGE_BACKGROUND_1.png">
     <source src="images/space-bg.mp4" type="video/mp4">
   </video>
 </div>
@@ -3623,6 +3646,12 @@ function revealVisible() {
 // ══════════════════════════════════════════
 const skyVidA = document.getElementById('sky-video-a');
 let skyRotateTimer = null;
+
+// On mobile, pause video to save bandwidth — poster image shows instead
+if (skyVidA && window.innerWidth <= 768) {
+  skyVidA.pause();
+  skyVidA.removeAttribute('autoplay');
+}
 
 function rotateSky() {} // no-op
 
