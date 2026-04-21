@@ -1163,12 +1163,20 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
 .bb-article-link:hover .bb-article-arrow { opacity: 1; transform: none; color: rgba(240,242,245,0.4); }
 
 /* ====== Ask Billy (conversational chat) ====== */
-#speech-bubble {
-  white-space: pre-wrap;
-  max-height: min(55vh, 420px);
-  overflow-y: auto;
+/* In chat mode, the OUTER bubble stays overflow:visible so the ::before/::after
+   tail triangles pointing at Billy are never clipped. The scrollable content
+   lives in an inner .chat-body wrapper. */
+#speech-bubble.chat-mode {
+  overflow: visible;
 }
-#speech-bubble.streaming::after {
+#speech-bubble.chat-mode .chat-body {
+  max-height: min(42vh, 300px);
+  overflow-y: auto;
+  text-align: left;
+  white-space: pre-wrap;
+  line-height: 1.5;
+}
+#speech-bubble.chat-mode.streaming .chat-body::after {
   content: '▍';
   display: inline-block;
   margin-left: 2px;
@@ -4693,25 +4701,36 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
   const btn = document.getElementById('billy-chat-btn');
   const bubble = document.getElementById('speech-bubble');
   const wrap = document.getElementById('billy-wrap');
-  const defaultBubbleText = bubble ? bubble.textContent : '';
   let history = [];
   let busy = false;
 
-  function showBubble() {
+  // Kill the homepage blurb-rotation timer so it stops overwriting Billy's answer.
+  // rotateBubble is defined above; bubbleTimer is the setInterval handle.
+  function stopBlurbRotation() {
+    try { if (typeof bubbleTimer !== 'undefined' && bubbleTimer) { clearInterval(bubbleTimer); bubbleTimer = null; } } catch (_) {}
+    // Prevent future restarts by shadowing setInterval for rotateBubble: simpler approach —
+    // overwrite the rotateBubble global with a no-op so any scheduled ticks do nothing.
+    try { if (typeof rotateBubble === 'function') { window.rotateBubble = function(){}; } } catch (_) {}
+  }
+
+  function pinBubbleForChat() {
     if (!bubble) return;
-    bubble.classList.add('visible');
+    bubble.classList.add('visible', 'chat-mode');
     bubble.style.opacity = '1';
-    // match billySpinEntrance's responsive positioning
+    // Lock to a consistent position every turn so the bubble doesn't flip sides
+    // like the blurb rotator does. Default tail (::before/::after) sits on the
+    // LEFT of the bubble pointing down-left at Billy, so put the bubble to Billy's right.
+    bubble.classList.remove('bubble-left');
     if (window.innerWidth < 900) {
       bubble.style.left = '52%';
       bubble.style.right = 'auto';
       bubble.style.bottom = '58%';
-      bubble.style.transform = 'scale(1)';
-      bubble.classList.remove('bubble-left');
     } else {
+      bubble.style.left = '63%';
+      bubble.style.right = 'auto';
       bubble.style.bottom = '88%';
-      bubble.style.transform = 'scale(1)';
     }
+    bubble.style.transform = 'scale(1)';
   }
 
   function billyReact() {
@@ -4722,6 +4741,41 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
     setTimeout(() => { if (wrap) wrap.style.animation = 'none'; }, 720);
   }
 
+  // Paces incoming stream chunks at reading speed (~60 chars/sec) regardless of
+  // how fast the model emits tokens. Buffer grows from the network; render loop
+  // drains it into the DOM on a steady cadence.
+  function createPacer(target) {
+    let buffer = '';
+    let rendered = '';
+    let done = false;
+    let flushResolve = null;
+    const CHARS_PER_TICK = 2;   // 2 chars every 30ms ≈ 66 chars/sec
+    const TICK_MS = 30;
+    const timer = setInterval(() => {
+      if (rendered.length < buffer.length) {
+        const next = Math.min(buffer.length, rendered.length + CHARS_PER_TICK);
+        rendered = buffer.slice(0, next);
+        target.textContent = rendered;
+        target.scrollTop = target.scrollHeight;
+      } else if (done) {
+        clearInterval(timer);
+        if (flushResolve) flushResolve();
+      }
+    }, TICK_MS);
+    return {
+      push(chunk) { buffer += chunk; },
+      finish() {
+        done = true;
+        return new Promise(resolve => {
+          if (rendered.length >= buffer.length) { clearInterval(timer); resolve(); }
+          else { flushResolve = resolve; }
+        });
+      },
+      getFullText() { return buffer; },
+      cancel() { clearInterval(timer); }
+    };
+  }
+
   async function ask(message) {
     if (busy) return;
     busy = true;
@@ -4729,12 +4783,18 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
     const originalLabel = btn.textContent;
     btn.textContent = 'Thinking…';
 
-    showBubble();
-    bubble.textContent = '';
+    stopBlurbRotation();
+    pinBubbleForChat();
+
+    // Reset inner scrollable body so tails on the outer bubble stay visible
+    bubble.innerHTML = '<div class="chat-body"></div>';
+    const body = bubble.querySelector('.chat-body');
     bubble.classList.add('streaming');
     billyReact();
 
-    let answer = '';
+    const pacer = createPacer(body);
+    let fullAnswer = '';
+
     try {
       const resp = await fetch('/api/chat', {
         method: 'POST',
@@ -4748,12 +4808,14 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
           const j = await resp.json();
           if (j && j.error) msg = j.error;
         } catch (_) { /* ignore */ }
-        bubble.textContent = msg;
+        pacer.cancel();
+        body.textContent = msg;
         return;
       }
 
       if (!resp.body) {
-        bubble.textContent = await resp.text();
+        pacer.cancel();
+        body.textContent = await resp.text();
         return;
       }
 
@@ -4762,21 +4824,21 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
       while (true) {
         const { value, done } = await reader.read();
         if (done) break;
-        answer += decoder.decode(value, { stream: true });
-        bubble.textContent = answer;
-        bubble.scrollTop = bubble.scrollHeight;
+        pacer.push(decoder.decode(value, { stream: true }));
       }
-      answer += decoder.decode();
-      bubble.textContent = answer;
+      pacer.push(decoder.decode());
+      await pacer.finish();
+      fullAnswer = pacer.getFullText();
 
-      if (answer.trim()) {
+      if (fullAnswer.trim()) {
         history.push({ role: 'user', content: message });
-        history.push({ role: 'assistant', content: answer });
+        history.push({ role: 'assistant', content: fullAnswer });
         if (history.length > 40) history = history.slice(-40);
       }
     } catch (err) {
       console.error('Ask Billy error:', err);
-      bubble.textContent = answer || "Connection hiccup — try that again in a sec.";
+      pacer.cancel();
+      body.textContent = pacer.getFullText() || "Connection hiccup — try that again in a sec.";
     } finally {
       bubble.classList.remove('streaming');
       busy = false;
@@ -4792,13 +4854,6 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
     if (!q || busy) return;
     input.value = '';
     ask(q);
-  });
-
-  // Reset bubble to default if the input is focused on an unanswered state
-  input.addEventListener('focus', function () {
-    if (!busy && history.length === 0 && bubble && bubble.textContent === defaultBubbleText) {
-      // leave default greeting visible
-    }
   });
 })();
 /* ====== end Ask Billy ====== */
