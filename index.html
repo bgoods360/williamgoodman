@@ -1163,85 +1163,9 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
 .bb-article-link:hover .bb-article-arrow { opacity: 1; transform: none; color: rgba(240,242,245,0.4); }
 
 /* ====== Ask Billy (conversational chat) ====== */
-/* Answers now render in a dedicated panel below the input, not the speech
-   bubble. The bubble keeps its original blurb rotation, unmodified. */
-#billy-response {
-  max-width: 880px;
-  margin: 8px auto 48px;
-  padding: 28px 32px 32px;
-  background: #fff;
-  border: 3px solid #111;
-  border-radius: 18px;
-  box-shadow: 6px 6px 0 #111;
-  font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
-  font-size: 17px;
-  line-height: 1.65;
-  color: #1a1a1a;
-  text-align: left;
-  white-space: pre-wrap;
-  position: relative;
-  z-index: 8;
-  animation: responsePopIn 0.35s ease-out;
-  box-sizing: border-box;
-}
-#billy-response[hidden] { display: none; }
-@keyframes responsePopIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-#billy-response-header {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 14px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid #eee;
-}
-#billy-response-name {
-  font-family: 'DM Mono', monospace;
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  color: #666;
-  text-transform: uppercase;
-  font-weight: 700;
-  flex: 1;
-}
-#billy-response-close {
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: 'DM Mono', monospace;
-  font-size: 16px;
-  color: #999;
-  padding: 2px 8px;
-  border-radius: 6px;
-  line-height: 1;
-  transition: color 0.15s, background 0.15s;
-}
-#billy-response-close:hover { color: #111; background: #f0f0f0; }
-#billy-response-body {
-  font-size: 17px;
-  line-height: 1.65;
-  color: #1a1a1a;
-}
-#billy-response.streaming #billy-response-body::after {
-  content: '▍';
-  display: inline-block;
-  margin-left: 2px;
-  opacity: 0.6;
-  animation: billyCaret 0.9s steps(1) infinite;
-}
+/* Answers render inside the same shell as the input — the shell morphs
+   from question field to answer surface. The speech bubble is left alone. */
 @keyframes billyCaret { 50% { opacity: 0; } }
-@media (max-width: 768px) {
-  #billy-response { padding: 22px 24px 26px; font-size: 16px; }
-}
-@media (max-width: 600px) {
-  #billy-response {
-    margin: 8px 16px 36px;
-    padding: 20px 22px 24px;
-  }
-  #billy-response-body { font-size: 15px; line-height: 1.6; }
-}
 
 #billy-chat-eyebrow {
   text-align: center;
@@ -1272,8 +1196,10 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
   box-sizing: border-box;
   position: relative;
   z-index: 8;
+  align-items: stretch;
 }
-#billy-chat-input {
+/* SHELL: shared box used by both input and answer modes */
+#billy-chat-shell {
   flex: 1 1 auto;
   min-width: 0;
   background: #fff;
@@ -1281,17 +1207,65 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
   border-radius: 18px;
   box-shadow: 6px 6px 0 #111;
   padding: 22px 28px;
+  transition: box-shadow 0.2s ease, transform 0.1s ease;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+#billy-chat-shell:focus-within {
+  transform: translate(-1px, -1px);
+  box-shadow: 7px 7px 0 #111;
+}
+/* Input inside the shell — transparent, all styling comes from shell */
+#billy-chat-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  padding: 0;
+  margin: 0;
   font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
   font-size: 20px;
   font-weight: 500;
   color: #222;
   outline: none;
-  transition: transform 0.1s ease, box-shadow 0.1s ease;
+  line-height: 1.3;
 }
 #billy-chat-input::placeholder { color: #a6a6a6; font-weight: 500; }
-#billy-chat-input:focus {
-  transform: translate(-1px, -1px);
-  box-shadow: 7px 7px 0 #111;
+/* ANSWER mode: replaces the input visually inside the same shell */
+#billy-chat-answer { width: 100%; }
+#billy-chat-answer-label {
+  font-family: 'DM Mono', 'Menlo', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 10px;
+}
+#billy-chat-answer-body {
+  font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.6;
+  color: #1a1a1a;
+  white-space: pre-wrap;
+  min-height: 1.6em;
+}
+#billy-chat-shell.streaming #billy-chat-answer-body::after {
+  content: '▍';
+  display: inline-block;
+  margin-left: 2px;
+  opacity: 0.6;
+  animation: billyCaret 0.9s steps(1) infinite;
+  color: #555;
+}
+/* Mode toggle — fade between input and answer */
+#billy-chat[data-mode="ask"] #billy-chat-answer { display: none; }
+#billy-chat[data-mode="answer"] #billy-chat-input { display: none; }
+#billy-chat[data-mode="answer"] #billy-chat-shell { animation: shellExpand 0.35s ease-out; }
+@keyframes shellExpand {
+  from { opacity: 0.6; transform: translateY(-4px); }
+  to   { opacity: 1;   transform: translateY(0); }
 }
 #billy-chat-btn {
   background: #111;
@@ -1402,26 +1376,24 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
     </div>
 
     <p id="billy-chat-eyebrow"><span class="chat-arrow">▾</span> Talk to Billy <span class="chat-arrow">▾</span></p>
-    <form id="billy-chat" autocomplete="off">
-      <input
-        id="billy-chat-input"
-        type="text"
-        name="q"
-        maxlength="1000"
-        placeholder="Your question here!"
-        aria-label="Ask Billy a question"
-      />
+    <form id="billy-chat" autocomplete="off" data-mode="ask">
+      <div id="billy-chat-shell">
+        <input
+          id="billy-chat-input"
+          type="text"
+          name="q"
+          maxlength="1000"
+          placeholder="Your question here!"
+          aria-label="Ask Billy a question"
+        />
+        <div id="billy-chat-answer" aria-live="polite">
+          <div id="billy-chat-answer-label">Billy says</div>
+          <div id="billy-chat-answer-body"></div>
+        </div>
+      </div>
       <button id="billy-chat-btn" type="submit">Ask Billy</button>
     </form>
-    <p id="billy-chat-hint">press enter · Billy answers below</p>
-
-    <div id="billy-response" hidden aria-live="polite">
-      <div id="billy-response-header">
-        <span id="billy-response-name">Billy says</span>
-        <button id="billy-response-close" type="button" aria-label="Dismiss answer">✕</button>
-      </div>
-      <div id="billy-response-body"></div>
-    </div>
+    <p id="billy-chat-hint">press enter · Billy's answer fills the field below</p>
 
     <div class="scroll-hint">
       <span>Scroll</span>
@@ -4763,14 +4735,19 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
 (function () {
   const form = document.getElementById('billy-chat');
   if (!form) return;
+  const shell = document.getElementById('billy-chat-shell');
   const input = document.getElementById('billy-chat-input');
   const btn = document.getElementById('billy-chat-btn');
-  const panel = document.getElementById('billy-response');
-  const body = document.getElementById('billy-response-body');
-  const closeBtn = document.getElementById('billy-response-close');
+  const body = document.getElementById('billy-chat-answer-body');
   const wrap = document.getElementById('billy-wrap');
   let history = [];
   let busy = false;
+  let mode = 'ask'; // 'ask' | 'answer'
+
+  function setMode(m) {
+    mode = m;
+    form.setAttribute('data-mode', m);
+  }
 
   function billyReact() {
     if (!wrap) return;
@@ -4780,20 +4757,20 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
     setTimeout(() => { if (wrap) wrap.style.animation = 'none'; }, 720);
   }
 
-  function showPanel() {
-    panel.hidden = false;
-  }
-
-  function hidePanel() {
-    panel.hidden = true;
+  function returnToAsk() {
+    setMode('ask');
     body.textContent = '';
+    shell.classList.remove('streaming');
+    btn.textContent = 'Ask Billy';
+    btn.type = 'submit';
+    btn.disabled = false;
+    input.value = '';
+    input.focus();
   }
 
   // Paces incoming stream chunks at a comfortable reading speed regardless of
-  // how fast the model emits tokens. Buffer grows from the network; render
-  // loop drains it into the DOM on a steady cadence.
-  //
-  // 1 char / 40ms ≈ 25 chars/sec ≈ 300 wpm — slow enough to follow word-by-word.
+  // how fast the model emits tokens. 1 char / 40ms ≈ 25 chars/sec ≈ 300 wpm —
+  // slow enough to follow word-by-word as the shell grows downward.
   function createPacer(target) {
     let buffer = '';
     let rendered = '';
@@ -4829,18 +4806,18 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
     if (busy) return;
     busy = true;
     btn.disabled = true;
-    const originalLabel = btn.textContent;
     btn.textContent = 'Thinking…';
+    btn.type = 'button'; // prevent accidental submit while thinking
 
-    // Reset panel content so each new question replaces the last answer cleanly
+    // Switch shell to answer mode — input vanishes, header appears
+    setMode('answer');
     body.textContent = '';
-    showPanel();
-    panel.classList.add('streaming');
+    shell.classList.add('streaming');
     billyReact();
 
-    // Scroll the panel into view smoothly so the user's eyes land on the answer
+    // Plant the top of the shell at a readable position in the viewport
     requestAnimationFrame(() => {
-      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      shell.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
 
     const pacer = createPacer(body);
@@ -4891,27 +4868,37 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
       pacer.cancel();
       body.textContent = pacer.getFullText() || "Connection hiccup — try that again in a sec.";
     } finally {
-      panel.classList.remove('streaming');
+      shell.classList.remove('streaming');
       busy = false;
       btn.disabled = false;
-      btn.textContent = originalLabel;
+      // Answer is complete — button becomes "Ask Another" to start a fresh question
+      btn.textContent = 'Ask Another';
+      btn.type = 'button';
     }
   }
 
   form.addEventListener('submit', function (e) {
     e.preventDefault();
+    if (busy) return;
+    if (mode === 'answer') {
+      // Shouldn't happen (button is type=button here) but guard anyway
+      returnToAsk();
+      return;
+    }
     const q = (input.value || '').trim();
-    if (!q || busy) return;
+    if (!q) return;
     input.value = '';
     ask(q);
   });
 
-  if (closeBtn) {
-    closeBtn.addEventListener('click', function () {
-      hidePanel();
-      input.focus();
-    });
-  }
+  // "Ask Another" click when the button is type=button
+  btn.addEventListener('click', function (e) {
+    if (busy) return;
+    if (mode === 'answer') {
+      e.preventDefault();
+      returnToAsk();
+    }
+  });
 })();
 /* ====== end Ask Billy ====== */
 </script>
