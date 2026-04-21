@@ -1163,20 +1163,68 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
 .bb-article-link:hover .bb-article-arrow { opacity: 1; transform: none; color: rgba(240,242,245,0.4); }
 
 /* ====== Ask Billy (conversational chat) ====== */
-/* In chat mode, the OUTER bubble stays overflow:visible so the ::before/::after
-   tail triangles pointing at Billy are never clipped. The scrollable content
-   lives in an inner .chat-body wrapper. */
-#speech-bubble.chat-mode {
-  overflow: visible;
-}
-#speech-bubble.chat-mode .chat-body {
-  max-height: min(42vh, 300px);
-  overflow-y: auto;
+/* Answers now render in a dedicated panel below the input, not the speech
+   bubble. The bubble keeps its original blurb rotation, unmodified. */
+#billy-response {
+  max-width: 880px;
+  margin: 8px auto 48px;
+  padding: 28px 32px 32px;
+  background: #fff;
+  border: 3px solid #111;
+  border-radius: 18px;
+  box-shadow: 6px 6px 0 #111;
+  font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 17px;
+  line-height: 1.65;
+  color: #1a1a1a;
   text-align: left;
   white-space: pre-wrap;
-  line-height: 1.5;
+  position: relative;
+  z-index: 8;
+  animation: responsePopIn 0.35s ease-out;
+  box-sizing: border-box;
 }
-#speech-bubble.chat-mode.streaming .chat-body::after {
+#billy-response[hidden] { display: none; }
+@keyframes responsePopIn {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+#billy-response-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #eee;
+}
+#billy-response-name {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  color: #666;
+  text-transform: uppercase;
+  font-weight: 700;
+  flex: 1;
+}
+#billy-response-close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: 'DM Mono', monospace;
+  font-size: 16px;
+  color: #999;
+  padding: 2px 8px;
+  border-radius: 6px;
+  line-height: 1;
+  transition: color 0.15s, background 0.15s;
+}
+#billy-response-close:hover { color: #111; background: #f0f0f0; }
+#billy-response-body {
+  font-size: 17px;
+  line-height: 1.65;
+  color: #1a1a1a;
+}
+#billy-response.streaming #billy-response-body::after {
   content: '▍';
   display: inline-block;
   margin-left: 2px;
@@ -1184,6 +1232,16 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
   animation: billyCaret 0.9s steps(1) infinite;
 }
 @keyframes billyCaret { 50% { opacity: 0; } }
+@media (max-width: 768px) {
+  #billy-response { padding: 22px 24px 26px; font-size: 16px; }
+}
+@media (max-width: 600px) {
+  #billy-response {
+    margin: 8px 16px 36px;
+    padding: 20px 22px 24px;
+  }
+  #billy-response-body { font-size: 15px; line-height: 1.6; }
+}
 
 #billy-chat-eyebrow {
   text-align: center;
@@ -1355,7 +1413,15 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
       />
       <button id="billy-chat-btn" type="submit">Ask Billy</button>
     </form>
-    <p id="billy-chat-hint">press enter · answers stream into Billy's bubble</p>
+    <p id="billy-chat-hint">press enter · Billy answers below</p>
+
+    <div id="billy-response" hidden aria-live="polite">
+      <div id="billy-response-header">
+        <span id="billy-response-name">Billy says</span>
+        <button id="billy-response-close" type="button" aria-label="Dismiss answer">✕</button>
+      </div>
+      <div id="billy-response-body"></div>
+    </div>
 
     <div class="scroll-hint">
       <span>Scroll</span>
@@ -4699,39 +4765,12 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
   if (!form) return;
   const input = document.getElementById('billy-chat-input');
   const btn = document.getElementById('billy-chat-btn');
-  const bubble = document.getElementById('speech-bubble');
+  const panel = document.getElementById('billy-response');
+  const body = document.getElementById('billy-response-body');
+  const closeBtn = document.getElementById('billy-response-close');
   const wrap = document.getElementById('billy-wrap');
   let history = [];
   let busy = false;
-
-  // Kill the homepage blurb-rotation timer so it stops overwriting Billy's answer.
-  // rotateBubble is defined above; bubbleTimer is the setInterval handle.
-  function stopBlurbRotation() {
-    try { if (typeof bubbleTimer !== 'undefined' && bubbleTimer) { clearInterval(bubbleTimer); bubbleTimer = null; } } catch (_) {}
-    // Prevent future restarts by shadowing setInterval for rotateBubble: simpler approach —
-    // overwrite the rotateBubble global with a no-op so any scheduled ticks do nothing.
-    try { if (typeof rotateBubble === 'function') { window.rotateBubble = function(){}; } } catch (_) {}
-  }
-
-  function pinBubbleForChat() {
-    if (!bubble) return;
-    bubble.classList.add('visible', 'chat-mode');
-    bubble.style.opacity = '1';
-    // Lock to a consistent position every turn so the bubble doesn't flip sides
-    // like the blurb rotator does. Default tail (::before/::after) sits on the
-    // LEFT of the bubble pointing down-left at Billy, so put the bubble to Billy's right.
-    bubble.classList.remove('bubble-left');
-    if (window.innerWidth < 900) {
-      bubble.style.left = '52%';
-      bubble.style.right = 'auto';
-      bubble.style.bottom = '58%';
-    } else {
-      bubble.style.left = '63%';
-      bubble.style.right = 'auto';
-      bubble.style.bottom = '88%';
-    }
-    bubble.style.transform = 'scale(1)';
-  }
 
   function billyReact() {
     if (!wrap) return;
@@ -4741,22 +4780,32 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
     setTimeout(() => { if (wrap) wrap.style.animation = 'none'; }, 720);
   }
 
-  // Paces incoming stream chunks at reading speed (~60 chars/sec) regardless of
-  // how fast the model emits tokens. Buffer grows from the network; render loop
-  // drains it into the DOM on a steady cadence.
+  function showPanel() {
+    panel.hidden = false;
+  }
+
+  function hidePanel() {
+    panel.hidden = true;
+    body.textContent = '';
+  }
+
+  // Paces incoming stream chunks at a comfortable reading speed regardless of
+  // how fast the model emits tokens. Buffer grows from the network; render
+  // loop drains it into the DOM on a steady cadence.
+  //
+  // 1 char / 40ms ≈ 25 chars/sec ≈ 300 wpm — slow enough to follow word-by-word.
   function createPacer(target) {
     let buffer = '';
     let rendered = '';
     let done = false;
     let flushResolve = null;
-    const CHARS_PER_TICK = 2;   // 2 chars every 30ms ≈ 66 chars/sec
-    const TICK_MS = 30;
+    const CHARS_PER_TICK = 1;
+    const TICK_MS = 40;
     const timer = setInterval(() => {
       if (rendered.length < buffer.length) {
         const next = Math.min(buffer.length, rendered.length + CHARS_PER_TICK);
         rendered = buffer.slice(0, next);
         target.textContent = rendered;
-        target.scrollTop = target.scrollHeight;
       } else if (done) {
         clearInterval(timer);
         if (flushResolve) flushResolve();
@@ -4783,14 +4832,16 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
     const originalLabel = btn.textContent;
     btn.textContent = 'Thinking…';
 
-    stopBlurbRotation();
-    pinBubbleForChat();
-
-    // Reset inner scrollable body so tails on the outer bubble stay visible
-    bubble.innerHTML = '<div class="chat-body"></div>';
-    const body = bubble.querySelector('.chat-body');
-    bubble.classList.add('streaming');
+    // Reset panel content so each new question replaces the last answer cleanly
+    body.textContent = '';
+    showPanel();
+    panel.classList.add('streaming');
     billyReact();
+
+    // Scroll the panel into view smoothly so the user's eyes land on the answer
+    requestAnimationFrame(() => {
+      panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
 
     const pacer = createPacer(body);
     let fullAnswer = '';
@@ -4840,11 +4891,10 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
       pacer.cancel();
       body.textContent = pacer.getFullText() || "Connection hiccup — try that again in a sec.";
     } finally {
-      bubble.classList.remove('streaming');
+      panel.classList.remove('streaming');
       busy = false;
       btn.disabled = false;
       btn.textContent = originalLabel;
-      input.focus();
     }
   }
 
@@ -4855,6 +4905,13 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
     input.value = '';
     ask(q);
   });
+
+  if (closeBtn) {
+    closeBtn.addEventListener('click', function () {
+      hidePanel();
+      input.focus();
+    });
+  }
 })();
 /* ====== end Ask Billy ====== */
 </script>
