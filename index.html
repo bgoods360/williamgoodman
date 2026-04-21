@@ -1180,80 +1180,83 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
 #billy-chat-eyebrow {
   text-align: center;
   font-family: 'DM Mono', monospace;
-  font-size: 12px;
-  letter-spacing: 0.22em;
+  font-size: 13px;
+  letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: rgba(240,242,245,0.6);
-  margin: 36px 0 14px;
+  color: rgba(240,242,245,0.7);
+  margin: 48px 0 18px;
+  font-weight: 700;
 }
 #billy-chat-eyebrow .chat-arrow {
   display: inline-block;
-  margin: 0 8px;
+  margin: 0 10px;
   animation: chatArrowBounce 1.4s ease-in-out infinite;
 }
 @keyframes chatArrowBounce {
   0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(4px); }
+  50%      { transform: translateY(5px); }
 }
 #billy-chat {
   display: flex;
-  gap: 12px;
-  max-width: 780px;
+  gap: 14px;
+  width: 100%;
+  max-width: 1040px;
   margin: 0 auto 8px;
-  padding: 0 20px;
+  padding: 0 24px;
   box-sizing: border-box;
   position: relative;
   z-index: 8;
 }
 #billy-chat-input {
-  flex: 1;
+  flex: 1 1 auto;
   min-width: 0;
   background: #fff;
   border: 3px solid #111;
-  border-radius: 16px;
-  box-shadow: 5px 5px 0 #111;
-  padding: 18px 22px;
+  border-radius: 18px;
+  box-shadow: 6px 6px 0 #111;
+  padding: 22px 28px;
   font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
-  font-size: 17px;
+  font-size: 20px;
   font-weight: 500;
   color: #222;
   outline: none;
   transition: transform 0.1s ease, box-shadow 0.1s ease;
 }
-#billy-chat-input::placeholder { color: #999; }
+#billy-chat-input::placeholder { color: #a6a6a6; font-weight: 500; }
 #billy-chat-input:focus {
   transform: translate(-1px, -1px);
-  box-shadow: 6px 6px 0 #111;
+  box-shadow: 7px 7px 0 #111;
 }
 #billy-chat-btn {
   background: #111;
   color: #fff;
   border: 3px solid #111;
-  border-radius: 16px;
-  box-shadow: 5px 5px 0 rgba(17,17,17,0.35);
-  padding: 18px 32px;
+  border-radius: 18px;
+  box-shadow: 6px 6px 0 rgba(17,17,17,0.4);
+  padding: 22px 38px;
   font-family: 'DM Mono', 'Menlo', monospace;
   font-weight: 700;
-  font-size: 13px;
-  letter-spacing: 0.12em;
+  font-size: 15px;
+  letter-spacing: 0.14em;
   text-transform: uppercase;
   cursor: pointer;
   transition: transform 0.1s ease, box-shadow 0.1s ease, opacity 0.2s;
   flex-shrink: 0;
+  white-space: nowrap;
 }
 #billy-chat-btn:hover {
   transform: translate(-1px, -1px);
-  box-shadow: 6px 6px 0 rgba(17,17,17,0.45);
+  box-shadow: 7px 7px 0 rgba(17,17,17,0.5);
 }
 #billy-chat-btn:active {
   transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0 rgba(17,17,17,0.35);
+  box-shadow: 2px 2px 0 rgba(17,17,17,0.4);
 }
 #billy-chat-btn:disabled {
   opacity: 0.55;
   cursor: not-allowed;
   transform: none;
-  box-shadow: 5px 5px 0 rgba(17,17,17,0.35);
+  box-shadow: 6px 6px 0 rgba(17,17,17,0.4);
 }
 #billy-chat-hint {
   text-align: center;
@@ -1262,13 +1265,18 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
   letter-spacing: 0.1em;
   color: rgba(240,242,245,0.4);
   text-transform: uppercase;
-  margin: 10px 0 28px;
+  margin: 12px 0 32px;
+}
+@media (max-width: 768px) {
+  #billy-chat { padding: 0 18px; }
+  #billy-chat-input { padding: 18px 22px; font-size: 17px; }
+  #billy-chat-btn { padding: 18px 26px; font-size: 13px; }
 }
 @media (max-width: 600px) {
-  #billy-chat-eyebrow { margin-top: 28px; font-size: 11px; letter-spacing: 0.18em; }
-  #billy-chat { flex-direction: column; gap: 10px; padding: 0 16px; }
-  #billy-chat-input { padding: 16px 18px; font-size: 16px; }
-  #billy-chat-btn { width: 100%; padding: 14px 20px; }
+  #billy-chat-eyebrow { margin-top: 32px; font-size: 12px; letter-spacing: 0.2em; }
+  #billy-chat { flex-direction: column; gap: 12px; padding: 0 16px; }
+  #billy-chat-input { padding: 16px 20px; font-size: 16px; }
+  #billy-chat-btn { width: 100%; padding: 16px 20px; font-size: 13px; }
   #speech-bubble { max-height: min(48vh, 340px); }
 }
 /* ====== end Ask Billy ====== */
@@ -1334,7 +1342,7 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
         type="text"
         name="q"
         maxlength="1000"
-        placeholder="Ask about Amazon Music, Ticketmaster, AI, or anything else…"
+        placeholder="Your question here!"
         aria-label="Ask Billy a question"
       />
       <button id="billy-chat-btn" type="submit">Ask Billy</button>
