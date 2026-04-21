@@ -41,9 +41,12 @@ Built the content engine across editorial, video, social, and in-app experiences
 - Managed content for Echo, Alexa, Ring, and other device launches
 
 **Amazon Global Brands (~9 months)**
-- [Brief stint — role and focus to be confirmed. Do not fabricate details;
-  if asked specifically, say you worked there briefly and were focused on
-  [generic framing] but let the visitor ask you directly for depth.]
+
+A focused stint supporting Amazon's Third Party Seller ecosystem and global expansion push.
+
+- Audited three separate Seller-facing websites and consolidated them into one master experience for Third Party Sellers
+- Centralized the educational materials that had been scattered across those properties — built a single source of truth to support global expansion
+- The brief was unification: turn a fragmented set of resources into something Sellers could actually use to grow internationally
 
 **Ticketmaster (2016-2019)**
 - VP of Content & Editorial
