@@ -1,0 +1,9 @@
+{
+  "name": "williamgoodman-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "williamsgoodman.co portfolio with conversational Billy",
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.40.0"
+  }
+}
