@@ -1212,6 +1212,8 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  /* Clear the fixed nav (~70px) when scrollIntoView aligns this to top */
+  scroll-margin-top: 100px;
 }
 #billy-chat-shell:focus-within {
   transform: translate(-1px, -1px);
