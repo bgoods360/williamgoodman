@@ -1333,9 +1333,17 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
 <div id="cursor-dot"></div>
 <canvas id="comet-canvas"></canvas>
 
-<!-- SKY BG — static nebula + procedural flying starfield -->
+<!-- SKY BG — looping nebula video (ping-pong edit) + procedural flying starfield -->
 <div id="sky-bg">
-  <img id="sky-img" src="images/SPACE_IMAGE_BACKGROUND_1.png" alt="" aria-hidden="true">
+  <video
+    id="sky-img"
+    autoplay muted loop playsinline
+    preload="auto"
+    poster="images/SPACE_IMAGE_BACKGROUND_1.png"
+    aria-hidden="true"
+  >
+    <source src="images/space-bg.mp4" type="video/mp4">
+  </video>
 </div>
 <canvas id="starfield-canvas"></canvas>
 <canvas id="twinkle-canvas"></canvas>
