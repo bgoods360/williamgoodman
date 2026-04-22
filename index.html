@@ -60,17 +60,16 @@ body:has(button:hover) #cursor-dot { transform: translate(-50%,-50%) scale(2.5);
 #sky-bg {
   position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
 }
-#sky-bg video {
+/* Static nebula backdrop — no zoom, no loop cut. Procedural starfield on
+   top provides the "walking into space" forward motion. */
+#sky-img {
   position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover; object-position: center center;
   filter: brightness(0.72) saturate(1.1);
   animation: skyFade 2.5s ease 0.3s both;
 }
-/* On mobile: pause video, show poster instantly for performance */
 @media (max-width: 768px) {
-  #sky-bg video {
-    animation: skyFade 0.5s ease 0s both;
-  }
+  #sky-img { animation: skyFade 0.5s ease 0s both; }
 }
 @keyframes skyFade { from { opacity:0; } to { opacity:1; } }
 #sky-vignette {
@@ -78,7 +77,12 @@ body:has(button:hover) #cursor-dot { transform: translate(-50%,-50%) scale(2.5);
   background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.38) 70%, rgba(0,0,0,0.68) 100%);
 }
 
-/* ── TWINKLE STARS CANVAS ── */
+/* ── PROCEDURAL STARFIELD (flying forward) ── */
+#starfield-canvas {
+  position: fixed; inset: 0; z-index: 1; pointer-events: none;
+}
+
+/* ── TWINKLE STARS CANVAS (pulsing gas + shooting stars) ── */
 #twinkle-canvas {
   position: fixed; inset: 0; z-index: 1; pointer-events: none;
 }
@@ -1329,12 +1333,11 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
 <div id="cursor-dot"></div>
 <canvas id="comet-canvas"></canvas>
 
-<!-- SKY BG — looping video background -->
+<!-- SKY BG — static nebula + procedural flying starfield -->
 <div id="sky-bg">
-  <video id="sky-video-a" autoplay muted loop playsinline preload="none" poster="images/SPACE_IMAGE_BACKGROUND_1.png">
-    <source src="images/space-bg.mp4" type="video/mp4">
-  </video>
+  <img id="sky-img" src="images/SPACE_IMAGE_BACKGROUND_1.png" alt="" aria-hidden="true">
 </div>
+<canvas id="starfield-canvas"></canvas>
 <canvas id="twinkle-canvas"></canvas>
 <div id="sky-vignette"></div>
 
@@ -4732,6 +4735,126 @@ function carouselNext() { carouselIndex = (carouselIndex + 1) % CAROUSEL_ITEMS.l
 function carouselPrev() { carouselIndex = (carouselIndex - 1 + CAROUSEL_ITEMS.length) % CAROUSEL_ITEMS.length; renderCarousel(carouselIndex); }
 const dotsContainer = document.getElementById('carousel-dots');
 if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.createElement('div'); dot.className = 'video-carousel-dot' + (i === 0 ? ' active' : ''); dot.onclick = () => { carouselIndex = i; renderCarousel(i); }; dotsContainer.appendChild(dot); }); }
+
+/* ====== Procedural starfield — flying forward, ambient, no loop ====== */
+(function initStarfield() {
+  const canvas = document.getElementById('starfield-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let W = 0, H = 0, dpr = 1;
+
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Light mobile: fewer stars, no trails, slower animation pass
+  const isMobile = window.matchMedia('(max-width: 768px)').matches;
+  const STAR_COUNT = isMobile ? 180 : 360;
+  const BASE_SPEED = isMobile ? 0.00045 : 0.0007; // z units per ms
+  const FOCAL = 0.9;
+  const TRAIL_THRESHOLD_Z = 0.75; // stars closer than this get a motion trail
+
+  // Subtle star color palette — mostly white with a few warm/cool accents
+  const palette = [
+    [255, 255, 250], // near white
+    [255, 255, 250],
+    [255, 255, 250],
+    [255, 255, 250],
+    [210, 225, 255], // cool blue-white
+    [255, 238, 215], // warm amber
+    [220, 235, 250], // pale ice
+  ];
+
+  const stars = new Array(STAR_COUNT);
+  function seedStar(s, newborn) {
+    // x,y in [-1,1]; z in (0,1] with 1 = far, 0 = at camera
+    s.x = (Math.random() - 0.5) * 2;
+    s.y = (Math.random() - 0.5) * 2;
+    s.z = newborn ? Math.random() : 1;
+    s.col = palette[Math.floor(Math.random() * palette.length)];
+    s.prevSx = null;
+    s.prevSy = null;
+  }
+  for (let i = 0; i < STAR_COUNT; i++) {
+    stars[i] = {};
+    seedStar(stars[i], true);
+  }
+
+  let running = true;
+  let last = performance.now();
+
+  function frame(now) {
+    if (!running) { requestAnimationFrame(frame); return; }
+    const dt = Math.min(48, now - last);
+    last = now;
+
+    ctx.clearRect(0, 0, W, H);
+
+    const cx = W / 2;
+    const cy = H / 2;
+    const span = Math.max(W, H) * 0.65;
+
+    for (let i = 0; i < STAR_COUNT; i++) {
+      const s = stars[i];
+      s.z -= BASE_SPEED * dt;
+      if (s.z <= 0.02) {
+        seedStar(s, false);
+        continue;
+      }
+      const scale = FOCAL / s.z;
+      const sx = cx + s.x * scale * span;
+      const sy = cy + s.y * scale * span;
+
+      // Offscreen — respawn at far distance
+      if (sx < -20 || sx > W + 20 || sy < -20 || sy > H + 20) {
+        seedStar(s, false);
+        continue;
+      }
+
+      const depthK = 1 - s.z; // 0 far → 1 near
+      const size = 0.3 + depthK * depthK * 2.4;
+      const alpha = Math.min(1, 0.15 + depthK * 1.05);
+      const [r, g, b] = s.col;
+
+      if (!isMobile && s.z < TRAIL_THRESHOLD_Z && s.prevSx !== null) {
+        ctx.strokeStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + (alpha * 0.35).toFixed(3) + ')';
+        ctx.lineWidth = size * 0.75;
+        ctx.beginPath();
+        ctx.moveTo(s.prevSx, s.prevSy);
+        ctx.lineTo(sx, sy);
+        ctx.stroke();
+      }
+
+      ctx.fillStyle = 'rgba(' + r + ',' + g + ',' + b + ',' + alpha.toFixed(3) + ')';
+      ctx.beginPath();
+      ctx.arc(sx, sy, size, 0, Math.PI * 2);
+      ctx.fill();
+
+      s.prevSx = sx;
+      s.prevSy = sy;
+    }
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+
+  // Pause when tab hidden to save battery; reset timestamp on resume so
+  // we don't jump-forward after long backgrounding.
+  document.addEventListener('visibilitychange', function () {
+    running = !document.hidden;
+    if (running) last = performance.now();
+  });
+})();
+/* ====== end Procedural starfield ====== */
 
 /* ====== Ask Billy (conversational chat) ====== */
 (function () {
