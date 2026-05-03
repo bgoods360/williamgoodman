@@ -1,4 +1,5 @@
 import Anthropic from '@anthropic-ai/sdk';
+import { matchVisitor, buildVisitorContextBlock } from './_lib/applications.js';
 
 export const config = { runtime: 'edge' };
 
@@ -389,7 +390,7 @@ export default async function handler(request) {
         });
     }
 
-    const { message, conversationHistory } = body ?? {};
+    const { message, conversationHistory, visitorCompany } = body ?? {};
 
     if (typeof message !== 'string' || message.trim().length === 0 || message.length > 1000) {
         return new Response(JSON.stringify({ error: 'Message must be 1-1000 characters' }), {
@@ -406,17 +407,40 @@ export default async function handler(request) {
         { role: 'user', content: message },
     ];
 
+    // Visitor-context injection: client passes a company name, server re-runs
+    // matchVisitor() (so only known companies result in injected context — the
+    // client can't construct arbitrary prompt content). Block is appended as a
+    // SECOND uncached system block so the cached BILLY_SYSTEM_PROMPT prefix
+    // remains valid across all visitors.
+    let visitorContextBlock = null;
+    if (typeof visitorCompany === 'string' && visitorCompany.length > 0 && visitorCompany.length < 200) {
+        const match = matchVisitor(visitorCompany);
+        if (match) {
+            visitorContextBlock = buildVisitorContextBlock(match);
+            console.log(`[chat] visitor tier=${match.tier} company="${match.entry.company}"`);
+        }
+    }
+
+    const systemBlocks = [
+        {
+            type: 'text',
+            text: BILLY_SYSTEM_PROMPT,
+            cache_control: { type: 'ephemeral' },
+        },
+    ];
+    if (visitorContextBlock) {
+        systemBlocks.push({
+            type: 'text',
+            text: visitorContextBlock,
+            // No cache_control — varies per visitor, processed fresh each request.
+        });
+    }
+
     try {
         const stream = client.messages.stream({
             model: 'claude-sonnet-4-6',
             max_tokens: 300,
-            system: [
-                {
-                    type: 'text',
-                    text: BILLY_SYSTEM_PROMPT,
-                    cache_control: { type: 'ephemeral' },
-                },
-            ],
+            system: systemBlocks,
             messages,
         });
 

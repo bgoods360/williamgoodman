@@ -1311,7 +1311,51 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
   letter-spacing: 0.1em;
   color: rgba(240,242,245,0.4);
   text-transform: uppercase;
-  margin: 12px 0 32px;
+  margin: 12px 0 16px;
+}
+/* Suggestion chips — appear under the input. Update dynamically when
+   visitor detection lands a known company. */
+#billy-chat-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  max-width: 880px;
+  margin: 0 auto 36px;
+  padding: 0 24px;
+  box-sizing: border-box;
+  position: relative;
+  z-index: 8;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+#billy-chat-chips.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.billy-chip {
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.18);
+  color: rgba(240,242,245,0.85);
+  font-family: 'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease, transform 0.1s ease;
+  backdrop-filter: blur(4px);
+}
+.billy-chip:hover {
+  background: rgba(255,255,255,0.14);
+  border-color: rgba(255,255,255,0.35);
+  color: #fff;
+  transform: translateY(-1px);
+}
+@media (max-width: 600px) {
+  #billy-chat-chips { padding: 0 16px; gap: 6px; }
+  .billy-chip { font-size: 12px; padding: 7px 12px; }
 }
 @media (max-width: 768px) {
   #billy-chat { padding: 0 18px; }
@@ -1407,6 +1451,8 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
       <button id="billy-chat-btn" type="submit">Ask Billy</button>
     </form>
     <p id="billy-chat-hint">press enter · Billy's answer fills the field below</p>
+
+    <div id="billy-chat-chips" aria-label="Suggested questions"></div>
 
     <div class="scroll-hint">
       <span>Scroll</span>
@@ -4873,9 +4919,72 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
   const btn = document.getElementById('billy-chat-btn');
   const body = document.getElementById('billy-chat-answer-body');
   const wrap = document.getElementById('billy-wrap');
+  const chipsContainer = document.getElementById('billy-chat-chips');
   let history = [];
   let busy = false;
   let mode = 'ask'; // 'ask' | 'answer'
+  // Visitor-detection result, cached per session. null = no detection (yet).
+  let visitorInfo = null;
+
+  // Default suggestion chips when there's no company match.
+  const DEFAULT_CHIPS = [
+    'Tell me about Amazon Music',
+    "What are you building with AI?",
+    'Walk me through your career',
+  ];
+
+  function renderChips(chips) {
+    if (!chipsContainer || !Array.isArray(chips) || chips.length === 0) return;
+    chipsContainer.innerHTML = '';
+    chips.slice(0, 3).forEach(text => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'billy-chip';
+      b.textContent = text;
+      b.addEventListener('click', () => {
+        if (busy) return;
+        input.value = text;
+        ask(text);
+      });
+      chipsContainer.appendChild(b);
+    });
+    requestAnimationFrame(() => chipsContainer.classList.add('visible'));
+  }
+
+  // Visitor detection: fetch once on load, cache in sessionStorage,
+  // update chips when result arrives. Non-blocking — page works without it.
+  async function loadVisitorContext() {
+    let cached = null;
+    try {
+      const raw = sessionStorage.getItem('billy_visitor');
+      if (raw) cached = JSON.parse(raw);
+    } catch (_) { /* ignore */ }
+    if (cached !== null) {
+      visitorInfo = cached || null;
+      if (visitorInfo && visitorInfo.openers && visitorInfo.openers.length) {
+        renderChips(visitorInfo.openers);
+      } else {
+        renderChips(DEFAULT_CHIPS);
+      }
+      return;
+    }
+    // Render defaults immediately so the page never feels empty
+    renderChips(DEFAULT_CHIPS);
+    try {
+      const resp = await fetch('/api/visitor', { method: 'GET' });
+      if (!resp.ok) return;
+      const data = await resp.json();
+      visitorInfo = data || null;
+      try { sessionStorage.setItem('billy_visitor', JSON.stringify(data || null)); } catch (_) {}
+      if (visitorInfo && visitorInfo.openers && visitorInfo.openers.length) {
+        // Replace the default chips with company-tailored openers
+        chipsContainer.classList.remove('visible');
+        setTimeout(() => renderChips(visitorInfo.openers), 250);
+      }
+    } catch (_) {
+      // Detection failure is silent — defaults are already rendered.
+    }
+  }
 
   function setMode(m) {
     mode = m;
@@ -4960,7 +5069,11 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
       const resp = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message: message, conversationHistory: history }),
+        body: JSON.stringify({
+          message: message,
+          conversationHistory: history,
+          visitorCompany: (visitorInfo && visitorInfo.company) || null,
+        }),
       });
 
       if (!resp.ok) {
@@ -5032,6 +5145,9 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
       returnToAsk();
     }
   });
+
+  // Kick off visitor detection (non-blocking) and render initial chips
+  loadVisitorContext();
 })();
 /* ====== end Ask Billy ====== */
 </script>
