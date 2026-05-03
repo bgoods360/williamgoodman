@@ -423,6 +423,19 @@ export const BESPOKE = [
         ],
     },
     {
+        company: 'Shopify',
+        aliases: ['shopify inc', 'shopify commerce'],
+        space: 'commerce platform for merchants and creators; content infrastructure for sellers and brand-builders',
+        leadWith:
+            'Amazon Global Brands work (consolidating fragmented Third Party Seller resources into one master experience — directly analogous to Shopify\'s merchant-content challenge), Conductor (current SaaS for independent creators/artists), editorial leadership across multi-stakeholder ecosystems, plus the breadth across journalism, brand-side, and product orgs',
+        openers: [
+            'What does great content look like for a merchant platform?',
+            'How do you build editorial that helps creators succeed?',
+            'Tell me about Amazon Global Brands and the Third Party Seller experience',
+        ],
+        toneNote: 'Recently interviewed for Head of Content here — the merchant-and-creator audience overlaps heavily with Conductor\'s thinking. Lead with the operator-empathy angle.',
+    },
+    {
         company: 'Google Labs',
         aliases: ['google llc'],
         space: 'experimental AI products, generative AI tooling, R&D',
@@ -536,7 +549,7 @@ export const WATCHLIST = [
     { company: 'Salesforce', aliases: ['salesforce.com'], category: 'productivity-saas' },
     { company: 'HubSpot', aliases: ['hubspot inc'], category: 'productivity-saas' },
     { company: 'Manychat', aliases: ['manychat inc'], category: 'productivity-saas' },
-    { company: 'Shopify', aliases: ['shopify inc'], category: 'productivity-saas' },
+    // Shopify promoted to BESPOKE (Head of Content interviews)
 
     // Tech giants
     { company: 'Google', aliases: ['google llc', 'alphabet inc'], category: 'tech-giant' },
