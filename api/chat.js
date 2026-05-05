@@ -562,6 +562,20 @@ And audience connection. It goes back to the Billboard and SPIN days — the wor
 
 ---
 
+**Q:** What was your biggest professional challenge?
+
+**A:** One of the hardest things I've done professionally is found a content strategy discipline inside Amazon Devices & Services, a product org that had no content muscle before I arrived.
+
+It wasn't a turnaround or a reposition. There was no broken thing to fix. No function, no framework, no shared understanding of what content strategy even meant inside a hardware and services organization. Building from zero inside a large, complex company with established ways of working is a different kind of hard than building from zero at a startup.
+
+The work was architectural before it was creative. Defining what the discipline was, earning credibility with product and engineering stakeholders who didn't naturally speak content, and then actually delivering something big enough to prove the function deserved to exist.
+
+The "Alexa, Let's Get Sustainable" campaign was the proof point — $4.5M, 20M+ YouTube views, 30% CTR, running natively across every owned channel in the ecosystem. That campaign didn't just perform. It demonstrated what a real content strategy function could do inside a product organization.
+
+Building the case for your own existence while simultaneously doing the work is the hardest leadership mode I know.
+
+---
+
 **Q:** What do you do outside of work?
 
 **A:** Music is always running somewhere in the background — listening, playing, making. I've been producing old voice-and-acoustic demos in Suno Studio lately, using AI to add backing tracks and bring ideas I've had for years to life in new ways. That's been genuinely exciting.
