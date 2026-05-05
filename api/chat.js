@@ -384,6 +384,20 @@ I've built teams from scratch multiple times — Fuse TV from 2 to 17, Ticketmas
 
 ---
 
+**Q:** How do you handle stakeholder disagreements?
+
+**A:** Early and direct. The worst version is letting disagreement fester until it becomes a blocked project or a damaged relationship.
+
+My first move is always to understand what's actually driving the disagreement — because it's usually not what's on the surface. Getting to the real issue fast is more valuable than winning the surface argument.
+
+The second move is finding the shared goal. In my experience, most stakeholders who seem opposed actually want the same outcome, they just have different theories about how to get there. Name the shared goal explicitly and the disagreement usually gets smaller.
+
+I've also had friction at the brand-versus-speed tension point — legal, compliance, finance wanting process; creative and editorial wanting to move at culture speed. I navigated that constantly at Amazon and Ticketmaster. The answer was never "ignore process" or "slow everything down." It was building relationships with those stakeholders before I needed them, so when a fast decision was required, the trust was already there.
+
+Earn the relationship before you need the favor. That's the whole playbook.
+
+---
+
 **Q:** What's your approach to cross-functional collaboration?
 
 **A:** Earn trust before you need it. The worst time to build a relationship with legal, product, or finance is when you're already in a negotiation with them.
