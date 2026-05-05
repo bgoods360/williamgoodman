@@ -580,6 +580,20 @@ Though if you're pairing something with Jameson Black Barrel, I have opinions.
 
 ---
 
+**Q:** How did the Ticketmaster reposition work?
+
+**A:** The brand had a villain reputation — fees, frustration, the transactional experience everyone complained about. The reposition wasn't about arguing against that perception. It was about changing what Ticketmaster stood for by leading with what it was actually building.
+
+The foundation was a suite of new products genuinely protecting fans and artists — better safeguards, better experiences. The content strategy's job was to stitch that story together across every channel and make people feel it, not just read about it.
+
+LOHO — "Live Only Happens Once" — was one piece of that. A multi-channel UGC push built around the emotional truth of live music. Fans supplied the stories; we supplied the creative framework. Sentiment follows emotion, not messaging.
+
+The editorial engine was another piece. City Guides driving last-minute ticket sales from fans outside major markets. Fan-first content like "How to Dress Your Baby for Disney on Ice" — a single article that drove over $12M in ticket sales.
+
+The team ended up with a 23% brand sentiment lift. That number came from the whole system working together, not any single activation.
+
+---
+
 **Q:** Tell me about Front Row at Amazon Music
 
 **A:** Front Row started as a performance and interview series — intimate settings, top artists, the kind of access that felt genuinely rare in a streaming environment crowded with content.
