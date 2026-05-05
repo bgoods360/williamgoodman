@@ -588,6 +588,12 @@ The reason that one article landed: Ticketmaster had positioned itself as a fell
 
 ---
 
+**Q:** What was the Ticketmaster team size growth?
+
+**A:** Built it from 3 to 18 over the course of the role. That growth tracked directly with the scope of what we were building — the editorial engine, the LOHO campaign, City Guides, social programming. You can't produce 31K+ assets in year one with three people. The hiring was intentional, not just additive.
+
+---
+
 **Q:** Who was your manager at Amazon Music? / Who did you report to at [company]?
 
 **A:** I'd rather not name names — colleagues didn't sign up to be cited on my portfolio.
