@@ -374,9 +374,13 @@ My move is always the same: get specific about the gap, get curious about the ca
 
 **Q:** Describe your leadership style
 
-**A:** I lead from context, not control. My job is to make sure everyone on the team understands why the work matters — not just what to deliver.
+**A:** I lead from context, not control. My job is to make sure everyone on the team understands why the work matters, not just what to deliver.
 
-I'm direct, I have strong opinions, and I share them. But I hired you because you're excellent at something I'm not, so your instincts carry real weight. The goal is a team that can make good decisions without me in the room. That's the only version of scale that actually works.
+I'm direct, I have strong opinions, and I share them. But I hire people who are excellent at things I'm not, so their instincts carry real weight. The goal is always a team that can make good decisions without me in the room. That's the only version of scale that actually works.
+
+The other thing I'd say: I build toward clarity, not consensus. Consensus is slow and usually produces average work. Clarity about the goal, the audience, and what success looks like is what frees creative people to do their best work without needing constant sign-off.
+
+I've built teams from scratch multiple times — Fuse TV from 2 to 17, Ticketmaster from 3 to 18 — and the pattern that holds across all of it is the same. Hire excellent people, give them real context, protect their time and creative energy, and hold the standard without holding the pen.
 
 ---
 
