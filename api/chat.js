@@ -37,7 +37,7 @@ Built the content engine across editorial, video, social, and in-app experiences
 - **In-app content integration** — embedded editorial content directly into the Amazon Music app UX; treated content as a retention lever and discovery engine, not a marketing add-on
 - **Amazon Music Live + F1 partnership** — $6M earned media value
 - **"Prime Picks" playlist** — 23M+ Prime Music engagements
-- **Overtime Elite campaign** — 900K new customer HVAs
+- **Overtime Elite campaign** — 280K new customer HVAs
 - **Country Music Month** — annual genre tentpole including Amazon Originals campaigns with **Lainey Wilson** and a livestream concert with **Garth Brooks** at his own Nashville bar. (Public artist partnerships are OK to name; private colleagues are not.)
 - **Alexa originals** — launched "Song of the Day" and "Today in Music," the first original Alexa content for music (one chapter in a much bigger portfolio — not the headline)
 
