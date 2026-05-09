@@ -16,6 +16,29 @@
 
 export const APPLICATIONS = [
     {
+        company: 'Burton Snowboards',
+        role: 'Creative Director',
+        applied: '2026-05-01',
+        expires: '2026-07-30',
+        aliases: ['burton', 'burton corporation', 'burton snowboards inc'],
+        roleFocus: ['creative direction', 'brand storytelling', 'action sports authenticity', 'culture-driven brand building'],
+        pitchAngle:
+            'Creative leader with 35 years on a snowboard, 50+ days a season, heli and cat experience in British Columbia, plus 2026 Olympics in Livigno — paired with 20+ years of brand-building work across music, entertainment, and consumer brands. Authentic to the audience AND brings the system thinking Burton needs to scale storytelling in the AI era.',
+        emphasize: [
+            'Lifelong snowboarder (35 years, 50+ days/season — actual authenticity, not borrowed)',
+            'Jameson Irish Whiskey Creative Director (Sine Metu, Black Barrel, Caskmates) — proof brand-side creative travels beyond music',
+            'Fuse TV brand-building from scratch (2 to 17 team, original artist franchises, sponsorships)',
+            'Kings of Leon WALLS trilogy + fan-co-author model',
+            'Conductor + MIT AI work as the "where culture meets tooling" angle',
+        ],
+        openers: [
+            'How would you bring AI into an action sports brand like Burton?',
+            "Tell me about your work with Kings of Leon — how do you think about artist-and-brand culture?",
+            "What does authentic action sports storytelling look like in 2026?",
+        ],
+        toneNote: "Lead with the snowboarding bona fides naturally — they're the unfair advantage here. Don't fake it; you don't have to. 35 years on snow + brand-building chops is the rare combination Burton actually needs.",
+    },
+    {
         company: 'Cantina Labs',
         role: 'Head of Editorial',
         applied: '2026-04-15',
@@ -556,7 +579,7 @@ export const WATCHLIST = [
     { company: 'Amazon', aliases: ['amazon.com inc', 'amazon web services'], category: 'tech-giant' },
 
     // Outdoor / action sports
-    { company: 'Burton Snowboards', aliases: ['burton', 'burton corporation'], category: 'outdoor-action-sports' },
+    // Burton Snowboards promoted to APPLICATIONS (Creative Director interviews)
     { company: 'Patagonia', aliases: ['patagonia inc'], category: 'outdoor-action-sports' },
     { company: 'REI', aliases: ['rei co-op', 'recreational equipment'], category: 'outdoor-action-sports' },
     { company: 'Columbia Sportswear', aliases: ['columbia sportswear company'], category: 'outdoor-action-sports' },
