@@ -4801,6 +4801,117 @@ function carouselPrev() { carouselIndex = (carouselIndex - 1 + CAROUSEL_ITEMS.le
 const dotsContainer = document.getElementById('carousel-dots');
 if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.createElement('div'); dot.className = 'video-carousel-dot' + (i === 0 ? ' active' : ''); dot.onclick = () => { carouselIndex = i; renderCarousel(i); }; dotsContainer.appendChild(dot); }); }
 
+/* ====== GOODMAN character scramble on hover ======
+   Each .gchar letter cycles through random characters on mouseenter,
+   then settles back to its original character. Reads as an "alien
+   transmission decoding" effect that pairs with the deep-space aesthetic.
+   Disabled on touch devices (no hover). Does not interfere with the
+   existing per-letter sine-wave float animation since we only mutate
+   textContent, never transform/animation properties. */
+(function initGoodmanScramble() {
+  if (window.matchMedia('(hover: none)').matches) return;
+  const POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&*+=?@';
+  const DURATION = 700;
+  const TICK = 50;
+  const chars = document.querySelectorAll('.gchar');
+  chars.forEach(el => {
+    const original = el.textContent;
+    let timer = null;
+    el.addEventListener('mouseenter', () => {
+      if (timer) return; // let the in-progress scramble finish
+      const stopAt = performance.now() + DURATION;
+      timer = setInterval(() => {
+        if (performance.now() >= stopAt) {
+          clearInterval(timer);
+          timer = null;
+          el.textContent = original;
+          return;
+        }
+        el.textContent = POOL[Math.floor(Math.random() * POOL.length)];
+      }, TICK);
+    });
+  });
+})();
+/* ====== end GOODMAN character scramble ====== */
+
+/* ====== Cursor starlight trail ======
+   Adds a fading particle trail behind the existing #cursor-dot.
+   Lives on its own canvas overlay so it doesn't interfere with anything
+   else. Skipped on touch devices. */
+(function initCursorTrail() {
+  if (window.matchMedia('(hover: none)').matches) return;
+  const canvas = document.createElement('canvas');
+  canvas.id = 'cursor-trail-canvas';
+  canvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9997;';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  let W = 0, H = 0, dpr = 1;
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const particles = [];
+  const MAX_PARTICLES = 80;
+  const LIFE_MS = 600;
+
+  let lastX = 0, lastY = 0, hasMouse = false;
+  window.addEventListener('mousemove', e => {
+    const dx = e.clientX - lastX;
+    const dy = e.clientY - lastY;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    if (!hasMouse || dist > 3) {
+      // Spawn 1-2 particles per mousemove, with small random jitter
+      const count = Math.min(2, 1 + Math.floor(dist / 24));
+      for (let i = 0; i < count; i++) {
+        if (particles.length >= MAX_PARTICLES) particles.shift();
+        particles.push({
+          x: e.clientX + (Math.random() - 0.5) * 4,
+          y: e.clientY + (Math.random() - 0.5) * 4,
+          born: performance.now(),
+          size: 1.5 + Math.random() * 1.5,
+        });
+      }
+      lastX = e.clientX;
+      lastY = e.clientY;
+      hasMouse = true;
+    }
+    // Expose the cursor position for the starfield's cursor-attraction effect
+    window.__cursorX = e.clientX;
+    window.__cursorY = e.clientY;
+  });
+
+  let running = true;
+  document.addEventListener('visibilitychange', () => { running = !document.hidden; });
+
+  function frame(now) {
+    if (!running) { requestAnimationFrame(frame); return; }
+    ctx.clearRect(0, 0, W, H);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      const age = now - p.born;
+      if (age >= LIFE_MS) { particles.splice(i, 1); continue; }
+      const t = 1 - (age / LIFE_MS); // 1 → 0
+      const alpha = t * 0.75;
+      ctx.fillStyle = 'rgba(255, 255, 245, ' + alpha.toFixed(3) + ')';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * t, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+/* ====== end Cursor starlight trail ====== */
+
 /* ====== Procedural starfield — flying forward, ambient, no loop ====== */
 (function initStarfield() {
   const canvas = document.getElementById('starfield-canvas');
@@ -4857,6 +4968,11 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
   let running = true;
   let last = performance.now();
 
+  // Cursor-attraction tuning. Stars near the cursor get a gentle nudge
+  // toward it, with inverse-falloff so the effect is local, not global.
+  const CURSOR_INFLUENCE_RADIUS = 220;   // px
+  const CURSOR_INFLUENCE_MAX_OFFSET = 14; // px max displacement when right at cursor
+
   function frame(now) {
     if (!running) { requestAnimationFrame(frame); return; }
     const dt = Math.min(48, now - last);
@@ -4868,6 +4984,11 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
     const cy = H / 2;
     const span = Math.max(W, H) * 0.65;
 
+    // Read cursor (exposed by cursor-trail IIFE). Falsy if no mouse yet.
+    const mx = window.__cursorX;
+    const my = window.__cursorY;
+    const hasCursor = !isMobile && typeof mx === 'number' && typeof my === 'number';
+
     for (let i = 0; i < STAR_COUNT; i++) {
       const s = stars[i];
       s.z -= BASE_SPEED * dt;
@@ -4876,13 +4997,30 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
         continue;
       }
       const scale = FOCAL / s.z;
-      const sx = cx + s.x * scale * span;
-      const sy = cy + s.y * scale * span;
+      let sx = cx + s.x * scale * span;
+      let sy = cy + s.y * scale * span;
 
       // Offscreen — respawn at far distance
       if (sx < -20 || sx > W + 20 || sy < -20 || sy > H + 20) {
         seedStar(s, false);
         continue;
+      }
+
+      // Cursor-attraction: only applies to near stars (depth-weighted) for
+      // perspective consistency. Stars closer to viewer feel more "pulled".
+      if (hasCursor) {
+        const dx = mx - sx;
+        const dy = my - sy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < CURSOR_INFLUENCE_RADIUS) {
+          const falloff = 1 - (dist / CURSOR_INFLUENCE_RADIUS); // 1 at cursor, 0 at edge
+          const depthWeight = 1 - s.z; // near stars react more
+          const pull = falloff * falloff * depthWeight * CURSOR_INFLUENCE_MAX_OFFSET;
+          if (dist > 0.5) {
+            sx += (dx / dist) * pull;
+            sy += (dy / dist) * pull;
+          }
+        }
       }
 
       const depthK = 1 - s.z; // 0 far → 1 near
