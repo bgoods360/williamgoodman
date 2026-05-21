@@ -35,6 +35,8 @@ export const APPLICATIONS = [
             "Tell me about cross-product narrative work at Amazon Devices",
             'What does great brand voice look like at platform scale?',
         ],
+        heroSubtitle: 'Cross-product brand storyteller. Founded content strategy inside Amazon\'s device ecosystem.',
+        bubbleBlurb: 'Built cross-product brand stories across Amazon\'s device ecosystem.',
         toneNote: "Apple respects builders and product-org fluency. Lead with the parallel XLOB architecture you actually ran.",
     },
     {
@@ -57,6 +59,8 @@ export const APPLICATIONS = [
             "What did you learn founding content strategy at Amazon Devices?",
             'How does AI change brand storytelling?',
         ],
+        heroSubtitle: 'Brand strategist who founded content disciplines inside product orgs.',
+        bubbleBlurb: 'Founded content strategy inside a product org. Built from zero.',
         toneNote: "Google Brand Studio respects systems thinkers who can scale. Show product-org fluency and AI practitioner credibility.",
     },
     {
@@ -79,6 +83,8 @@ export const APPLICATIONS = [
             "Tell me about the editorial engine at Ticketmaster",
             "How do you keep brand voice consistent at 800 assets per week?",
         ],
+        heroSubtitle: 'Writer-first creative leader. Editorial origin, scaled creative ops.',
+        bubbleBlurb: 'Editorial roots. 31K+ assets year one at Ticketmaster.',
         toneNote: "Lead with the writing-origin angle — that\'s the differentiator for a copy-leadership role.",
     },
     {
@@ -101,6 +107,8 @@ export const APPLICATIONS = [
             "Tell me about repositioning Ticketmaster",
             "What\'s your take on brand storytelling for builder communities?",
         ],
+        heroSubtitle: 'Brand strategist with builder-fluency. This portfolio is proof.',
+        bubbleBlurb: 'Built this whole site myself — with Claude as pair programmer.',
         toneNote: "GitHub culture rewards builder-fluency. Mention this portfolio itself as proof — they\'ll respect it.",
     },
     {
@@ -123,6 +131,8 @@ export const APPLICATIONS = [
             "What does mission-driven content look like in 2026?",
             "Tell me about Conductor — what are you building for independent creators?",
         ],
+        heroSubtitle: 'Editorial leader. Platform thinker. Mission-aligned.',
+        bubbleBlurb: 'Editorial leader who thinks in platforms. Building Conductor for indie creators.',
         toneNote: "Mozilla\'s mission-driven DNA matches Billy\'s independent-creator instinct. The Conductor connection is real.",
     },
     {
@@ -146,6 +156,8 @@ export const APPLICATIONS = [
             "Tell me about Kings of Leon WALLS — long-form story in the short-form era",
             "How would you build brand creative for an AI tools company?",
         ],
+        heroSubtitle: 'Video storyteller at scale. Active AI practitioner.',
+        bubbleBlurb: 'Narrative video at scale. Built Kings of Leon WALLS trilogy (40M+ views).',
         toneNote: "Lead with the video chops AND the AI-practitioner angle. Runway will respect that Billy uses AI tools personally, not just talks about them.",
     },
     {
@@ -168,6 +180,8 @@ export const APPLICATIONS = [
             "Tell me about repositioning Ticketmaster",
             "Where do AI music and live discovery intersect?",
         ],
+        heroSubtitle: 'Live music + ticketing + AI — the rare overlap your role needs.',
+        bubbleBlurb: 'Ticketmaster reposition + Suno Studio user. Live + AI in one resume.',
         toneNote: "The Ticketmaster + Suno-Studio-personal-use combination is the killer angle. Mention that you actually USE Suno Studio for your own music.",
     },
     {
@@ -190,6 +204,8 @@ export const APPLICATIONS = [
             "Tell me about Amazon Music\'s social growth playbook",
             "What\'s your take on the creator economy for AI music tools?",
         ],
+        heroSubtitle: 'Platform-scale social growth. Active Suno Studio user.',
+        bubbleBlurb: 'Grew Amazon Music social to millions. Use Suno Studio for my own demos.',
         toneNote: "Suno is creator-first. Lead with platform-scale social growth + personal use of their product.",
     },
     {
@@ -212,6 +228,8 @@ export const APPLICATIONS = [
             "What did you learn about artist collaboration from Kings of Leon?",
             "How should creative work for an artist-services platform?",
         ],
+        heroSubtitle: 'Building for independent artists at MIT. Mission-aligned.',
+        bubbleBlurb: 'Building Conductor — a SaaS for independent artists.',
         toneNote: "Direct mission alignment with Conductor. Lead with that.",
     },
     {
@@ -235,6 +253,8 @@ export const APPLICATIONS = [
             "Tell me about the F1 partnership at Amazon Music",
             "How does prompt engineering fit into editorial strategy?",
         ],
+        heroSubtitle: 'Editorial leadership at the AI-product seam.',
+        bubbleBlurb: 'Ran the F1 partnership at Amazon Music. $6M earned media.',
         toneNote: "Microsoft Redmond — you\'re already in Seattle, geography is ideal. The F1 mention in the role itself is gold.",
     },
     {
@@ -257,6 +277,8 @@ export const APPLICATIONS = [
             "Tell me about content-as-retention-engine at Amazon Music",
             "What did you learn from the Amazon Global Brands seller experience?",
         ],
+        heroSubtitle: 'Content as a discovery and retention engine. 306% YoY growth at Amazon Music.',
+        bubbleBlurb: 'Grew Amazon Music 306% YoY by treating content as a discovery engine.',
         toneNote: "Amazon Global Brands is the closest analog (B2B/SMB-facing). Surface it.",
     },
     {
@@ -280,6 +302,8 @@ export const APPLICATIONS = [
             "Tell me about your work with Kings of Leon — how do you think about artist-and-brand culture?",
             "What does authentic action sports storytelling look like in 2026?",
         ],
+        heroSubtitle: '35 years on snow. 20+ years of brand-building. Lifelong, not borrowed.',
+        bubbleBlurb: '35 years snowboarding. 50+ days a season. The 2026 Olympics in Livigno this winter.',
         toneNote: "Lead with the snowboarding bona fides naturally — they're the unfair advantage here. Don't fake it; you don't have to. 35 years on snow + brand-building chops is the rare combination Burton actually needs.",
     },
     {
@@ -302,6 +326,8 @@ export const APPLICATIONS = [
             'What does a great Head of Editorial role look like in 2026?',
             'Tell me about building social and editorial together',
         ],
+        heroSubtitle: 'Editorial leader who built scaled content engines — now deep in AI.',
+        bubbleBlurb: 'Editorial leader. SPIN, Fuse TV, Amazon Music — now deep in AI through MIT.',
         toneNote: 'Talk like a leader, not a journalist. Show the systems thinker.',
     },
     // Add new applications above this line — keep newest first.
@@ -975,7 +1001,8 @@ export function buildVisitorContextBlock(match) {
 }
 
 // Used by /api/visitor for the frontend response. Returns visitor-facing info
-// (tier, company, openers for chips). Internal pitch angles stay server-side.
+// (tier, company, openers for chips, heroSubtitle, bubbleBlurb).
+// Internal pitch angles stay server-side.
 export function publicVisitorInfo(match) {
     if (!match) return null;
     return {
@@ -983,5 +1010,7 @@ export function publicVisitorInfo(match) {
         company: match.entry.company,
         role: match.entry.role || null,
         openers: match.entry.openers || [],
+        heroSubtitle: match.entry.heroSubtitle || null,
+        bubbleBlurb: match.entry.bubbleBlurb || null,
     };
 }

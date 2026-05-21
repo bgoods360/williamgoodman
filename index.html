@@ -1427,7 +1427,7 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
       <span class="gchar">G</span><span class="gchar">O</span><span class="gchar">O</span><span class="gchar">D</span><span class="gchar">M</span><span class="gchar">A</span><span class="gchar">N</span>
     </h1>
 
-    <div class="hero-tagline" style="opacity:1;animation:none;">Product narrative. Content strategy. Creative leadership.<br><strong>Now building the AI systems that make all three scale.</strong></div>
+    <div class="hero-tagline" id="hero-tagline" style="opacity:1;animation:none;"><span id="hero-tagline-lead">Product narrative. Content strategy. Creative leadership.</span><br><strong>Now building the AI systems that make all three scale.</strong></div>
     <div class="hero-sub">
 
       <div class="pulse-row" id="workplaces">
@@ -4964,6 +4964,22 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
 
   // Visitor detection: fetch once on load, cache in sessionStorage,
   // update chips when result arrives. Non-blocking — page works without it.
+  // Phase 1 + 5 — apply visitor-tailored hero subtitle and bubble blurb
+  // when the detected visitor entry includes them.
+  function applyVisitorPersonalization(info) {
+    if (!info) return;
+    // Phase 1: swap the hero tagline lead line
+    if (info.heroSubtitle) {
+      const leadEl = document.getElementById('hero-tagline-lead');
+      if (leadEl) leadEl.textContent = info.heroSubtitle;
+    }
+    // Phase 5: inject visitor-tailored blurb into the speech-bubble rotation.
+    // Replace the 3rd default blurb so two stock messages still rotate alongside it.
+    if (info.bubbleBlurb && typeof BUBBLE_MESSAGES !== 'undefined' && Array.isArray(BUBBLE_MESSAGES)) {
+      BUBBLE_MESSAGES[2] = info.bubbleBlurb;
+    }
+  }
+
   async function loadVisitorContext() {
     let cached = null;
     try {
@@ -4972,6 +4988,7 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
     } catch (_) { /* ignore */ }
     if (cached !== null) {
       visitorInfo = cached || null;
+      applyVisitorPersonalization(visitorInfo);
       if (visitorInfo && visitorInfo.openers && visitorInfo.openers.length) {
         renderChips(visitorInfo.openers);
       } else {
@@ -4987,6 +5004,7 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
       const data = await resp.json();
       visitorInfo = data || null;
       try { sessionStorage.setItem('billy_visitor', JSON.stringify(data || null)); } catch (_) {}
+      applyVisitorPersonalization(visitorInfo);
       if (visitorInfo && visitorInfo.openers && visitorInfo.openers.length) {
         // Replace the default chips with company-tailored openers
         chipsContainer.classList.remove('visible');
