@@ -4201,14 +4201,17 @@ function rotateBubble() {
     const isMobile = window.innerWidth < 900;
     if (isMobile) {
       // Alternate sides on mobile — right side for even, left side for odd
+      // Mobile: bubble sits above Billy's head, tail pointing down at his
+      // face/shoulder. Alternate slight horizontal offset so it doesn't always
+      // anchor the same side.
       if (bubbleIndex % 2 === 0) {
-        b.style.left = '52%'; b.style.right = 'auto';
-        b.style.bottom = '58%';
+        b.style.left = '40%'; b.style.right = 'auto';
+        b.style.bottom = '95%';
         b.style.transform = 'scale(1)';
         b.classList.remove('bubble-left');
       } else {
-        b.style.right = '52%'; b.style.left = 'auto';
-        b.style.bottom = '58%';
+        b.style.right = '40%'; b.style.left = 'auto';
+        b.style.bottom = '95%';
         b.style.transform = 'scale(1)';
         b.classList.add('bubble-left');
       }
@@ -4542,9 +4545,10 @@ function billySpinEntrance() {
       bub.className = 'visible';
       bub.style.opacity = '1';
       if (window.innerWidth < 900) {
-        bub.style.left = '52%';
+        // Mobile: bubble above Billy's head, tail pointing down at face
+        bub.style.left = '40%';
         bub.style.right = 'auto';
-        bub.style.bottom = '58%';
+        bub.style.bottom = '95%';
         bub.style.transform = 'scale(1)';
         bub.classList.remove('bubble-left');
       } else {
