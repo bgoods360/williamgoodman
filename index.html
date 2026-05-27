@@ -4807,6 +4807,41 @@ function carouselPrev() { carouselIndex = (carouselIndex - 1 + CAROUSEL_ITEMS.le
 const dotsContainer = document.getElementById('carousel-dots');
 if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.createElement('div'); dot.className = 'video-carousel-dot' + (i === 0 ? ' active' : ''); dot.onclick = () => { carouselIndex = i; renderCarousel(i); }; dotsContainer.appendChild(dot); }); }
 
+/* ====== Parallax depth on scroll ======
+   Translates the fixed background layers at different rates so they
+   appear at different depths as you scroll. Foreground moves at 1x
+   (normal scroll); deeper layers move slower, creating parallax.
+   Respects prefers-reduced-motion. */
+(function initParallax() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const layers = [
+    { id: 'sky-bg',           rate: 0.06 }, // deepest (nebula bg)
+    { id: 'sky-vignette',     rate: 0.04 }, // vignette stays glued to bg
+    { id: 'twinkle-canvas',   rate: 0.12 }, // mid (gas clouds + shooters)
+    { id: 'starfield-canvas', rate: 0.18 }, // near (flying-forward stars)
+  ]
+    .map(l => ({ el: document.getElementById(l.id), rate: l.rate }))
+    .filter(l => l.el);
+
+  let rafId = null;
+  function update() {
+    const y = window.scrollY;
+    for (const layer of layers) {
+      // Negative translate so backgrounds appear to "lag" upward as
+      // foreground scrolls. Rate < 1 means slower than foreground = depth.
+      layer.el.style.transform = 'translateY(' + (-y * layer.rate).toFixed(2) + 'px)';
+    }
+    rafId = null;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (rafId) return;
+    rafId = requestAnimationFrame(update);
+  }, { passive: true });
+})();
+/* ====== end Parallax ====== */
+
 /* ====== GOODMAN character scramble on hover ======
    Each .gchar letter cycles through random characters on mouseenter,
    then settles back to its original character. Reads as an "alien
