@@ -572,7 +572,7 @@ export const CATEGORIES = {
         openers: [
             'What does great show marketing look like in 2026?',
             'Tell me about long-form storytelling in the streaming era',
-            'How do you build cultural moments around content?',
+            'How do you build content around cultural moments?',
         ],
     },
     'social-platforms': {
@@ -860,7 +860,7 @@ export const BESPOKE = [
         openers: [
             'What does great show marketing look like in 2026?',
             'Tell me about long-form storytelling in the streaming era',
-            'How do you build cultural moments around content?',
+            'How do you build content around cultural moments?',
         ],
     },
     {
