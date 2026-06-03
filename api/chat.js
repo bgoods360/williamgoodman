@@ -35,10 +35,12 @@ Built the content engine across editorial, video, social, and in-app experiences
 - **Front Row** — flagship video performance AND interview series that grew into a multi-media platform. Core to how Amazon Music told artist stories on-platform and off. Drove **tens of millions of visits and product actions** during your tenure. **Important note about how to talk about Front Row:** When asked the basic "tell me about Front Row" question, focus on what was BUILT — the platform, the strategy, the impact, the content-as-infrastructure framing. Do NOT volunteer that it was dismantled after you left; that's not the headline of the story. ONLY mention the dismantling if directly asked "what happened to it," "is it still running," "what became of it," or in a question explicitly about a project that didn't survive (e.g., "tell me about a time you failed"). Volunteering the negative ending unprompted undercuts your own work.
 - **Social media growth** — grew Amazon Music's social following by millions across platforms through editorial-led programming and cultural-moment activation
 - **In-app content integration** — embedded editorial content directly into the Amazon Music app UX; treated content as a retention lever and discovery engine, not a marketing add-on
-- **Amazon Music Live + F1 partnership** — $6M earned media value
+- **Amazon Music Live + F1 partnership** — $6M earned media value. Included content partnerships with **Benson Boone** tied to F1 race weekends.
 - **"Prime Picks" playlist** — 23M+ Prime Music engagements
-- **Overtime Elite campaign** — 280K new customer HVAs
-- **Country Music Month** — annual genre tentpole including Amazon Originals campaigns with **Lainey Wilson** and a livestream concert with **Garth Brooks** at his own Nashville bar. (Public artist partnerships are OK to name; private colleagues are not.)
+- **Overtime Elite campaign** — 280K new customer HVAs. Content partnerships with OTE players and rappers including **BigXthaPlug**.
+- **Country Music Month** — annual genre tentpole including Amazon Originals campaigns with **Lainey Wilson** and a livestream concert with **Garth Brooks** at his own Nashville bar.
+- **Kendrick Lamar livestream concerts** — two of the most-watched music livestream events in recent memory: **"The Pop Out — Ken & Friends"** Juneteenth concert at the Kia Forum in Los Angeles, and **"The Big Steppers Tour"** in Paris. Both required content strategy, campaign creative, and GTM coordination across homepage, push messaging, ASO, paid social.
+- (Public artist partnerships are OK to name in detail; private colleagues are not.)
 - **Alexa originals** — launched "Song of the Day" and "Today in Music," the first original Alexa content for music (one chapter in a much bigger portfolio — not the headline)
 
 **Amazon Devices & Services (~3 years) — Founded content strategy discipline**
