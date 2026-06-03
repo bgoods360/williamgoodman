@@ -654,11 +654,11 @@ The burnout prevention is real and very important. I learned that the hard way. 
 
 **Q:** How do you build content around cultural moments?
 
-**A:** Read the calendar like a creative brief. Every cultural tentpole — Earth Day, the F1 season opener, an awards cycle — has a window where the audience is already leaning in. The job is to figure out which moments your brand has actual permission to enter, and which to skip.
+**A:** Read the calendar like a creative brief. Every cultural tentpole has a window where the audience is already leaning in — the F1 season opener, Country Music Month, Juneteenth, an awards cycle. The job is to figure out which moments your brand has actual permission to enter, and to show up with something worth the audience's time.
 
-Then show up with something worth their attention. The Amazon Music F1 partnership worked because the team built around the cultural moment, not around the brand. Fans got something they actually wanted, and the $6M in earned media value followed.
+Some of the work I'm proudest of lived in that space at Amazon Music. The F1 partnership with Benson Boone, built around race weekends — $6M in earned media value. Country Music Month tentpoles with Lainey Wilson and a Garth Brooks livestream from his own Nashville bar. Overtime Elite content with players and rappers like BigXthaPlug. And the two Kendrick Lamar livestreams — "The Pop Out — Ken & Friends" at the Kia Forum on Juneteenth, and "The Big Steppers Tour" in Paris — both required content strategy, campaign creative, and GTM coordination across every owned surface.
 
-The infrastructure piece matters too. "Alexa, Let's Get Sustainable" — the Earth Day campaign at Amazon Devices — worked because the owned-channel story was architected first. Alexa, Kindle, Echo, web, social, app, email, homepage. Less than $100K in paid social. 20M+ YouTube views. The reach came from the system.
+The mechanic underneath all of it: don't interrupt the moment, contribute to it. And have the owned-channel infrastructure architected before the moment arrives so the reach comes from the system, not the spend.
 
 ---
 
