@@ -570,7 +570,7 @@ export const CATEGORIES = {
         leadWith:
             'Fuse TV cross-platform work (digital ↔ linear schedule, content supporting on-air programming, TV ticker integration), Kings of Leon WALLS narrative trilogy (long-form story arc in streaming era), cultural fluency at scale.',
         openers: [
-            'What does great show marketing look like in 2026?',
+            'What does great event marketing look like in 2026?',
             'Tell me about long-form storytelling in the streaming era',
             'How do you build content around cultural moments?',
         ],
@@ -739,7 +739,7 @@ export const BESPOKE = [
         openers: [
             'How would you build content around premium video programming?',
             'Tell me about your Fuse TV cross-platform work',
-            'What does great show marketing look like in 2026?',
+            'What does great event marketing look like in 2026?',
         ],
     },
     {
@@ -858,7 +858,7 @@ export const BESPOKE = [
         leadWith:
             'Fuse TV cross-platform work supporting on-air programming, Kings of Leon WALLS narrative trilogy (long-form story arc in streaming era), cultural fluency at scale',
         openers: [
-            'What does great show marketing look like in 2026?',
+            'What does great event marketing look like in 2026?',
             'Tell me about long-form storytelling in the streaming era',
             'How do you build content around cultural moments?',
         ],
