@@ -6,7 +6,6 @@
 <title>William S. Goodman — Content Strategy & Creative Direction</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="images/SPACE_IMAGE_BACKGROUND_1.png">
 <!-- Core fonts — always load (4 families, fast) -->
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <!-- Decorative shuffle fonts — desktop only, non-blocking -->
@@ -59,6 +58,9 @@ body:has(button:hover) #cursor-dot { transform: translate(-50%,-50%) scale(2.5);
 /* ── SKY BG ── */
 #sky-bg {
   position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  /* Deep-space fallback color shown briefly while the video element
+     loads. Prevents flash-of-wrong-poster on hard refresh. */
+  background-color: #050510;
 }
 /* Static nebula backdrop — no zoom, no loop cut. Procedural starfield on
    top provides the "walking into space" forward motion. */
@@ -1395,7 +1397,6 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
     class="sky-video"
     autoplay muted loop playsinline
     preload="auto"
-    poster="images/SPACE_IMAGE_BACKGROUND_1.png"
     aria-hidden="true"
   >
     <source src="images/space-bg.mp4" type="video/mp4">
