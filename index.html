@@ -62,12 +62,12 @@ body:has(button:hover) #cursor-dot { transform: translate(-50%,-50%) scale(2.5);
 }
 /* Static nebula backdrop — no zoom, no loop cut. Procedural starfield on
    top provides the "walking into space" forward motion. */
-#sky-img {
+#sky-img, .sky-video {
   position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover; object-position: center center;
   filter: brightness(0.72) saturate(1.1);
-  animation: skyFade 2.5s ease 0.3s both;
 }
+#sky-img { animation: skyFade 2.5s ease 0.3s both; }
 @media (max-width: 768px) {
   #sky-img { animation: skyFade 0.5s ease 0s both; }
 }
@@ -1387,14 +1387,26 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
 <div id="cursor-dot"></div>
 <canvas id="comet-canvas"></canvas>
 
-<!-- SKY BG — looping nebula video (ping-pong edit) + procedural flying starfield -->
+<!-- SKY BG — TWO video elements played in stagger + crossfade to mask the
+     loop seam without requiring a yo-yo edit of the source file. -->
 <div id="sky-bg">
   <video
     id="sky-img"
+    class="sky-video"
     autoplay muted loop playsinline
     preload="auto"
     poster="images/SPACE_IMAGE_BACKGROUND_1.png"
     aria-hidden="true"
+  >
+    <source src="images/space-bg.mp4" type="video/mp4">
+  </video>
+  <video
+    id="sky-img-b"
+    class="sky-video"
+    autoplay muted loop playsinline
+    preload="auto"
+    aria-hidden="true"
+    style="opacity:0;"
   >
     <source src="images/space-bg.mp4" type="video/mp4">
   </video>
@@ -4806,6 +4818,69 @@ function carouselNext() { carouselIndex = (carouselIndex + 1) % CAROUSEL_ITEMS.l
 function carouselPrev() { carouselIndex = (carouselIndex - 1 + CAROUSEL_ITEMS.length) % CAROUSEL_ITEMS.length; renderCarousel(carouselIndex); }
 const dotsContainer = document.getElementById('carousel-dots');
 if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.createElement('div'); dot.className = 'video-carousel-dot' + (i === 0 ? ' active' : ''); dot.onclick = () => { carouselIndex = i; renderCarousel(i); }; dotsContainer.appendChild(dot); }); }
+
+/* ====== Seamless video loop via stagger + crossfade ======
+   Two video elements (#sky-img and #sky-img-b) playing the same file.
+   Video B is offset by half the file's duration. When either video
+   approaches its loop seam, opacity smoothly crossfades to the other
+   (which is mid-file, far from any seam). Net effect: visible cut
+   at the loop point is masked. Works for any source video — no
+   yo-yo editing required. */
+(function initSeamlessVideoLoop() {
+  const videoA = document.getElementById('sky-img');
+  const videoB = document.getElementById('sky-img-b');
+  if (!videoA || !videoB) return;
+
+  const FADE_DURATION = 1.0; // seconds — width of the crossfade window
+  let initialized = false;
+
+  function initialize() {
+    if (initialized) return;
+    const dur = videoA.duration;
+    if (!isFinite(dur) || dur < FADE_DURATION * 2.5) return;
+    initialized = true;
+
+    // Stagger B by half the duration so it's mid-loop when A is near a seam
+    try { videoB.currentTime = dur / 2; } catch (_) {}
+    videoB.play().catch(() => {});
+
+    function tick() {
+      const tA = videoA.currentTime;
+      const tB = videoB.currentTime;
+      // Distance to nearest seam (either start or end of the loop)
+      const seamDistA = Math.min(tA, dur - tA);
+      const seamDistB = Math.min(tB, dur - tB);
+
+      let opA, opB;
+      if (seamDistA < FADE_DURATION) {
+        // A is near its seam → fade A out, show B (which is mid-loop)
+        const f = seamDistA / FADE_DURATION; // 0 at seam, 1 at fade edge
+        opA = f;
+        opB = 1 - f;
+      } else if (seamDistB < FADE_DURATION) {
+        // B is near its seam → fade B out, show A
+        const f = seamDistB / FADE_DURATION;
+        opB = f;
+        opA = 1 - f;
+      } else {
+        // Both videos are mid-loop — default to showing A
+        opA = 1;
+        opB = 0;
+      }
+      videoA.style.opacity = opA.toFixed(3);
+      videoB.style.opacity = opB.toFixed(3);
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  if (videoA.readyState >= 1 && videoA.duration) {
+    initialize();
+  } else {
+    videoA.addEventListener('loadedmetadata', initialize, { once: true });
+  }
+})();
+/* ====== end Seamless video loop ====== */
 
 /* ====== Parallax depth on scroll ======
    Translates the fixed background layers at different rates so they
