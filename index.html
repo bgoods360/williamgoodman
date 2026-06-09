@@ -4820,65 +4820,85 @@ const dotsContainer = document.getElementById('carousel-dots');
 if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.createElement('div'); dot.className = 'video-carousel-dot' + (i === 0 ? ' active' : ''); dot.onclick = () => { carouselIndex = i; renderCarousel(i); }; dotsContainer.appendChild(dot); }); }
 
 /* ====== Seamless video loop via stagger + crossfade ======
-   Two video elements (#sky-img and #sky-img-b) playing the same file.
-   Video B is offset by half the file's duration. When either video
-   approaches its loop seam, opacity smoothly crossfades to the other
-   (which is mid-file, far from any seam). Net effect: visible cut
-   at the loop point is masked. Works for any source video — no
-   yo-yo editing required. */
+   Two video elements (#sky-img and #sky-img-b) playing the same file,
+   offset by half the duration. Crossfades around the loop seam to
+   mask the visible cut. */
 (function initSeamlessVideoLoop() {
   const videoA = document.getElementById('sky-img');
   const videoB = document.getElementById('sky-img-b');
   if (!videoA || !videoB) return;
 
-  const FADE_DURATION = 1.0; // seconds — width of the crossfade window
+  const FADE_DURATION = 1.5; // seconds — wider window for more forgiving overlap
   let initialized = false;
 
-  function initialize() {
+  function whenCanPlay(el) {
+    return new Promise(resolve => {
+      // readyState 3 = HAVE_FUTURE_DATA, enough to play continuously
+      if (el.readyState >= 3) return resolve();
+      el.addEventListener('canplay', () => resolve(), { once: true });
+    });
+  }
+
+  async function initialize() {
     if (initialized) return;
-    const dur = videoA.duration;
-    if (!isFinite(dur) || dur < FADE_DURATION * 2.5) return;
     initialized = true;
 
-    // Stagger B by half the duration so it's mid-loop when A is near a seam
-    try { videoB.currentTime = dur / 2; } catch (_) {}
-    videoB.play().catch(() => {});
-
-    function tick() {
-      const tA = videoA.currentTime;
-      const tB = videoB.currentTime;
-      // Distance to nearest seam (either start or end of the loop)
-      const seamDistA = Math.min(tA, dur - tA);
-      const seamDistB = Math.min(tB, dur - tB);
-
-      let opA, opB;
-      if (seamDistA < FADE_DURATION) {
-        // A is near its seam → fade A out, show B (which is mid-loop)
-        const f = seamDistA / FADE_DURATION; // 0 at seam, 1 at fade edge
-        opA = f;
-        opB = 1 - f;
-      } else if (seamDistB < FADE_DURATION) {
-        // B is near its seam → fade B out, show A
-        const f = seamDistB / FADE_DURATION;
-        opB = f;
-        opA = 1 - f;
-      } else {
-        // Both videos are mid-loop — default to showing A
-        opA = 1;
-        opB = 0;
+    try {
+      // Wait for BOTH videos to be playable, not just metadata-loaded
+      await Promise.all([whenCanPlay(videoA), whenCanPlay(videoB)]);
+      const dur = videoA.duration;
+      if (!isFinite(dur) || dur < FADE_DURATION * 2.5) {
+        // Too short or invalid duration — fall back to single-video (hide B)
+        videoB.style.display = 'none';
+        return;
       }
-      videoA.style.opacity = opA.toFixed(3);
-      videoB.style.opacity = opB.toFixed(3);
+
+      // Stagger B by half the duration so it's mid-loop when A is near a seam
+      videoB.currentTime = dur / 2;
+      // Force-play both. autoplay attribute should cover this but be defensive.
+      await Promise.all([
+        videoA.play().catch(() => {}),
+        videoB.play().catch(() => {}),
+      ]);
+
+      // Verify B is actually playing. If paused after our play() call,
+      // autoplay is blocked — fall back to just A.
+      if (videoB.paused) {
+        videoB.style.display = 'none';
+        return;
+      }
+
+      function tick() {
+        const tA = videoA.currentTime;
+        const tB = videoB.currentTime;
+        const seamDistA = Math.min(tA, dur - tA);
+        const seamDistB = Math.min(tB, dur - tB);
+
+        let opA, opB;
+        if (seamDistA < FADE_DURATION) {
+          const f = seamDistA / FADE_DURATION;
+          opA = f;
+          opB = 1 - f;
+        } else if (seamDistB < FADE_DURATION) {
+          const f = seamDistB / FADE_DURATION;
+          opB = f;
+          opA = 1 - f;
+        } else {
+          opA = 1;
+          opB = 0;
+        }
+        videoA.style.opacity = opA.toFixed(3);
+        videoB.style.opacity = opB.toFixed(3);
+        requestAnimationFrame(tick);
+      }
       requestAnimationFrame(tick);
+    } catch (e) {
+      console.warn('[sky-video] seamless loop init failed:', e);
+      videoB.style.display = 'none';
     }
-    requestAnimationFrame(tick);
   }
 
-  if (videoA.readyState >= 1 && videoA.duration) {
-    initialize();
-  } else {
-    videoA.addEventListener('loadedmetadata', initialize, { once: true });
-  }
+  initialize();
 })();
 /* ====== end Seamless video loop ====== */
 
