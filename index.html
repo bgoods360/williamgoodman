@@ -70,6 +70,25 @@ body:has(button:hover) #cursor-dot { transform: translate(-50%,-50%) scale(2.5);
   filter: brightness(0.72) saturate(1.1);
 }
 #sky-img { animation: skyFade 2.5s ease 0.3s both; }
+
+/* Defensive — kill any iOS/Safari play-button overlay that might appear
+   when autoplay is blocked on a failed video element. */
+.sky-video::-webkit-media-controls,
+.sky-video::-webkit-media-controls-overlay-play-button,
+.sky-video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none !important;
+}
+.sky-video {
+  pointer-events: none;
+}
+
+/* On mobile, run only one video. iOS Safari struggles with two
+   simultaneous autoplaying videos and the failed one shows a play
+   button overlay. Single video is cleaner on small screens. */
+@media (max-width: 768px) {
+  #sky-img-b { display: none !important; }
+}
 @media (max-width: 768px) {
   #sky-img { animation: skyFade 0.5s ease 0s both; }
 }
@@ -4830,6 +4849,16 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
   const videoA = document.getElementById('sky-img');
   const videoB = document.getElementById('sky-img-b');
   if (!videoA || !videoB) return;
+
+  // Skip the second-video crossfade on mobile entirely — iOS Safari
+  // can't reliably autoplay two videos at once and was showing a
+  // play-button overlay on the failed one. Single video on mobile,
+  // crossfade only on desktop.
+  if (window.matchMedia('(max-width: 768px)').matches) {
+    videoB.style.display = 'none';
+    videoA.play().catch(() => {});
+    return;
+  }
 
   function whenCanPlay(el) {
     return new Promise(resolve => {
