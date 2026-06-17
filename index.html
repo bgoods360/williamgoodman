@@ -27,7 +27,9 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--black);
+  /* Deep-space color matched to #sky-bg's fallback color, so any
+     exposed background area reads as continuous space, not a black gap. */
+  background: #050510;
   color: rgba(240,242,245,0.88);
   font-family: 'DM Serif Display', serif;
   cursor: none;
@@ -4938,8 +4940,11 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
   const layers = [
-    { id: 'sky-bg',           rate: 0.06 }, // deepest (nebula bg)
-    { id: 'sky-vignette',     rate: 0.04 }, // vignette stays glued to bg
+    // sky-bg and sky-vignette intentionally NOT parallaxed — they're
+    // fixed-position 100vh elements, and translating them upward as
+    // the user scrolls leaves a gap at the bottom of the viewport
+    // that exposes the body's dark background as a growing black
+    // strip. Depth still comes from the canvas layers on top.
     { id: 'twinkle-canvas',   rate: 0.12 }, // mid (gas clouds + shooters)
     { id: 'starfield-canvas', rate: 0.18 }, // near (flying-forward stars)
   ]
