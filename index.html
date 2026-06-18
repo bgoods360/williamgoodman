@@ -85,12 +85,10 @@ body:has(button:hover) #cursor-dot { transform: translate(-50%,-50%) scale(2.5);
   pointer-events: none;
 }
 
-/* On mobile, run only one video. iOS Safari struggles with two
-   simultaneous autoplaying videos and the failed one shows a play
-   button overlay. Single video is cleaner on small screens. */
-@media (max-width: 768px) {
-  #sky-img-b { display: none !important; }
-}
+/* Note: sky-img-b is no longer hidden on mobile. We try dual-video
+   crossfade on mobile too — the play-button-overlay CSS above
+   suppresses iOS's failed-autoplay UI, and the JS gracefully falls
+   back to a single-video opacity dip if iOS blocks the second video. */
 @media (max-width: 768px) {
   #sky-img { animation: skyFade 0.5s ease 0s both; }
 }
@@ -4852,16 +4850,6 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
   const videoB = document.getElementById('sky-img-b');
   if (!videoA || !videoB) return;
 
-  // Skip the second-video crossfade on mobile entirely — iOS Safari
-  // can't reliably autoplay two videos at once and was showing a
-  // play-button overlay on the failed one. Single video on mobile,
-  // crossfade only on desktop.
-  if (window.matchMedia('(max-width: 768px)').matches) {
-    videoB.style.display = 'none';
-    videoA.play().catch(() => {});
-    return;
-  }
-
   function whenCanPlay(el) {
     return new Promise(resolve => {
       if (el.readyState >= 3) return resolve();
@@ -4873,9 +4861,30 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
     return new Promise(resolve => {
       const handler = () => { el.removeEventListener('seeked', handler); resolve(); };
       el.addEventListener('seeked', handler);
-      // Hard timeout in case the seeked event never fires
       setTimeout(() => { el.removeEventListener('seeked', handler); resolve(); }, 3000);
     });
+  }
+
+  // Single-video fallback when dual-video crossfade isn't available
+  // (typically iOS Safari blocking the second autoplaying video).
+  // Dips the video opacity to 0 in a cosine curve around the loop
+  // seam, so the cut blends into the deep-space background color
+  // (#050510) instead of showing an abrupt content jump.
+  function runSingleVideoWithSeamDip(video, dur) {
+    const DIP_WINDOW = 0.45; // seconds before/after each seam
+    function tick() {
+      const t = video.currentTime;
+      const seamDist = Math.min(t, dur - t);
+      let op = 1;
+      if (seamDist < DIP_WINDOW) {
+        // Cosine ease: 0 at the seam, smoothly rising to 1 at DIP_WINDOW.
+        const f = seamDist / DIP_WINDOW;
+        op = 1 - Math.cos(f * Math.PI / 2);
+      }
+      video.style.opacity = op.toFixed(3);
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
   }
 
   async function initialize() {
@@ -4884,13 +4893,13 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
       const dur = videoA.duration;
       if (!isFinite(dur) || dur < 2) {
         videoB.style.display = 'none';
+        if (isFinite(dur) && dur > 0) runSingleVideoWithSeamDip(videoA, dur);
         return;
       }
 
-      // Seek B to mid-duration AND wait for the seek to complete
-      // before starting the blend loop. Without this, the rAF tick
-      // can run while B is still at 0 — both videos at same point,
-      // no buffer to crossfade to.
+      // Seek videoB to mid-duration and wait for the seek to actually
+      // complete before starting the crossfade tick — otherwise both
+      // videos might be at the same time when the tick first runs.
       const seekedPromise = whenSeeked(videoB);
       videoB.currentTime = dur / 2;
       await seekedPromise;
@@ -4899,20 +4908,23 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
         videoA.play().catch(() => {}),
         videoB.play().catch(() => {}),
       ]);
+
+      // If videoB failed to autoplay (common on iOS Safari with two
+      // simultaneous videos), hide it and apply the single-video
+      // seam-dip mask to videoA so the loop cut still gets hidden.
       if (videoB.paused) {
         videoB.style.display = 'none';
+        runSingleVideoWithSeamDip(videoA, dur);
         return;
       }
 
+      // Continuous-blend crossfade — opacity always proportional to
+      // each video's distance from its loop seam. No discontinuities.
       function tick() {
         const tA = videoA.currentTime;
         const tB = videoB.currentTime;
-        // Distance to nearest loop seam for each video
         const seamDistA = Math.min(tA, dur - tA);
         const seamDistB = Math.min(tB, dur - tB);
-        // Continuous proportional blend. The video closer to its
-        // seam has lower opacity; the one farther has higher. They
-        // always sum to 1, so there's no opacity discontinuity ever.
         const total = seamDistA + seamDistB || 1;
         const opA = seamDistA / total;
         const opB = seamDistB / total;
@@ -4924,6 +4936,8 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
     } catch (e) {
       console.warn('[sky-video] seamless loop init failed:', e);
       videoB.style.display = 'none';
+      const dur = videoA.duration;
+      if (isFinite(dur) && dur > 0) runSingleVideoWithSeamDip(videoA, dur);
     }
   }
 
