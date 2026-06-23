@@ -143,6 +143,8 @@ nav.scrolled { background: rgba(8,8,12,0.85); backdrop-filter: blur(12px); }
 #page-amz-music-sports nav,
 #page-amz-music-country nav,
 #page-tm-loho nav,
+#page-labs nav,
+#page-fuel nav,
 [id^="page-role"] nav { position: sticky; top: 0; background: rgba(8,8,12,0.92); backdrop-filter: blur(12px); }
 #page-work nav .nav-logo,
 #page-work nav .nav-links a,
@@ -162,6 +164,10 @@ nav.scrolled { background: rgba(8,8,12,0.85); backdrop-filter: blur(12px); }
 #page-amz-music-country nav .nav-links a,
 #page-tm-loho nav .nav-logo,
 #page-tm-loho nav .nav-links a,
+#page-labs nav .nav-logo,
+#page-labs nav .nav-links a,
+#page-fuel nav .nav-logo,
+#page-fuel nav .nav-links a,
 [id^="page-role"] nav .nav-logo,
 [id^="page-role"] nav .nav-links a { color: rgba(240,242,245,0.88); }
 
@@ -1443,6 +1449,7 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
     <a href="#" class="nav-logo" onclick="navigate('home');return false;">WSG</a>
     <div class="nav-links">
       <a href="#" onclick="navigate('home');return false;">Work</a>
+      <a href="#" onclick="navigate('labs');return false;">Labs</a>
       <a href="#" onclick="navigate('about');return false;">About</a>
       <a href="mailto:william.stephen.goodman@gmail.com">Contact</a>
     </div>
@@ -3615,6 +3622,7 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
       <a href="#" class="nav-logo" onclick="navigate('home');return false;">WSG</a>
       <div class="nav-links">
         <a href="#" onclick="navigate('home');return false;">Work</a>
+        <a href="#" onclick="navigate('labs');return false;">Labs</a>
         <a href="mailto:william.stephen.goodman@gmail.com">Contact</a>
       </div>
     </nav>
@@ -3693,6 +3701,291 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
   </div>
 </div>
 
+
+<!-- ████████████████████████████████████████
+     AI LABS — LANDING PAGE
+     ████████████████████████████████████████ -->
+<div id="page-labs" class="page">
+  <div class="role-page">
+    <nav>
+      <a href="#" class="nav-logo" onclick="navigate('home');return false;">WSG</a>
+      <div class="nav-links">
+        <a href="#" onclick="navigate('home');return false;">← Home</a>
+        <a href="#" onclick="navigate('about');return false;">About</a>
+        <a href="mailto:william.stephen.goodman@gmail.com">Contact</a>
+      </div>
+    </nav>
+    <div class="role-hero" style="background:linear-gradient(135deg,#02161c 0%,#063b3a 50%,#02161c 100%);">
+      <div class="role-eyebrow" style="color:rgba(125,249,158,0.55);">AI LABS · 2025 –</div>
+      <h1 class="role-title" style="background:linear-gradient(90deg,#7df99e,#38f9d7,#6fffe9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">AI Labs.</h1>
+      <p class="role-subtitle">Shipping AI products that I want to use myself. No frameworks chasing benchmarks. No prototypes that never leave the desktop. Real apps, in real hands, with the Claude API doing the work the user used to.</p>
+      <div class="role-meta">
+        <div class="role-meta-item">
+          <div class="role-meta-label" style="color:rgba(125,249,158,0.4);">Shipped</div>
+          <div class="role-meta-value" style="color:rgba(180,255,210,0.75);">Fuel — calorie counter</div>
+        </div>
+        <div class="role-meta-item">
+          <div class="role-meta-label" style="color:rgba(125,249,158,0.4);">In Build</div>
+          <div class="role-meta-value" style="color:rgba(180,255,210,0.75);">Rad Report · Conductor</div>
+        </div>
+        <div class="role-meta-item">
+          <div class="role-meta-label" style="color:rgba(125,249,158,0.4);">Stack</div>
+          <div class="role-meta-value" style="color:rgba(180,255,210,0.75);">Claude API · TypeScript · PWA</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="role-body">
+      <div class="role-intro">
+        <div class="role-intro-text">
+          <p>After three MIT certificates in generative AI, agentic AI, and AI product design, the question I kept coming back to was the same one: <em>what does it actually feel like to ship one of these things?</em></p>
+          <p>Labs is the answer. Each project here is a real, working product — shipped or shipping — built to test a specific thesis about where the Claude API genuinely changes the user experience, not just adds a chat box.</p>
+          <p>Start with Fuel. It's live on the web and installable on iPhone.</p>
+        </div>
+        <div class="role-stats">
+          <div>
+            <div class="role-stat-num" style="background:linear-gradient(90deg,#7df99e,#38f9d7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">3</div>
+            <div class="role-stat-label">Apps in active development</div>
+          </div>
+          <div>
+            <div class="role-stat-num" style="background:linear-gradient(90deg,#7df99e,#38f9d7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">1</div>
+            <div class="role-stat-label">Shipped and live</div>
+          </div>
+          <div>
+            <div class="role-stat-num" style="background:linear-gradient(90deg,#7df99e,#38f9d7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">2025</div>
+            <div class="role-stat-label">Year of focused AI building</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--rule);margin:8px 0 56px;"></div>
+
+      <!-- LABS CARDS -->
+      <div style="display:grid;grid-template-columns:1fr;gap:2px;background:rgba(125,249,158,0.06);">
+
+        <!-- FUEL -->
+        <div onclick="navigate('fuel')" style="background:#08080f;padding:48px 40px;border-left:3px solid rgba(125,249,158,0.6);cursor:pointer;transition:background 0.3s ease;display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:center;" onmouseover="this.style.background='#0a0e14'" onmouseout="this.style.background='#08080f'">
+          <div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(125,249,158,0.6);margin-bottom:14px;">01 · LIVE · CALORIE COUNTER</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,5vw,68px);color:rgba(240,242,245,0.95);letter-spacing:0.01em;line-height:1;margin-bottom:18px;">Fuel.</div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.65;color:rgba(240,242,245,0.7);margin-bottom:14px;">A calorie counter that uses Claude to identify food from a photo. Snap, tap, log. No accounts, no cloud, no friction. Your Anthropic API key stays on your device.</p>
+            <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.55;color:rgba(240,242,245,0.4);margin-bottom:24px;">PWA · Vanilla HTML/JS · Claude API · One HTML file, installable on iPhone via Add to Home Screen.</p>
+            <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(125,249,158,0.9);">View Project →</span>
+          </div>
+          <div style="aspect-ratio:9/16;max-height:380px;background:linear-gradient(135deg,#04140f 0%,#0a3b30 100%);border:1px solid rgba(125,249,158,0.15);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(125,249,158,0.45);text-align:center;padding:24px;">Fuel app preview<br><span style="font-size:9px;opacity:0.6;">drop fuel-hero.png in /images/</span></div>
+        </div>
+
+        <!-- RAD REPORT -->
+        <div style="background:#08080f;padding:48px 40px;border-left:3px solid rgba(255,180,120,0.45);display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:center;">
+          <div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,180,120,0.6);margin-bottom:14px;">02 · IN BUILD · MEDICAL READER</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,5vw,68px);color:rgba(240,242,245,0.95);letter-spacing:0.01em;line-height:1;margin-bottom:18px;">Rad Report.</div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.65;color:rgba(240,242,245,0.7);margin-bottom:14px;">A second opinion in plain English. Upload a radiology report; Claude translates the jargon, surfaces the findings that actually matter, and flags what to ask your doctor next.</p>
+            <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.55;color:rgba(240,242,245,0.4);margin-bottom:24px;">Coming soon. Currently in design and prompt-tuning.</p>
+            <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(240,242,245,0.3);">Coming Soon</span>
+          </div>
+          <div style="aspect-ratio:9/16;max-height:380px;background:linear-gradient(135deg,#1c0e04 0%,#3b1a08 100%);border:1px solid rgba(255,180,120,0.12);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,180,120,0.35);">In design</div>
+        </div>
+
+        <!-- CONDUCTOR -->
+        <div onclick="navigate('ai')" style="background:#08080f;padding:48px 40px;border-left:3px solid rgba(192,132,252,0.55);cursor:pointer;transition:background 0.3s ease;display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:center;" onmouseover="this.style.background='#0a0814'" onmouseout="this.style.background='#08080f'">
+          <div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(192,132,252,0.7);margin-bottom:14px;">03 · IN BUILD · ARTIST PLATFORM</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,5vw,68px);color:rgba(240,242,245,0.95);letter-spacing:0.01em;line-height:1;margin-bottom:18px;">Conductor.</div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.65;color:rgba(240,242,245,0.7);margin-bottom:14px;">Every service a record label provides — distribution, royalties, sync licensing, booking, fan engagement — in one dashboard, under the artist's control. My applied thesis for MIT.</p>
+            <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.55;color:rgba(240,242,245,0.4);margin-bottom:24px;">Next.js 14 · TypeScript · Supabase · Clerk · Anthropic API.</p>
+            <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(192,132,252,0.9);">View Case Study →</span>
+          </div>
+          <div style="aspect-ratio:9/16;max-height:380px;background:linear-gradient(135deg,#0e0418 0%,#1f0a38 100%);border:1px solid rgba(192,132,252,0.15);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(192,132,252,0.4);">SaaS in dev</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="contact-strip">
+      <div class="contact-strip-left">
+        <h2>Want to build something?</h2>
+        <p>Open to senior roles in AI product, content strategy, and creative direction.</p>
+      </div>
+      <div class="contact-strip-links">
+        <a href="mailto:william.stephen.goodman@gmail.com" class="contact-btn primary">Email Billy</a>
+        <a href="https://www.linkedin.com/in/wsgoodman/" class="contact-btn" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+
+    <footer>
+      <div class="ft-name">© 2025 William S. Goodman</div>
+      <div class="ft-links">
+        <a href="https://williamsgoodman.com" target="_blank">Live Site</a>
+        <a href="mailto:william.stephen.goodman@gmail.com">Email</a>
+      </div>
+    </footer>
+  </div>
+</div>
+
+
+<!-- ████████████████████████████████████████
+     FUEL — CALORIE COUNTER (AI LABS)
+     ████████████████████████████████████████ -->
+<div id="page-fuel" class="page">
+  <div class="role-page">
+    <nav>
+      <a href="#" class="nav-logo" onclick="navigate('home');return false;">WSG</a>
+      <div class="nav-links">
+        <a href="#" onclick="navigate('labs');return false;">← All Labs</a>
+        <a href="#" onclick="navigate('about');return false;">About</a>
+        <a href="mailto:william.stephen.goodman@gmail.com">Contact</a>
+      </div>
+    </nav>
+    <div class="role-hero" style="background:linear-gradient(135deg,#02181a 0%,#053a30 50%,#02181a 100%);">
+      <div class="role-eyebrow" style="color:rgba(125,249,158,0.55);">AI LABS · CALORIE COUNTER · 2025</div>
+      <h1 class="role-title" style="background:linear-gradient(90deg,#7df99e,#38f9d7,#6fffe9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Fuel.</h1>
+      <p class="role-subtitle">A calorie counter that uses Claude to identify food from a photo. Built to take the friction out of meal logging — and to test what happens when a daily-use utility offloads its hardest step to an LLM.</p>
+      <div class="role-meta">
+        <div class="role-meta-item">
+          <div class="role-meta-label" style="color:rgba(125,249,158,0.4);">Status</div>
+          <div class="role-meta-value" style="color:rgba(180,255,210,0.75);">Live · v1 shipped</div>
+        </div>
+        <div class="role-meta-item">
+          <div class="role-meta-label" style="color:rgba(125,249,158,0.4);">Stack</div>
+          <div class="role-meta-value" style="color:rgba(180,255,210,0.75);">PWA · Claude API · Vanilla HTML/JS</div>
+        </div>
+        <div class="role-meta-item">
+          <div class="role-meta-label" style="color:rgba(125,249,158,0.4);">Try It</div>
+          <div class="role-meta-value" style="color:rgba(180,255,210,0.75);"><a href="https://bgoods360.github.io/Fuel-Calorie-Counter" target="_blank" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(125,249,158,0.4);">bgoods360.github.io/Fuel-Calorie-Counter</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="role-body">
+
+      <!-- CTAs -->
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:56px;">
+        <a href="https://bgoods360.github.io/Fuel-Calorie-Counter" target="_blank" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#02181a;background:linear-gradient(90deg,#7df99e,#38f9d7);padding:14px 22px;text-decoration:none;border:1px solid rgba(125,249,158,0.6);font-weight:600;">Try the Live App →</a>
+        <a href="https://bgoods360.github.io/Fuel-Calorie-Counter" target="_blank" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(125,249,158,0.9);background:transparent;padding:14px 22px;text-decoration:none;border:1px solid rgba(125,249,158,0.4);">Install on iPhone</a>
+        <a href="https://github.com/bgoods360/Fuel-Calorie-Counter" target="_blank" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(240,242,245,0.7);background:transparent;padding:14px 22px;text-decoration:none;border:1px solid rgba(240,242,245,0.2);">View Source</a>
+      </div>
+
+      <!-- INTRO -->
+      <div class="role-intro">
+        <div class="role-intro-text">
+          <p>Calorie counting is friction. You eat something, then you have to type its name, scroll a database, pick a portion, log it. Most people quit by week two.</p>
+          <p>Fuel replaces the typing with a model that can see. Snap a photo of what's on your plate, tap <strong style="color:rgba(125,249,158,0.85);">AI Lookup</strong>, and Claude returns the food and an estimated calorie count. Verify, add to log, done — usually inside 5 seconds.</p>
+          <p>It's not a clinical tool. It's a daily-use utility built for the 80% case: rough numbers, low friction, no account, no cloud.</p>
+        </div>
+        <div class="role-stats">
+          <div>
+            <div class="role-stat-num" style="background:linear-gradient(90deg,#7df99e,#38f9d7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">~5s</div>
+            <div class="role-stat-label">From photo to logged entry</div>
+          </div>
+          <div>
+            <div class="role-stat-num" style="background:linear-gradient(90deg,#7df99e,#38f9d7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">0</div>
+            <div class="role-stat-label">Accounts. Servers. Trackers.</div>
+          </div>
+          <div>
+            <div class="role-stat-num" style="background:linear-gradient(90deg,#7df99e,#38f9d7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">1</div>
+            <div class="role-stat-label">HTML file. Installable as a PWA.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--rule);margin:8px 0 56px;"></div>
+
+      <!-- SCREENSHOTS GRID -->
+      <div style="margin-bottom:56px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(240,242,245,0.35);margin-bottom:32px;display:flex;align-items:center;gap:12px;"><span style="width:24px;height:1px;background:rgba(240,242,245,0.25);display:inline-block;"></span>Inside the App</div>
+
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+          <div style="aspect-ratio:9/19.5;background:linear-gradient(135deg,#04140f 0%,#0a3b30 100%);border:1px solid rgba(125,249,158,0.15);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(125,249,158,0.5);text-align:center;padding:18px;">Daily log<br><span style="font-size:8px;opacity:0.6;">fuel-log.png</span></div>
+          <div style="aspect-ratio:9/19.5;background:linear-gradient(135deg,#04140f 0%,#0a3b30 100%);border:1px solid rgba(125,249,158,0.15);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(125,249,158,0.5);text-align:center;padding:18px;">AI lookup<br><span style="font-size:8px;opacity:0.6;">fuel-ai-lookup.png</span></div>
+          <div style="aspect-ratio:9/19.5;background:linear-gradient(135deg,#04140f 0%,#0a3b30 100%);border:1px solid rgba(125,249,158,0.15);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(125,249,158,0.5);text-align:center;padding:18px;">Add to log<br><span style="font-size:8px;opacity:0.6;">fuel-add.png</span></div>
+          <div style="aspect-ratio:9/19.5;background:linear-gradient(135deg,#04140f 0%,#0a3b30 100%);border:1px solid rgba(125,249,158,0.15);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(125,249,158,0.5);text-align:center;padding:18px;">Settings<br><span style="font-size:8px;opacity:0.6;">fuel-settings.png</span></div>
+        </div>
+        <p style="font-family:'DM Serif Display',serif;font-style:italic;font-size:13px;color:rgba(240,242,245,0.4);margin-top:20px;text-align:center;">Drop screenshots in <code style="font-family:'DM Mono',monospace;color:rgba(125,249,158,0.7);">/images/</code> as <code style="font-family:'DM Mono',monospace;color:rgba(125,249,158,0.7);">fuel-log.png</code>, <code style="font-family:'DM Mono',monospace;color:rgba(125,249,158,0.7);">fuel-ai-lookup.png</code>, <code style="font-family:'DM Mono',monospace;color:rgba(125,249,158,0.7);">fuel-add.png</code>, <code style="font-family:'DM Mono',monospace;color:rgba(125,249,158,0.7);">fuel-settings.png</code> — I'll swap to img tags.</p>
+      </div>
+
+      <div style="border-top:1px solid var(--rule);margin:8px 0 56px;"></div>
+
+      <!-- HOW IT WORKS -->
+      <div style="margin-bottom:56px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(240,242,245,0.35);margin-bottom:32px;display:flex;align-items:center;gap:12px;"><span style="width:24px;height:1px;background:rgba(240,242,245,0.25);display:inline-block;"></span>How it works</div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;">
+          <div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,2.5vw,32px);color:rgba(125,249,158,0.9);letter-spacing:0.02em;margin-bottom:12px;">01 · AI Lookup</div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.7;color:rgba(240,242,245,0.65);">Snap or pick a photo. Claude identifies the food and estimates calories. Verify the result, tap Add to Log. The model carries the weight; you stay in flow.</p>
+          </div>
+          <div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,2.5vw,32px);color:rgba(125,249,158,0.9);letter-spacing:0.02em;margin-bottom:12px;">02 · Frequent</div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.7;color:rgba(240,242,245,0.65);">Tap-to-log for the foods you eat constantly. Pulled from your recent entries — no setup required.</p>
+          </div>
+          <div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,2.5vw,32px);color:rgba(125,249,158,0.9);letter-spacing:0.02em;margin-bottom:12px;">03 · Manual</div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.7;color:rgba(240,242,245,0.65);">Type it yourself when you want precision — name, calories, done. The classic input is still a tap away.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--rule);margin:8px 0 56px;"></div>
+
+      <!-- PRIVACY + TECH -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-bottom:56px;">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(125,249,158,0.7);margin-bottom:16px;">Privacy</div>
+          <h3 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(24px,2.8vw,36px);color:rgba(240,242,245,0.92);letter-spacing:0.02em;margin-bottom:16px;">Your data stays yours.</h3>
+          <p style="font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;color:rgba(240,242,245,0.65);">Your Anthropic API key lives in your device's local storage. It's never sent anywhere except Anthropic's API — not to me, not to a backend I run, not anywhere. There is no backend. No accounts, no analytics, no telemetry. The same posture you'd want from a health app, by default.</p>
+        </div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(125,249,158,0.7);margin-bottom:16px;">Tech</div>
+          <h3 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(24px,2.8vw,36px);color:rgba(240,242,245,0.92);letter-spacing:0.02em;margin-bottom:16px;">One HTML file.</h3>
+          <p style="font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;color:rgba(240,242,245,0.65);">Built as a Progressive Web App. Vanilla HTML, CSS, and JavaScript — no build step, no framework. Calls the Claude API directly for food recognition. Hosted on GitHub Pages. On iPhone, tap Share → Add to Home Screen and it installs like a native app, full-screen, with its own icon.</p>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--rule);margin:8px 0 56px;"></div>
+
+      <!-- INSTALL INSTRUCTIONS -->
+      <div style="background:linear-gradient(135deg,#04140f 0%,#0a3b30 100%);border:1px solid rgba(125,249,158,0.2);padding:40px;margin-bottom:56px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(125,249,158,0.7);margin-bottom:14px;">Install on iPhone</div>
+        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(26px,3vw,40px);color:rgba(240,242,245,0.95);letter-spacing:0.02em;margin-bottom:24px;">Three steps. Thirty seconds.</h3>
+        <ol style="font-family:'DM Sans',sans-serif;font-size:15px;line-height:2;color:rgba(240,242,245,0.7);padding-left:20px;margin-bottom:24px;">
+          <li>On your iPhone, open Safari and visit <a href="https://bgoods360.github.io/Fuel-Calorie-Counter" target="_blank" style="color:rgba(125,249,158,0.9);text-decoration:underline;text-decoration-color:rgba(125,249,158,0.4);">bgoods360.github.io/Fuel-Calorie-Counter</a></li>
+          <li>Tap the Share button (the square with the up arrow), then scroll down and tap <strong style="color:rgba(125,249,158,0.85);">Add to Home Screen</strong></li>
+          <li>Open Fuel from your home screen. On first launch, add your Anthropic API key in Settings — it stays on your device.</li>
+        </ol>
+        <p style="font-family:'DM Serif Display',serif;font-style:italic;font-size:13px;color:rgba(240,242,245,0.5);">No App Store. No review queue. No gatekeepers between the code and your home screen.</p>
+      </div>
+
+      <!-- LAB NOTE -->
+      <div style="margin-bottom:36px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(240,242,245,0.35);margin-bottom:20px;display:flex;align-items:center;gap:12px;"><span style="width:24px;height:1px;background:rgba(240,242,245,0.25);display:inline-block;"></span>Lab Note</div>
+        <p style="font-family:'DM Serif Display',serif;font-size:18px;line-height:1.7;color:rgba(240,242,245,0.72);font-style:italic;max-width:780px;">Fuel was a thesis test: can a single Claude call replace an entire data-entry flow in a daily-use utility, without forcing the user to learn a new pattern? The answer was yes — and the more interesting finding was that the API key staying on-device made the privacy story write itself. No backend to defend, no terms-of-service to draft, no analytics dashboard to ignore. The simplest secure architecture turned out to be the only one I needed.</p>
+      </div>
+
+    </div>
+
+    <div class="contact-strip">
+      <div class="contact-strip-left">
+        <h2>Want to build something?</h2>
+        <p>Open to senior roles in AI product, content strategy, and creative direction.</p>
+      </div>
+      <div class="contact-strip-links">
+        <a href="mailto:william.stephen.goodman@gmail.com" class="contact-btn primary">Email Billy</a>
+        <a href="https://www.linkedin.com/in/wsgoodman/" class="contact-btn" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+
+    <footer>
+      <div class="ft-name">© 2025 William S. Goodman</div>
+      <div class="ft-links">
+        <a href="https://williamsgoodman.com" target="_blank">Live Site</a>
+        <a href="mailto:william.stephen.goodman@gmail.com">Email</a>
+      </div>
+    </footer>
+  </div>
+</div>
+
+
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ══════════════════════════════════════════
 // ROUTING
@@ -3719,6 +4012,8 @@ const PAGE_MAP = {
   'amz-music-sports': 'page-amz-music-sports',
   'amz-music-country': 'page-amz-music-country',
   'tm-loho': 'page-tm-loho',
+  'labs': 'page-labs',
+  'fuel': 'page-fuel',
   'about': 'page-about',
 };
 
