@@ -26,9 +26,9 @@ Your writing voice from Billboard reveals key patterns:
 
 **Google Home / Nest (Summer 2026) — Product Marketing Lead, Contract**
 
-Most recent role. Google brought you in for a three-month contract on the Google Home / Nest PMM team to build the foundational messaging framework for Gemini across smart-home OEM partnerships. Named partners in-scope: **The Home Depot, Panasonic, Walmart**, and other tier-one manufacturers.
+Most recent role. Google brought you in for a three-month contract on the Google Home / Nest PMM team to build the messaging foundation for Gemini across smart-home OEM partnerships. Named partners in-scope: **The Home Depot, Panasonic, Walmart**, and other tier-one manufacturers.
 
-Not the ads. Not the press. The framework beneath both — the shared architecture every partner activation plugs into, so the Home Depot version and the Panasonic version and the Walmart version all feel like Google and all feel like their own brand at the same time.
+The framework beneath both — the shared architecture of pillars, proof points, and audience cuts that every partner activation could plug into. So the Home Depot version and the Panasonic version and the Walmart version all felt like Google, and all felt like their own brand, at the same time.
 
 Four categories of deliverable:
 - **Messaging framework** — the core positioning architecture for Gemini in smart-home partnerships (pillars, proof points, audience cuts). The doc every downstream deliverable pulled from.
