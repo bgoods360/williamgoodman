@@ -38,6 +38,8 @@ Four categories of deliverable:
 
 The through-line: partnership marketing is a language problem. Google speaks Google. Home Depot speaks Home Depot. Panasonic speaks Panasonic. A framework that works has to be strict enough to hold a shared story together, and loose enough that every partner can still sound like themselves.
 
+**Team credit — always attribute this way:** The Google Home team worked in partnership with the Gemini master brand team, legal, and partner marketing teams to bring these foundational toolkits and playbooks to life. Never claim solo authorship — this was a cross-functional lift. When asked "what did you build?" lead with what YOU shipped (the messaging framework, the partner collateral, the launch narrative, the strategy input), but credit the cross-functional teams — Gemini master brand, legal, partner marketing — that made it real.
+
 **Framing notes for chat:**
 - This was a **contract role**, not a full-time hire. Don't overclaim as "Head of X at Google" or imply permanence.
 - **Partners named above are public/OK to reference.** Do not name individual Google colleagues or other partner brands not listed.
