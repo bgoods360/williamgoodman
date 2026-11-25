@@ -16,6 +16,493 @@
 
 export const APPLICATIONS = [
     {
+        company: 'Adopt/Publicis',
+        role: 'Director, Creative',
+        applied: '2026-05-19',
+        expires: '2026-08-17',
+        aliases: ['publicis groupe', 'publicis', 'adopt', 'adopt agency', 'publicis sapient'],
+        roleFocus: ['creative direction at an agency', 'multi-client brand storytelling', 'agency-side creative leadership'],
+        pitchAngle:
+            '20+ years fluent on BOTH sides of the agency/client relationship. Ran the integrated agency model at Ticketmaster — Contend was embedded on-site, in daily standups, inside our project management infrastructure, not a vendor relationship. Knows what agencies need from clients AND what clients need from agencies. Combined with brand-reposition track record (Jameson, Fuse TV, Ticketmaster) and active AI practitioner credentials.',
+        emphasize: [
+            'Ticketmaster + Contend embedded agency model (full integration, not vendor relationship)',
+            'Jameson Irish Whiskey Creative Director — Sine Metu always-on, Black Barrel + Caskmates launches',
+            'Multi-brand creative across Fuse TV, Amazon Music, Amazon Devices',
+            'Brand reposition track record (Ticketmaster 23% sentiment lift)',
+            'MIT AI + Conductor for the practitioner-not-just-strategist angle',
+        ],
+        openers: [
+            'How do you think about the agency/client relationship in 2026?',
+            'Tell me about the Contend embedded agency model at Ticketmaster',
+            'What does great creative direction look like across multiple brands?',
+        ],
+        heroSubtitle: 'Creative leader fluent on both sides — agency-embedded and brand-side.',
+        bubbleBlurb: '20+ years of creative across Jameson, Fuse TV, Ticketmaster, Amazon.',
+        toneNote: "Lead with the agency-fluency angle. Most candidates have only worked one side; you've run both.",
+    },
+    {
+        company: 'Expedia',
+        role: 'Senior Manager, Integrated Marketing',
+        applied: '2026-05-19',
+        expires: '2026-08-17',
+        aliases: ['expedia group', 'expedia inc', 'expedia.com'],
+        roleFocus: ['integrated marketing', 'cross-channel campaigns', 'travel + lifestyle brand'],
+        pitchAngle:
+            'Built integrated marketing campaigns that ran natively across every owned channel. Amazon Devices "Alexa, Let\'s Get Sustainable" ($4.5M, 20M+ YouTube views, < $100K paid social) is the cleanest case study of integrated-marketing-done-right. Plus Ticketmaster\'s multi-channel content engine and Jameson Sine Metu always-on. Bonus: based in Seattle (Expedia\'s HQ).',
+        emphasize: [
+            '"Alexa, Let\'s Get Sustainable" — integrated Earth Day comms across Alexa, Kindle, Echo, web, social, app, email, homepage',
+            'Ticketmaster multi-channel content engine (31K+ assets year one)',
+            'Jameson Sine Metu — always-on integrated brand work',
+            'Seattle-based (geographic match)',
+        ],
+        openers: [
+            'How do you build a campaign that runs natively across every channel?',
+            "Tell me about Alexa, Let's Get Sustainable",
+            'What makes integrated marketing work at platform scale?',
+        ],
+        heroSubtitle: 'Integrated marketer who ran $4.5M campaigns natively across every channel.',
+        bubbleBlurb: 'Built integrated brand campaigns at Amazon Devices, Ticketmaster, and Jameson.',
+        toneNote: "Seattle home base is a real plus for Expedia. Mention it if location comes up.",
+    },
+    {
+        company: 'Anthropic',
+        role: 'Engineering Editorial Lead (reapplication)',
+        applied: '2026-05-19',
+        expires: '2026-08-17',
+        aliases: ['anthropic pbc'],
+        roleFocus: ['editorial leadership at an AI lab', 'technical communications', 'editorial inside engineering culture'],
+        pitchAngle:
+            'Editorial leader who built with Claude. This portfolio is the demo: a fully agentic conversational system grounded in 20+ years of work history, with visitor-aware tailoring, deployed to Vercel, all built by an editorial-leader-not-engineer using Claude as pair programmer. Anthropic visitors will see the proof before reading any pitch.',
+        emphasize: [
+            'This portfolio itself — agentic Billy, visitor detection, the works (built with Claude API)',
+            'MIT certificates: generative AI, agentic AI, AI product design',
+            'Conductor — AI-powered SaaS for independent artists',
+            'Editorial roots predating AI: Rolling Stone, SPIN, Billboard, Fuse TV',
+            'Founded content strategy at Amazon Devices (cross-functional with engineering)',
+        ],
+        openers: [
+            "How would you build editorial inside an AI lab?",
+            "What's the role of editorial in technical product documentation?",
+            "Tell me about Conductor — what are you building with AI?",
+        ],
+        heroSubtitle: 'Editorial leader who builds with AI — this site is the proof.',
+        bubbleBlurb: 'Built this whole site as an agent. With Claude as pair programmer.',
+        toneNote: "Anthropic visitors are technical. Lead with this portfolio itself as the demo — they\'ll inspect the code.",
+    },
+    {
+        company: 'Pinterest (Lead Creative Producer)',
+        role: 'Lead Creative Producer, Editorial Content',
+        applied: '2026-05-19',
+        expires: '2026-08-17',
+        aliases: ['pinterest inc'],
+        roleFocus: ['creative producing', 'editorial content at a visual discovery platform', 'taste-led storytelling'],
+        pitchAngle:
+            'Editorial producer with platform-scale instincts. Built Amazon Music\'s in-app content as a discovery engine (the closest analog to Pinterest\'s job). Editorial roots at Rolling Stone, SPIN, Billboard, and Fuse TV. Visual-arts sensibility runs deep — Turner, Impressionists, the whole reference set.',
+        emphasize: [
+            'Amazon Music in-app content as discovery engine (direct analog)',
+            'Editorial roots: Rolling Stone, SPIN, Billboard, Fuse TV',
+            'Front Row video/interview platform (visual storytelling at scale)',
+            'Visual sensibility: Turner, Impressionists, the broader cultural-references set',
+        ],
+        openers: [
+            "How does editorial content drive discovery at a visual platform?",
+            "Tell me about Front Row at Amazon Music",
+            "What does taste-led editorial look like at platform scale?",
+        ],
+        heroSubtitle: 'Editorial producer with platform-scale instincts. Taste as strategy.',
+        bubbleBlurb: 'Editorial roots + Amazon Music in-app content as a discovery engine.',
+        toneNote: "Pinterest is taste-driven. Lead with the visual + editorial overlap.",
+    },
+    {
+        company: 'SeatGeek',
+        role: 'Head of PR & Communications',
+        applied: '2026-05-19',
+        expires: '2026-08-17',
+        aliases: ['seatgeek inc'],
+        roleFocus: ['PR + communications', 'live event ticketing brand', 'cultural reposition'],
+        pitchAngle:
+            'Ran the Ticketmaster reposition (transactional villain to advocate for the live experience, 23% sentiment lift) — SeatGeek\'s opportunity is the same playbook. Plus editorial engine (31K+ assets, City Guides, $12M+ Disney on Ice article), Touring Milestone Awards. Direct competitor experience at the depth this role actually needs.',
+        emphasize: [
+            'Ticketmaster reposition (23% brand sentiment lift) — THE direct analog',
+            'LOHO campaign — multi-channel UGC push around the emotional truth of live music',
+            'Editorial engine driving last-minute ticket sales (13% lift via City Guides)',
+            'Touring Milestone Awards (artist-side relationship building)',
+        ],
+        openers: [
+            "How would you position SeatGeek against Ticketmaster?",
+            "Tell me about repositioning Ticketmaster",
+            "What does great PR look like for a live-music brand right now?",
+        ],
+        heroSubtitle: 'Repositioned Ticketmaster — 23% brand sentiment lift across live music.',
+        bubbleBlurb: 'Repositioned Ticketmaster from transactional villain to live-experience advocate.',
+        toneNote: "Direct competitor experience. Lead with the reposition — they want exactly that playbook.",
+    },
+    {
+        company: 'Airbnb',
+        role: 'Host Communications Strategy Lead',
+        applied: '2026-05-19',
+        expires: '2026-08-17',
+        aliases: ['airbnb inc'],
+        roleFocus: ['host-facing communications strategy', 'B2B/SMB-facing comms', 'operator support'],
+        pitchAngle:
+            'Amazon Global Brands is the direct parallel — built communications for Third Party Sellers (operators running businesses on a platform, exactly like Airbnb Hosts). Audited three fragmented Seller-facing properties and consolidated them into one master experience; the seller-onboarding revamp drove an 11% completion lift. Same shape of work Airbnb needs for Hosts.',
+        emphasize: [
+            'Amazon Global Brands — Third Party Seller experience (direct shape parallel to Airbnb Hosts)',
+            '78-step seller onboarding revamp (11% completion lift)',
+            'Editorial leadership for operator-facing content',
+            'Cross-functional with product/engineering teams',
+        ],
+        openers: [
+            "How would you approach communications strategy for Airbnb Hosts?",
+            "Tell me about the Amazon Global Brands seller experience",
+            "What makes operator-facing comms different from consumer comms?",
+        ],
+        heroSubtitle: 'Communications strategist for operators — Amazon Sellers are Airbnb Hosts in another category.',
+        bubbleBlurb: 'Built comms for Amazon Third Party Sellers. Same shape as Airbnb Hosts.',
+        toneNote: "The Sellers/Hosts parallel is THE angle. Lead with Amazon Global Brands work.",
+    },
+    {
+        company: 'Docusign',
+        role: 'Head of Communications AI Systems & Social Production',
+        applied: '2026-05-19',
+        expires: '2026-08-17',
+        aliases: ['docusign inc'],
+        roleFocus: ['communications', 'AI systems', 'social production at scale'],
+        pitchAngle:
+            'Communications leader who actively builds with AI. Founded content strategy at Amazon Devices, ran Amazon Music\'s social growth to millions, plus MIT AI work, Conductor, and this portfolio (built as a working agent). Rare to find a comms leader who can actually architect the AI-systems-and-social-production work the role is asking for.',
+        emphasize: [
+            'Amazon Music social growth (millions of followers via editorial-led programming)',
+            'Founded content strategy at Amazon Devices (parallel comms-inside-product-org work)',
+            'MIT certificates: generative AI, agentic AI, AI product design',
+            'Conductor — AI-powered SaaS, proves practitioner credibility',
+            'This portfolio itself — agent Billy as proof of AI-systems literacy',
+        ],
+        openers: [
+            "How would you build a communications AI system?",
+            "Tell me about Amazon Music's social growth playbook",
+            "What does AI in social production actually look like?",
+        ],
+        heroSubtitle: 'Communications leader at the AI-systems seam.',
+        bubbleBlurb: 'Built content systems and social production at scale. Now deep in AI.',
+        toneNote: "DocuSign role is rare — comms + AI systems together. Few candidates can do both. Surface both clearly.",
+    },
+    {
+        company: 'UnitedMasters (VP Marketing)',
+        role: 'VP of Marketing',
+        applied: '2026-05-19',
+        expires: '2026-08-17',
+        aliases: ['united masters', 'unitedmasters inc'],
+        roleFocus: ['marketing leadership at an artist services platform', 'growth marketing for independent artists', 'music industry marketing'],
+        pitchAngle:
+            'Mission-aligned with UnitedMasters at a level few candidates can match — currently building Conductor as a SaaS for independent artists. Plus drove the team\'s 306% YoY acquisition growth at Amazon Music, ran cultural-moment activation (F1, Overtime Elite), and built brand-side marketing across Ticketmaster, Jameson, Fuse TV. Marketing leader who actually understands what independent artists need because Billy is building for them.',
+        emphasize: [
+            'Conductor — directly mission-aligned (independent artist SaaS)',
+            '306% YoY acquisition growth at Amazon Music (team metric)',
+            'Amazon Music Live + F1 partnership ($6M EMV) and Overtime Elite (280K HVAs)',
+            'Music industry depth: Rolling Stone, SPIN, Billboard, Fuse TV, Amazon Music',
+            'Front Row at Amazon Music (artist storytelling at platform scale)',
+        ],
+        openers: [
+            "How would you drive growth marketing for an artist services platform?",
+            "Tell me about Conductor and what it serves",
+            "What did you learn from the Amazon Music acquisition growth playbook?",
+        ],
+        heroSubtitle: 'Marketing leader who grew Amazon Music 306% YoY — now building for independent artists.',
+        bubbleBlurb: 'Marketing leader for independent artists. Conductor + Amazon Music chops.',
+        toneNote: "Mission alignment with Conductor is your unfair advantage. Lead with it.",
+    },
+    {
+        company: 'Apple',
+        role: 'Owned Social Senior Strategist, XLOB (Cross-Line-of-Business)',
+        applied: '2026-05-08',
+        expires: '2026-08-06',
+        aliases: ['apple inc', 'apple computer'],
+        roleFocus: ['owned social at scale', 'cross-product narrative', 'brand voice consistency across product lines'],
+        pitchAngle:
+            'Senior brand-side leader who has done exactly this kind of cross-product social work — Amazon Devices XPL ("Alexa, Let\'s Get Sustainable") across Echo, Alexa, Kindle, Ring + Amazon Music social growth into the millions across platforms. The XLOB challenge — holding voice and narrative across many product surfaces simultaneously — is the parallel architecture you ran at Amazon.',
+        emphasize: [
+            'Amazon Devices XPL "Alexa, Let\'s Get Sustainable" — multi-product narrative ran natively across every owned channel',
+            'Amazon Music social growth (millions of followers via editorial-led programming)',
+            'Founded content strategy discipline at Amazon Devices — directly parallel to XLOB shape',
+            'Cross-functional fluency operating across product orgs',
+        ],
+        openers: [
+            'How would you approach owned social across multiple product lines?',
+            "Tell me about cross-product narrative work at Amazon Devices",
+            'What does great brand voice look like at platform scale?',
+        ],
+        heroSubtitle: 'Cross-product brand storyteller. Founded content strategy inside Amazon\'s device ecosystem.',
+        bubbleBlurb: 'Built cross-product brand stories across Amazon\'s device ecosystem.',
+        toneNote: "Apple respects builders and product-org fluency. Lead with the parallel XLOB architecture you actually ran.",
+    },
+    {
+        company: 'Google',
+        role: 'Senior Brand Marketing Manager, Brand Studio',
+        applied: '2026-05-08',
+        expires: '2026-08-06',
+        aliases: ['google llc', 'alphabet inc'],
+        roleFocus: ['brand marketing at platform scale', 'brand studio practices', 'cultural-moment campaigns'],
+        pitchAngle:
+            'Founded content strategy inside a product org at Amazon Devices — the closest parallel to Google Brand Studio\'s role. Brings cross-discipline fluency (creative direction + content strategy + AI practitioner) that brand teams inside tech companies actively need now.',
+        emphasize: [
+            'Amazon Devices content strategy founding (parallel role architecture)',
+            '"Alexa, Let\'s Get Sustainable" — cross-product brand storytelling at scale',
+            'Amazon Music F1 partnership ($6M EMV) and Overtime Elite cultural-moment work',
+            'MIT AI work + Conductor for the practitioner-not-just-strategist angle',
+        ],
+        openers: [
+            'How would you build brand campaigns at platform scale?',
+            "What did you learn founding content strategy at Amazon Devices?",
+            'How does AI change brand storytelling?',
+        ],
+        heroSubtitle: 'Brand strategist who founded content disciplines inside product orgs.',
+        bubbleBlurb: 'Founded content strategy inside a product org. Built from zero.',
+        toneNote: "Google Brand Studio respects systems thinkers who can scale. Show product-org fluency and AI practitioner credibility.",
+    },
+    {
+        company: 'T-Mobile',
+        role: 'Creative Director, Copy & Story',
+        applied: '2026-05-08',
+        expires: '2026-08-06',
+        aliases: ['t-mobile us', 't-mobile usa', 'tmobile'],
+        roleFocus: ['copy leadership', 'narrative and story', 'cultural fluency at scale'],
+        pitchAngle:
+            'Writing-first creative leader with the voice-shaping chapter (Billboard, Rolling Stone, SPIN) AND the scaled creative-ops chops (31K+ assets in year one at Ticketmaster, 800/week peak). Rare combination of editorial origin + creative leadership at the volume T-Mobile actually operates at.',
+        emphasize: [
+            'Billboard / Rolling Stone / SPIN — voice was forged in editorial',
+            'Ticketmaster 31K+ assets year one — proof of writing leadership at scale',
+            'LOHO cultural reposition — copy and story working together',
+            'Fuse TV brand-building from scratch — culture-first creative',
+        ],
+        openers: [
+            "What does great brand copy look like at carrier scale?",
+            "Tell me about the editorial engine at Ticketmaster",
+            "How do you keep brand voice consistent at 800 assets per week?",
+        ],
+        heroSubtitle: 'Writer-first creative leader. Editorial origin, scaled creative ops.',
+        bubbleBlurb: 'Editorial roots. 31K+ assets year one at Ticketmaster.',
+        toneNote: "Lead with the writing-origin angle — that\'s the differentiator for a copy-leadership role.",
+    },
+    {
+        company: 'GitHub',
+        role: 'Senior Director, Brand Strategy & Narrative',
+        applied: '2026-05-08',
+        expires: '2026-08-06',
+        aliases: ['github inc', 'microsoft corporation'],
+        roleFocus: ['brand strategy at scale', 'narrative architecture', 'developer/builder culture'],
+        pitchAngle:
+            'Brand reposition track record (Ticketmaster: transactional villain → live experience advocate, 23% sentiment lift) + builder credibility (this very portfolio is a working agentic system Billy built with Claude). The combination GitHub needs: strategist who can reposition a brand AND speak the builder dialect natively.',
+        emphasize: [
+            'Ticketmaster reposition — 23% brand sentiment lift, real proof at scale',
+            'This portfolio itself — built as an AI agent, deployed to Vercel, demonstrates the builder fluency',
+            'Founded content strategy at Amazon Devices (cross-functional with engineering)',
+            'MIT AI + Conductor — practitioner credibility',
+        ],
+        openers: [
+            'How would you approach brand strategy at a developer platform?',
+            "Tell me about repositioning Ticketmaster",
+            "What\'s your take on brand storytelling for builder communities?",
+        ],
+        heroSubtitle: 'Brand strategist with builder-fluency. This portfolio is proof.',
+        bubbleBlurb: 'Built this whole site myself — with Claude as pair programmer.',
+        toneNote: "GitHub culture rewards builder-fluency. Mention this portfolio itself as proof — they\'ll respect it.",
+    },
+    {
+        company: 'Mozilla',
+        role: 'Head of Editorial + Platforms',
+        applied: '2026-05-08',
+        expires: '2026-08-06',
+        aliases: ['mozilla foundation', 'mozilla corporation'],
+        roleFocus: ['editorial leadership', 'platform thinking', 'mission-driven content', 'open-web values'],
+        pitchAngle:
+            'Editorial leader with platform-thinking credentials (Amazon Music in-app content as retention engine, Amazon Devices XPL across owned channels) — exactly the editorial-meets-platform discipline Mozilla needs. Mission alignment: spent 20 years closing the distance between creators and audiences; the open-web mission is the same impulse at infrastructure scale.',
+        emphasize: [
+            'Editorial roots: Rolling Stone, SPIN, Billboard, Fuse TV',
+            'Platform/product fluency: Amazon Music in-app, Amazon Devices XPL',
+            'Founded discipline at Amazon Devices (built editorial inside a platform org)',
+            'Independent-creator ethos: Conductor is built specifically for independent artists',
+        ],
+        openers: [
+            'How would you build editorial inside a platform organization?',
+            "What does mission-driven content look like in 2026?",
+            "Tell me about Conductor — what are you building for independent creators?",
+        ],
+        heroSubtitle: 'Editorial leader. Platform thinker. Mission-aligned.',
+        bubbleBlurb: 'Editorial leader who thinks in platforms. Building Conductor for indie creators.',
+        toneNote: "Mozilla\'s mission-driven DNA matches Billy\'s independent-creator instinct. The Conductor connection is real.",
+    },
+    {
+        company: 'Runway',
+        role: 'Creative Director',
+        applied: '2026-05-08',
+        expires: '2026-08-06',
+        aliases: ['runway ml', 'runwayml inc'],
+        roleFocus: ['creative leadership at an AI video tools company', 'storytelling-meets-AI', 'video-native brand'],
+        pitchAngle:
+            'Rare profile: deep video storytelling chops (Kings of Leon WALLS trilogy 40M+ views with fan co-author model, Fuse TV YouTube to 3M/wk, Amazon Sustainability 20M+ views) + active AI practitioner (MIT certificates, Conductor, this portfolio). Runway needs a creative director who has actually used the tools and shipped at scale — Billy is one of the few who has both.',
+        emphasize: [
+            'Kings of Leon WALLS trilogy (40M+ views, fan co-author model — narrative video at scale)',
+            'Fuse TV YouTube buildout (3M+ views/week, original artist franchises)',
+            'Amazon "Alexa, Let\'s Get Sustainable" 20M+ YouTube views',
+            'MIT AI work + Conductor — practitioner credibility',
+            'Personal: producing demos in Suno Studio (uses AI tools)',
+        ],
+        openers: [
+            "What\'s the future of AI in video production?",
+            "Tell me about Kings of Leon WALLS — long-form story in the short-form era",
+            "How would you build brand creative for an AI tools company?",
+        ],
+        heroSubtitle: 'Video storyteller at scale. Active AI practitioner.',
+        bubbleBlurb: 'Narrative video at scale. Built Kings of Leon WALLS trilogy (40M+ views).',
+        toneNote: "Lead with the video chops AND the AI-practitioner angle. Runway will respect that Billy uses AI tools personally, not just talks about them.",
+    },
+    {
+        company: 'Suno (GM, Songkick)',
+        role: 'GM, Songkick (Suno-acquired live music ticketing/discovery)',
+        applied: '2026-05-08',
+        expires: '2026-08-06',
+        aliases: ['suno inc', 'suno ai', 'songkick'],
+        roleFocus: ['live music + ticketing leadership', 'AI music + live discovery integration', 'GM-level business ownership'],
+        pitchAngle:
+            'Uniquely overlapping background: led the Ticketmaster reposition (live music + ticketing at scale, 23% sentiment lift, $12M Disney on Ice editorial, City Guides driving last-minute sales), Amazon Music brand work (streaming + cultural-moment activation), AND active AI practitioner using Suno Studio personally. The Songkick GM role at Suno needs someone who understands live music, ticketing, AI, AND can run a business — Billy is one of the few people who hits all four.',
+        emphasize: [
+            'Ticketmaster: 23% sentiment lift, 31K+ assets year one, $12M+ Disney on Ice article, City Guides driving 13% last-minute lift',
+            'Amazon Music F1 partnership ($6M EMV), Amazon Music Live programming',
+            'Personal Suno Studio user (producing AI-augmented demos)',
+            'Cross-functional GM-style operation at AD&S (founded discipline, ran budget, drove SVP-level work)',
+        ],
+        openers: [
+            "How would you grow Songkick within Suno?",
+            "Tell me about repositioning Ticketmaster",
+            "Where do AI music and live discovery intersect?",
+        ],
+        heroSubtitle: 'Live music + ticketing + AI — the rare overlap your role needs.',
+        bubbleBlurb: 'Ticketmaster reposition + Suno Studio user. Live + AI in one resume.',
+        toneNote: "The Ticketmaster + Suno-Studio-personal-use combination is the killer angle. Mention that you actually USE Suno Studio for your own music.",
+    },
+    {
+        company: 'Suno (Director of Social Media)',
+        role: 'Director of Social Media',
+        applied: '2026-05-08',
+        expires: '2026-08-06',
+        aliases: ['suno inc', 'suno ai'],
+        roleFocus: ['social media leadership at an AI music platform', 'creator-first social', 'product-aware social'],
+        pitchAngle:
+            'Grew Amazon Music\'s social following by millions through editorial-led programming and cultural-moment activation — directly parallel to what Suno needs. Plus: active Suno Studio user personally, producing demos with AI backing tracks. Combination of platform-scale social growth + native creator-side product use is rare.',
+        emphasize: [
+            'Amazon Music social growth — millions of followers via editorial-led programming',
+            'Cultural-moment activation: Amazon Music Live, F1 partnership, Overtime Elite (280K HVAs)',
+            'Personal Suno Studio user — practitioner credibility',
+            'Conductor — independent-artist-focused SaaS, mission-aligned',
+        ],
+        openers: [
+            'How would you grow social for an AI music platform?',
+            "Tell me about Amazon Music\'s social growth playbook",
+            "What\'s your take on the creator economy for AI music tools?",
+        ],
+        heroSubtitle: 'Platform-scale social growth. Active Suno Studio user.',
+        bubbleBlurb: 'Grew Amazon Music social to millions. Use Suno Studio for my own demos.',
+        toneNote: "Suno is creator-first. Lead with platform-scale social growth + personal use of their product.",
+    },
+    {
+        company: 'UnitedMasters',
+        role: 'Creative Director',
+        applied: '2026-05-08',
+        expires: '2026-08-06',
+        aliases: ['united masters', 'unitedmasters inc'],
+        roleFocus: ['creative direction for an artist-services platform', 'artist storytelling at scale', 'brand work for independent music'],
+        pitchAngle:
+            'Music industry depth + artist-side creative chops + builder for independent artists. UnitedMasters\' mission of empowering independent artists is the same problem Billy is solving with Conductor. Plus: Front Row, Kings of Leon WALLS, Amazon Music artist storytelling — directly relevant artist-platform work.',
+        emphasize: [
+            'Conductor — SaaS Billy is currently building for independent artists (direct mission alignment)',
+            'Front Row at Amazon Music — artist storytelling at platform scale',
+            'Kings of Leon WALLS trilogy — fan co-author model, narrative-led artist work',
+            'Music industry depth: Rolling Stone, SPIN, Billboard, Fuse TV, Amazon Music',
+        ],
+        openers: [
+            "Tell me about Conductor and how it serves independent artists",
+            "What did you learn about artist collaboration from Kings of Leon?",
+            "How should creative work for an artist-services platform?",
+        ],
+        heroSubtitle: 'Building for independent artists at MIT. Mission-aligned.',
+        bubbleBlurb: 'Building Conductor — a SaaS for independent artists.',
+        toneNote: "Direct mission alignment with Conductor. Lead with that.",
+    },
+    {
+        company: 'Microsoft',
+        role: 'Director, Content Engineering, MAI',
+        applied: '2026-05-08',
+        expires: '2026-08-06',
+        aliases: ['microsoft corporation', 'microsoft ai', 'mai'],
+        roleFocus: ['editorial strategy at scale', 'AI-powered content experiences', 'prompt-engineering guidance', 'cultural-moment editorial (World Cup, Met Gala, F1)', 'cross-functional with product + engineering'],
+        pitchAngle:
+            'Rare combination: deep editorial roots (Rolling Stone, SPIN, Billboard, Fuse TV) + founding-discipline experience at Amazon Devices + cultural-moment activation including the F1 partnership at Amazon Music ($6M EMV) + practitioner-level AI work through MIT and Conductor. The role is explicitly editorial leadership at the AI-product seam — exactly the bridge Billy has been building toward.',
+        emphasize: [
+            'Amazon Music F1 partnership ($6M EMV) — this role explicitly cites F1 as a cultural-moment example',
+            'Founded content strategy at Amazon Devices — parallel role architecture (editorial inside a product org)',
+            'MIT certificates: generative AI, agentic AI, AI product design',
+            'Conductor — currently building an AI-powered SaaS',
+            'Editorial roots that pre-date AI: Rolling Stone, SPIN, Billboard, Fuse TV',
+        ],
+        openers: [
+            "How would you lead editorial for AI-powered content experiences at scale?",
+            "Tell me about the F1 partnership at Amazon Music",
+            "How does prompt engineering fit into editorial strategy?",
+        ],
+        heroSubtitle: 'Editorial leadership at the AI-product seam.',
+        bubbleBlurb: 'Ran the F1 partnership at Amazon Music. $6M earned media.',
+        toneNote: "Microsoft Redmond — you\'re already in Seattle, geography is ideal. The F1 mention in the role itself is gold.",
+    },
+    {
+        company: 'Toast',
+        role: 'Senior Director, Content & Audience Growth',
+        applied: '2026-05-08',
+        expires: '2026-08-06',
+        aliases: ['toast inc', 'toast tab'],
+        roleFocus: ['content for audience growth', 'restaurant/SMB-facing content', 'editorial + growth marketing intersection'],
+        pitchAngle:
+            'Audience-growth-through-content is your discipline. 306% YoY acquisition growth at Amazon Music came from treating content as a discovery and retention engine, not a marketing add-on. Same playbook applies to Toast: build the content engine that scales the customer base.',
+        emphasize: [
+            '306% YoY acquisition growth at Amazon Music (team metric)',
+            'In-app content as retention engine (Amazon Music)',
+            'Ticketmaster editorial engine driving sales (City Guides → 13% last-minute lift, Disney on Ice → $12M)',
+            'Amazon Global Brands seller onboarding revamp — 11% completion lift on a SMB-facing experience (closest analog to Toast\'s restaurant audience)',
+        ],
+        openers: [
+            'How would you grow audience through content at Toast?',
+            "Tell me about content-as-retention-engine at Amazon Music",
+            "What did you learn from the Amazon Global Brands seller experience?",
+        ],
+        heroSubtitle: 'Content as a discovery and retention engine. 306% YoY growth at Amazon Music.',
+        bubbleBlurb: 'Grew Amazon Music 306% YoY by treating content as a discovery engine.',
+        toneNote: "Amazon Global Brands is the closest analog (B2B/SMB-facing). Surface it.",
+    },
+    {
+        company: 'Burton Snowboards',
+        role: 'Creative Director',
+        applied: '2026-05-01',
+        expires: '2026-07-30',
+        aliases: ['burton', 'burton corporation', 'burton snowboards inc'],
+        roleFocus: ['creative direction', 'brand storytelling', 'action sports authenticity', 'culture-driven brand building'],
+        pitchAngle:
+            'Creative leader with 35 years on a snowboard, 50+ days a season, heli and cat experience in British Columbia, plus 2026 Olympics in Livigno — paired with 20+ years of brand-building work across music, entertainment, and consumer brands. Authentic to the audience AND brings the system thinking Burton needs to scale storytelling in the AI era.',
+        emphasize: [
+            'Lifelong snowboarder (35 years, 50+ days/season — actual authenticity, not borrowed)',
+            'Jameson Irish Whiskey Creative Director (Sine Metu, Black Barrel, Caskmates) — proof brand-side creative travels beyond music',
+            'Fuse TV brand-building from scratch (2 to 17 team, original artist franchises, sponsorships)',
+            'Kings of Leon WALLS trilogy + fan-co-author model',
+            'Conductor + MIT AI work as the "where culture meets tooling" angle',
+        ],
+        openers: [
+            'How would you bring AI into an action sports brand like Burton?',
+            "Tell me about your work with Kings of Leon — how do you think about artist-and-brand culture?",
+            "What does authentic action sports storytelling look like in 2026?",
+        ],
+        heroSubtitle: '35 years on snow. 20+ years of brand-building. Lifelong, not borrowed.',
+        bubbleBlurb: '35 years snowboarding. 50+ days a season. The 2026 Olympics in Livigno this winter.',
+        toneNote: "Lead with the snowboarding bona fides naturally — they're the unfair advantage here. Don't fake it; you don't have to. 35 years on snow + brand-building chops is the rare combination Burton actually needs.",
+    },
+    {
         company: 'Cantina Labs',
         role: 'Head of Editorial',
         applied: '2026-04-15',
@@ -35,6 +522,8 @@ export const APPLICATIONS = [
             'What does a great Head of Editorial role look like in 2026?',
             'Tell me about building social and editorial together',
         ],
+        heroSubtitle: 'Editorial leader who built scaled content engines — now deep in AI.',
+        bubbleBlurb: 'Editorial leader. SPIN, Fuse TV, Amazon Music — now deep in AI through MIT.',
         toneNote: 'Talk like a leader, not a journalist. Show the systems thinker.',
     },
     // Add new applications above this line — keep newest first.
@@ -81,9 +570,9 @@ export const CATEGORIES = {
         leadWith:
             'Fuse TV cross-platform work (digital ↔ linear schedule, content supporting on-air programming, TV ticker integration), Kings of Leon WALLS narrative trilogy (long-form story arc in streaming era), cultural fluency at scale.',
         openers: [
-            'What does great show marketing look like in 2026?',
+            'What does great event marketing look like in 2026?',
             'Tell me about long-form storytelling in the streaming era',
-            'How do you build cultural moments around content?',
+            'How do you build content around cultural moments?',
         ],
     },
     'social-platforms': {
@@ -250,7 +739,7 @@ export const BESPOKE = [
         openers: [
             'How would you build content around premium video programming?',
             'Tell me about your Fuse TV cross-platform work',
-            'What does great show marketing look like in 2026?',
+            'What does great event marketing look like in 2026?',
         ],
     },
     {
@@ -369,9 +858,9 @@ export const BESPOKE = [
         leadWith:
             'Fuse TV cross-platform work supporting on-air programming, Kings of Leon WALLS narrative trilogy (long-form story arc in streaming era), cultural fluency at scale',
         openers: [
-            'What does great show marketing look like in 2026?',
+            'What does great event marketing look like in 2026?',
             'Tell me about long-form storytelling in the streaming era',
-            'How do you build cultural moments around content?',
+            'How do you build content around cultural moments?',
         ],
     },
     {
@@ -421,6 +910,19 @@ export const BESPOKE = [
             'What did you learn founding content strategy at Amazon Devices?',
             'How do you build a story that holds across hardware and services?',
         ],
+    },
+    {
+        company: 'Shopify',
+        aliases: ['shopify inc', 'shopify commerce'],
+        space: 'commerce platform for merchants and creators; content infrastructure for sellers and brand-builders',
+        leadWith:
+            'Amazon Global Brands work (consolidating fragmented Third Party Seller resources into one master experience — directly analogous to Shopify\'s merchant-content challenge), Conductor (current SaaS for independent creators/artists), editorial leadership across multi-stakeholder ecosystems, plus the breadth across journalism, brand-side, and product orgs',
+        openers: [
+            'What does great content look like for a merchant platform?',
+            'How do you build editorial that helps creators succeed?',
+            'Tell me about Amazon Global Brands and the Third Party Seller experience',
+        ],
+        toneNote: 'Recently interviewed for Head of Content here — the merchant-and-creator audience overlaps heavily with Conductor\'s thinking. Lead with the operator-empathy angle.',
     },
     {
         company: 'Google Labs',
@@ -536,14 +1038,14 @@ export const WATCHLIST = [
     { company: 'Salesforce', aliases: ['salesforce.com'], category: 'productivity-saas' },
     { company: 'HubSpot', aliases: ['hubspot inc'], category: 'productivity-saas' },
     { company: 'Manychat', aliases: ['manychat inc'], category: 'productivity-saas' },
-    { company: 'Shopify', aliases: ['shopify inc'], category: 'productivity-saas' },
+    // Shopify promoted to BESPOKE (Head of Content interviews)
 
     // Tech giants
     { company: 'Google', aliases: ['google llc', 'alphabet inc'], category: 'tech-giant' },
     { company: 'Amazon', aliases: ['amazon.com inc', 'amazon web services'], category: 'tech-giant' },
 
     // Outdoor / action sports
-    { company: 'Burton Snowboards', aliases: ['burton', 'burton corporation'], category: 'outdoor-action-sports' },
+    // Burton Snowboards promoted to APPLICATIONS (Creative Director interviews)
     { company: 'Patagonia', aliases: ['patagonia inc'], category: 'outdoor-action-sports' },
     { company: 'REI', aliases: ['rei co-op', 'recreational equipment'], category: 'outdoor-action-sports' },
     { company: 'Columbia Sportswear', aliases: ['columbia sportswear company'], category: 'outdoor-action-sports' },
@@ -695,7 +1197,8 @@ export function buildVisitorContextBlock(match) {
 }
 
 // Used by /api/visitor for the frontend response. Returns visitor-facing info
-// (tier, company, openers for chips). Internal pitch angles stay server-side.
+// (tier, company, openers for chips, heroSubtitle, bubbleBlurb).
+// Internal pitch angles stay server-side.
 export function publicVisitorInfo(match) {
     if (!match) return null;
     return {
@@ -703,5 +1206,7 @@ export function publicVisitorInfo(match) {
         company: match.entry.company,
         role: match.entry.role || null,
         openers: match.entry.openers || [],
+        heroSubtitle: match.entry.heroSubtitle || null,
+        bubbleBlurb: match.entry.bubbleBlurb || null,
     };
 }

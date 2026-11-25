@@ -6,7 +6,6 @@
 <title>William S. Goodman — Content Strategy & Creative Direction</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preload" as="image" href="images/SPACE_IMAGE_BACKGROUND_1.png">
 <!-- Core fonts — always load (4 families, fast) -->
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@400;500;600&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
 <!-- Decorative shuffle fonts — desktop only, non-blocking -->
@@ -28,7 +27,9 @@
 html { scroll-behavior: smooth; }
 
 body {
-  background: var(--black);
+  /* Deep-space color matched to #sky-bg's fallback color, so any
+     exposed background area reads as continuous space, not a black gap. */
+  background: #050510;
   color: rgba(240,242,245,0.88);
   font-family: 'DM Serif Display', serif;
   cursor: none;
@@ -59,15 +60,35 @@ body:has(button:hover) #cursor-dot { transform: translate(-50%,-50%) scale(2.5);
 /* ── SKY BG ── */
 #sky-bg {
   position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden;
+  /* Deep-space fallback color shown briefly while the video element
+     loads. Prevents flash-of-wrong-poster on hard refresh. */
+  background-color: #050510;
 }
 /* Static nebula backdrop — no zoom, no loop cut. Procedural starfield on
    top provides the "walking into space" forward motion. */
-#sky-img {
+#sky-img, .sky-video {
   position: absolute; inset: 0;
   width: 100%; height: 100%; object-fit: cover; object-position: center center;
   filter: brightness(0.72) saturate(1.1);
-  animation: skyFade 2.5s ease 0.3s both;
 }
+#sky-img { animation: skyFade 2.5s ease 0.3s both; }
+
+/* Defensive — kill any iOS/Safari play-button overlay that might appear
+   when autoplay is blocked on a failed video element. */
+.sky-video::-webkit-media-controls,
+.sky-video::-webkit-media-controls-overlay-play-button,
+.sky-video::-webkit-media-controls-start-playback-button {
+  display: none !important;
+  -webkit-appearance: none !important;
+}
+.sky-video {
+  pointer-events: none;
+}
+
+/* Note: sky-img-b is no longer hidden on mobile. We try dual-video
+   crossfade on mobile too — the play-button-overlay CSS above
+   suppresses iOS's failed-autoplay UI, and the JS gracefully falls
+   back to a single-video opacity dip if iOS blocks the second video. */
 @media (max-width: 768px) {
   #sky-img { animation: skyFade 0.5s ease 0s both; }
 }
@@ -122,6 +143,9 @@ nav.scrolled { background: rgba(8,8,12,0.85); backdrop-filter: blur(12px); }
 #page-amz-music-sports nav,
 #page-amz-music-country nav,
 #page-tm-loho nav,
+#page-labs nav,
+#page-fuel nav,
+#page-google nav,
 [id^="page-role"] nav { position: sticky; top: 0; background: rgba(8,8,12,0.92); backdrop-filter: blur(12px); }
 #page-work nav .nav-logo,
 #page-work nav .nav-links a,
@@ -141,6 +165,12 @@ nav.scrolled { background: rgba(8,8,12,0.85); backdrop-filter: blur(12px); }
 #page-amz-music-country nav .nav-links a,
 #page-tm-loho nav .nav-logo,
 #page-tm-loho nav .nav-links a,
+#page-labs nav .nav-logo,
+#page-labs nav .nav-links a,
+#page-fuel nav .nav-logo,
+#page-fuel nav .nav-links a,
+#page-google nav .nav-logo,
+#page-google nav .nav-links a,
 [id^="page-role"] nav .nav-logo,
 [id^="page-role"] nav .nav-links a { color: rgba(240,242,245,0.88); }
 
@@ -359,16 +389,24 @@ nav.scrolled { background: rgba(8,8,12,0.85); backdrop-filter: blur(12px); }
 }
 .impact-inner {
   max-width: 1100px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: flex-start; justify-content: space-between;
   gap: 8px;
 }
-.impact-item { text-align: center; flex: 1; }
+.impact-item {
+  text-align: center; flex: 1;
+  display: flex; flex-direction: column; align-items: center;
+}
 .impact-num {
   font-family: 'Bebas Neue', sans-serif;
   font-size: 42px;
   color: rgba(240,242,245,0.92);
-  line-height: 1; margin-bottom: 8px;
+  line-height: 1;
+  margin-bottom: 12px;
   white-space: nowrap;
+  /* Lock all numbers to a uniform height so $/+/M+/K variants align on a shared baseline */
+  height: 42px;
+  display: flex; align-items: center; justify-content: center;
+  font-variant-numeric: tabular-nums;
 }
 .impact-label {
   font-family: 'DM Mono', monospace;
@@ -897,15 +935,17 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
   .impact-divider { display: none; }
   .pov-section { padding: 80px 24px; }
 
-  /* Billy — bigger on mobile so he reads clearly */
-  #billy-img { width: clamp(130px, 28vw, 200px); }
+  /* Billy — sized to leave room for a properly readable bubble above his
+     head. Smaller than the original mobile size by ~30%. */
+  #billy-img { width: clamp(90px, 18vw, 140px); }
   #billy-scene { margin-bottom: 8px; }
 
-  /* Speech bubble — font/size only, position controlled by JS */
+  /* Speech bubble — font/size only, position controlled by JS.
+     Slightly larger font now that Billy is smaller and there's more room. */
   #speech-bubble {
-    width: min(200px, 58vw) !important;
+    width: min(240px, 64vw) !important;
     max-width: calc(100vw - 32px) !important;
-    font-size: clamp(12px, 3vw, 14px) !important;
+    font-size: clamp(13px, 3.2vw, 15px) !important;
     white-space: normal !important;
     word-break: break-word !important;
   }
@@ -967,12 +1007,12 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
   .nav-links a { font-size: 8px; letter-spacing: 0.12em; }
   .nav-logo { font-size: 18px; }
 
-  /* Billy */
-  #billy-img { width: clamp(110px, 30vw, 150px); }
+  /* Billy — even smaller on phones */
+  #billy-img { width: clamp(75px, 22vw, 110px); }
   #billy-scene { margin-bottom: 0; }
 
-  /* Speech bubble */
-  #speech-bubble { width: min(200px, 62vw) !important; max-width: calc(100vw - 24px) !important; font-size: clamp(11px, 3vw, 13px) !important; }
+  /* Speech bubble — more room means we can bump font + width slightly */
+  #speech-bubble { width: min(220px, 68vw) !important; max-width: calc(100vw - 24px) !important; font-size: clamp(12px, 3.2vw, 14px) !important; }
 
   /* GOODMAN */
   .hero-goodman { font-size: clamp(40px, 13vw, 120px); }
@@ -1377,14 +1417,25 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
 <div id="cursor-dot"></div>
 <canvas id="comet-canvas"></canvas>
 
-<!-- SKY BG — looping nebula video (ping-pong edit) + procedural flying starfield -->
+<!-- SKY BG — TWO video elements played in stagger + crossfade to mask the
+     loop seam without requiring a yo-yo edit of the source file. -->
 <div id="sky-bg">
   <video
     id="sky-img"
+    class="sky-video"
     autoplay muted loop playsinline
     preload="auto"
-    poster="images/SPACE_IMAGE_BACKGROUND_1.png"
     aria-hidden="true"
+  >
+    <source src="images/space-bg.mp4" type="video/mp4">
+  </video>
+  <video
+    id="sky-img-b"
+    class="sky-video"
+    autoplay muted loop playsinline
+    preload="auto"
+    aria-hidden="true"
+    style="opacity:0;"
   >
     <source src="images/space-bg.mp4" type="video/mp4">
   </video>
@@ -1419,16 +1470,17 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
       <span class="gchar">G</span><span class="gchar">O</span><span class="gchar">O</span><span class="gchar">D</span><span class="gchar">M</span><span class="gchar">A</span><span class="gchar">N</span>
     </h1>
 
-    <div class="hero-tagline" style="opacity:1;animation:none;">Product narrative. Content strategy. Creative leadership.<br><strong>Now building the AI systems that make all three scale.</strong></div>
+    <div class="hero-tagline" id="hero-tagline" style="opacity:1;animation:none;"><span id="hero-tagline-lead">Product narrative. Content strategy. Creative leadership.</span><br><strong>Now building the AI systems that make all three scale.</strong></div>
     <div class="hero-sub">
 
       <div class="pulse-row" id="workplaces">
+        <span class="pword" data-system="workplaces"><a href="#" onclick="navigate('google');return false;" style="color:inherit;text-decoration:none;cursor:pointer;">Google</a></span><span class="psep">·</span>
         <span class="pword" data-system="workplaces"><a href="#" onclick="navigate('amazon-music');return false;" style="color:inherit;text-decoration:none;cursor:pointer;">Amazon Music</a></span><span class="psep">·</span>
         <span class="pword" data-system="workplaces"><a href="#" onclick="navigate('amazon-devices');return false;" style="color:inherit;text-decoration:none;cursor:pointer;">Amazon Devices &amp; Services</a></span><span class="psep">·</span>
         <span class="pword" data-system="workplaces"><a href="#" onclick="navigate('ticketmaster');return false;" style="color:inherit;text-decoration:none;cursor:pointer;">Ticketmaster</a></span><span class="psep">·</span>
         <span class="pword" data-system="workplaces"><a href="#" onclick="navigate('fuse-tv');return false;" style="color:inherit;text-decoration:none;cursor:pointer;">Fuse TV</a></span><span class="psep">·</span>
-        <span class="pword" data-system="workplaces"><a href="#" onclick="navigate('rolling-stone');return false;" style="color:inherit;text-decoration:none;cursor:pointer;">Rolling Stone</a></span><span class="psep">·</span>
-        <span class="pword" data-system="workplaces"><a href="#" onclick="navigate('spin');return false;" style="color:inherit;text-decoration:none;cursor:pointer;">SPIN</a></span>
+        <span class="pword" data-system="workplaces"><a href="#" onclick="navigate('spin');return false;" style="color:inherit;text-decoration:none;cursor:pointer;">SPIN</a></span><span class="psep">·</span>
+        <span class="pword" data-system="workplaces"><a href="#" onclick="navigate('rolling-stone');return false;" style="color:inherit;text-decoration:none;cursor:pointer;">Rolling Stone</a></span>
       </div>
     </div>
 
@@ -1475,7 +1527,7 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
       </div>
       <div class="impact-divider"></div>
       <div class="impact-item">
-        <div class="impact-num">900K</div>
+        <div class="impact-num">280K</div>
         <div class="impact-label">New customer HVAs, Overtime Elite campaign</div>
       </div>
       <div class="impact-divider"></div>
@@ -1547,6 +1599,23 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
         <button class="df-pill" data-filter="growth-launch">Growth &amp; Launch</button>
         <button class="df-pill" data-filter="brand-editorial">Brand &amp; Editorial</button>
         <button class="df-pill" data-filter="ai-ventures">AI &amp; New Ventures</button>
+      </div>
+    </div>
+
+    <!-- ── GOOGLE (2026) ── -->
+    <div class="work-group reveal">
+      <div class="work-grid" style="grid-template-columns:1fr;">
+        <div class="work-card work-card--anchor" data-disciplines="product-storytelling growth-launch ai-ventures content-systems" onclick="navigate('google')" style="grid-column:1 / -1;overflow:hidden;">
+          <div class="work-card-logo logo-img mobile-contain" style="background:#fff;height:340px;border-radius:0;border:none;box-shadow:none;padding:0;box-sizing:border-box;margin:-36px -32px 32px -32px;">
+            <img src="images/google-home-family.png" alt="Google Home — device lineup" onerror="this.style.display='none'" style="width:100%;height:100%;object-fit:contain;object-position:center;display:block;" />
+          </div>
+          <div class="work-card-top"><div class="work-card-arrow">→</div></div>
+          <div class="work-card-bottom">
+            <div class="work-card-label">Google Home / Nest · 2026</div>
+            <div class="work-card-title">Google Home</div>
+            <div class="work-card-role">Product Marketing Lead — Foundational messaging for Gemini x Smart-Home OEM partnerships</div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -1715,7 +1784,7 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
           <div class="work-card-bottom">
             <div class="work-card-label">SPIN Magazine · 2006 – 2011</div>
             <div class="work-card-title">SPIN</div>
-            <div class="work-card-role">Senior Editor, Digital — launched social, built SPINHouse Live</div>
+            <div class="work-card-role">Associate Editor, Digital — launched social, built SPINHouse Live</div>
           </div>
         </div>
         <div class="work-card" data-disciplines="brand-editorial" onclick="navigate('rolling-stone')">
@@ -1888,7 +1957,7 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
         <div class="role-intro-text">
           <p>Amazon Music's primary growth funnels — bundled distribution through Prime and Alexa — were in steep decline. The business needed entirely new acquisition channels, and fast. I returned to Amazon Music in 2023 as part of the Audience Development Marketing leadership team, one of three L6s working alongside a team of 7–9 campaign managers, to build those new funnels through content-led growth marketing.</p>
           <p>I owned creative content strategy across cross-channel campaigns — producing and sourcing short-form video and static assets for paid spends across YouTube, TikTok, Meta, Reddit, and O&amp;O — and contributed to the strategic framework that defined how content, paid media, and product experience worked together as a unified growth engine.</p>
-          <p>The campaigns I contributed to spanned the full breadth of Amazon Music's 2023–2024 content slate. On the product side, I contributed content strategy and campaign creative for Maestro — the streaming industry's first AI-powered playlist generator and Amazon Entertainment's first consumer-facing AI product, which launched in public beta before scaling to 100% of Amazon Music customers, earning 50+ media placements across Billboard, TechCrunch, The Verge, and Engadget. On the live side, I worked on content strategy, campaign creative, and GTM coordination across Amazon Music's livestream portfolio — securing placements across homepage, push messaging, ASO, and paid social for shows including Amazon Music Live x NFL x Prime Video, Kendrick Lamar's <em>The Pop Out</em> (one of the most watched music livestream events of the year), and Stagecoach. That livestream strategy contributed to +31% customer growth, +39% revenue growth, and a +3.7pt lift in brand favorability. For sports partnerships, the F1 x Alpine x Benson Boone campaign generated $6M in earned media value and 88M impressions, ranking Amazon Music as the #3 most recognized Alpine sponsor. Overtime Elite was our best-performing campaign of 2024, driving 900K new customer high-value actions.</p>
+          <p>The campaigns I contributed to spanned the full breadth of Amazon Music's 2023–2024 content slate. On the product side, I contributed content strategy and campaign creative for Maestro — the streaming industry's first AI-powered playlist generator and Amazon Entertainment's first consumer-facing AI product, which launched in public beta before scaling to 100% of Amazon Music customers, earning 50+ media placements across Billboard, TechCrunch, The Verge, and Engadget. On the live side, I worked on content strategy, campaign creative, and GTM coordination across Amazon Music's livestream portfolio — securing placements across homepage, push messaging, ASO, and paid social for shows including Amazon Music Live x NFL x Prime Video, Kendrick Lamar's <em>The Pop Out</em> (one of the most watched music livestream events of the year), and Stagecoach. That livestream strategy contributed to +31% customer growth, +39% revenue growth, and a +3.7pt lift in brand favorability. For sports partnerships, the F1 x Alpine x Benson Boone campaign generated $6M in earned media value and 88M impressions, ranking Amazon Music as the #3 most recognized Alpine sponsor. Overtime Elite was our best-performing campaign of 2024, driving 280K new customer high-value actions.</p>
           <p>As part of this team, the Audience Development model delivered: +306% YoY acquisition growth, 75% reduction in customer acquisition cost, 45% improvement in retention, and a +2.8pt lift in consideration among non-users. The strategy was adopted as the growth playbook across Amazon's Global Media &amp; Entertainment organization — extending its principles from music to Prime Video, Audible, and beyond.</p>
         </div>
         <div class="role-stats" style="align-self:flex-start;">
@@ -1986,6 +2055,7 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
         </div>
         <div class="role-stats">
           <div><div class="role-stat-num">20+</div><div class="role-stat-label">Product lines under Content Strategy</div></div>
+          <div><div class="role-stat-num">+240%</div><div class="role-stat-label">YoY video viewership from new cross-channel strategy</div></div>
           <div><div class="role-stat-num">$1.2M</div><div class="role-stat-label">PWD accessibility campaign budget</div></div>
           <div><div class="role-stat-num">10</div><div class="role-stat-label">Videos produced for PWD campaign</div></div>
           <div><div class="role-stat-num">5</div><div class="role-stat-label">Person team founded from scratch</div></div>
@@ -1993,6 +2063,8 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
       </div>
 
       <p>My team co-owned the Product Marketing Guide — the master brief for every major launch — spanning global new-to-world and next-gen product launches including Alexa, Echo, Kindle, Ring, Fire TV, Luna, Astro, and Halo. We expanded the briefing process by 33%, inserting Content Strategy as the connective tissue between Brand Strategists, Product Marketers, and the customer journey data that told us where and how the story needed to land. Previously, briefs were written without that layer. Now they couldn't ship without it. These launches routinely involved hundreds of stakeholders.</p>
+
+      <p>I also wrote a six-pager strategy doc outlining new cross-channel strategies for all product video content. The team had been in the habit of producing million-dollar videos for every launch, most of them earning fewer than 20,000 views — unacceptable given the spend. I ran an audit of every existing product video, used the findings to ruthlessly say no to certain video types (saving millions), and reinvested behind the videos deemed vital. I also built the distribution infrastructure to ensure videos played across owned channels — email, homepage, and beyond — and ensured paid YouTube budget behind every new video. The result: <strong>a 240% YoY increase in video viewership.</strong></p>
 
       <div style="border-top:1px solid var(--rule);margin:48px 0;"></div>
 
@@ -2221,7 +2293,7 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
     <div class="role-hero">
       <div class="role-eyebrow">Ticketmaster / Live Nation · 2017 – 2019</div>
       <h1 class="role-title">Ticketmaster</h1>
-      <p class="role-subtitle">Leading a rebrand and content strategy that drove a 23% increase in brand sentiment and 11% lift in last-minute ticket sales.</p>
+      <p class="role-subtitle">Leading a rebrand and content strategy that drove a 23% increase in brand sentiment and 13% lift in last-minute ticket sales.</p>
       <div class="role-meta">
         <div class="role-meta-item"><div class="role-meta-label">Title</div><div class="role-meta-value">Creative Director → Head of Brand Creative &amp; Content Strategy</div></div>
         <div class="role-meta-item"><div class="role-meta-label">Discipline</div><div class="role-meta-value">Content Strategy · Creative Direction · Brand · UX</div></div>
@@ -2233,13 +2305,13 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
       <div class="role-intro">
         <div class="role-intro-text">
           <p>Ticketmaster is one of the most recognized — and most polarizing — brands in entertainment. After decades as the infrastructure of live events, the brand had become synonymous with fees, frustration, and friction. Leadership saw an opportunity to change that, driven by new products like Verified Fan that proved Ticketmaster could actually fight for fans. The brief: reposition the brand from transactional villain to advocate for the live experience. The scale: 400,000+ events annually, 500 million+ tickets processed, and a stakeholder ecosystem spanning professional sports leagues, venues, performers, and marketing partners — each with their own standards, guidelines, and expectations.</p>
-          <p>Reporting to the CMO, I joined as Creative Director managing a team of four, then was promoted to Head of Brand Creative &amp; Content Strategy, co-managing an internal team of 15 alongside our embedded agency partner, Contend. I led the brand strategy work that framed all of it: the rebrand workshop, the new fan-centric positioning, and the content strategy that projected <em>Live Only Happens Once</em> across email, SEM, social, web and app UX, live events, and mass advertising.</p>
+          <p>Reporting to the CMO, I joined as Creative Director managing a team of four, then was promoted to Head of Brand Creative &amp; Content Strategy, co-managing an internal team of 15 alongside our Head of Design. Together we also managed an embedded agency partner, Contend. I led the brand strategy work that framed all of it: the rebrand workshop, the new fan-centric positioning, and the content strategy that projected <em>Live Only Happens Once</em> across email, SEM, social, web and app UX, live events, and mass advertising.</p>
           <p>Together, we built a content factory executing up to 800 assets per week — 31,000+ distinct assets in the first year, peaking at 3,200 per month. That system covered 107 sports teams, 110+ venues, and 5,000+ assets each for NFL, NHL, and NBA partnerships, with a framework nimble enough to pivot in real time based on performance data, event changes, and talent updates. Contend was embedded on-site, in our daily stand-ups, operating inside Ticketmaster's own project management infrastructure — a full integration model, not a vendor relationship.</p>
-          <p>The campaign drove a 24% increase in sales, a 23% lift in brand sentiment, and an 11% increase in last-minute ticket purchases — repositioning Ticketmaster from a brand fans tolerated to one they recognized as being on their side.</p>
+          <p>The campaign drove a 24% increase in sales, a 23% lift in brand sentiment, and a 13% increase in last-minute ticket purchases — repositioning Ticketmaster from a brand fans tolerated to one they recognized as being on their side.</p>
         </div>
         <div class="role-stats">
           <div><div class="role-stat-num">23%</div><div class="role-stat-label">Increase in brand sentiment</div></div>
-          <div><div class="role-stat-num">11%</div><div class="role-stat-label">Lift in last-minute ticket sales</div></div>
+          <div><div class="role-stat-num">13%</div><div class="role-stat-label">Lift in last-minute ticket sales</div></div>
           <div><div class="role-stat-num">40yr</div><div class="role-stat-label">Brand in need of a fan-centric rebrand</div></div>
           <div><div class="role-stat-num">2</div><div class="role-stat-label">Promotions in under 2 years</div></div>
         </div>
@@ -2301,7 +2373,7 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
           <img src="https://images.squarespace-cdn.com/content/v1/5cae448c7a1fbd208cbe1ce0/1562787899010-XLMZY70YFWA1TGHSD2AJ/Hut-Hut-Party%21.jpg" alt="Ticketmaster NFL Super Bowl live coverage" onerror="this.parentElement.style.display='none'" />
         </div>
       </div>
-      <div class="gallery-caption">Editorial content, brand advertising, and on-the-ground social coverage — from NHL press day and music festivals to the Super Bowl. City Guides and Arena Guides drove an 11% lift in last-minute ticket sales.</div>
+      <div class="gallery-caption">Editorial content, brand advertising, and on-the-ground social coverage — from NHL press day and music festivals to the Super Bowl. City Guides and Arena Guides drove a 13% lift in last-minute ticket sales.</div>
 
       <div style="border-top:1px solid var(--rule);margin:48px 0;"></div>
 
@@ -2419,7 +2491,7 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
       <h1 class="role-title">SPIN</h1>
       <p class="role-subtitle">From Editorial Assistant to Associate Editor, building SPIN's digital presence, social channels, and original video from the ground up.</p>
       <div class="role-meta">
-        <div class="role-meta-item"><div class="role-meta-label">Title</div><div class="role-meta-value">Editorial Assistant, Digital → Senior Editor</div></div>
+        <div class="role-meta-item"><div class="role-meta-label">Title</div><div class="role-meta-value">Editorial Assistant, Digital → Associate Editor</div></div>
         <div class="role-meta-item"><div class="role-meta-label">Discipline</div><div class="role-meta-value">Editorial · Social Media · Video · Content Strategy</div></div>
         <div class="role-meta-item"><div class="role-meta-label">Tenure</div><div class="role-meta-value">2008 – 2011</div></div>
       </div>
@@ -2428,13 +2500,13 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
 
       <div class="role-intro">
         <div class="role-intro-text">
-          <p>SPIN was where the fundamentals were built. I joined as a freelance Editorial Assistant, Digital after my Rolling Stone internship, and spent the next five years learning to write, edit, manage, and eventually lead — all in the middle of print media's most disruptive decade. I owned daily editorial operations — writing and assigning news, managing editorial calendars, reviewing analytics, and developing the content strategy that drove traffic growth during SPIN's evolution into a broader cultural voice online.</p>
+          <p>SPIN was where the fundamentals were built. I joined as an Editorial Assistant, Digital after my Rolling Stone internship, and spent the next five years learning to write, edit, manage, and eventually lead — all in the middle of print media's most disruptive decade. I owned daily editorial operations — writing and assigning news, managing editorial calendars, reviewing analytics, and developing the content strategy that drove traffic growth during SPIN's evolution into a broader cultural voice online. In total, I wrote over 1,500 articles and edited at least 3x that many. I also built a global network of top-tier writers, editors, photographers, and video producers and editors.</p>
           <p>I launched SPIN on Twitter, Facebook, and Instagram, and helped build the audience that carried the brand into the social era. As my role grew, I joined the tiger team that built two innovative digital products: <strong>SPIN Play</strong> — a native iPad app featuring song streams, video clips, daily music news, and cutting-edge journalism — and <strong>SPIN Earth</strong>, a global UGC platform aggregating concert content from fans around the world. Both represented early bets on what music media could become beyond the printed page.</p>
           <p>Select reads: <a href="https://www.spin.com/2011/10/qa-noel-gallagher-tells-stories-about-solo-lp/" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">Q&amp;A: Noel Gallagher Tells Stories About Solo LP</a> · <a href="https://www.spin.com/2011/02/feature-chris-martins-quiet-riot/" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">Feature: Chris Martin's Quiet Riot</a> · <a href="https://www.spin.com/2011/08/my-favorite-things-blink-182s-tom-delonge/" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">My Favorite Things: Blink-182's Tom DeLonge</a> · <a href="https://www.spin.com/2011/02/feature-in-bed-with-feist/" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">In Bed With Feist</a> · <a href="https://www.spin.com/author/william-goodman/" target="_blank" style="color:inherit;text-decoration:underline;text-underline-offset:3px;">Full writer's page →</a></p>
         </div>
         <div class="role-stats">
           <div><div class="role-stat-num">3yr</div><div class="role-stat-label">Building SPIN's digital operation</div></div>
-          <div><div class="role-stat-num">1000s</div><div class="role-stat-label">Articles written and edited</div></div>
+          <div><div class="role-stat-num">1,500+</div><div class="role-stat-label">Articles written</div></div>
           <div><div class="role-stat-num">2</div><div class="role-stat-label">Innovative products: SPIN Play + SPIN Earth</div></div>
           <div><div class="role-stat-num">3</div><div class="role-stat-label">Social platforms launched from zero</div></div>
         </div>
@@ -2536,7 +2608,7 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
         </div>
       </div>
 
-      <p>I started in summer 2005 as an editorial intern, and was soon picked up as a contract worker in the books department, where I worked on a collection of RS writing on <strong>Bob Dylan</strong> and worked alongside Hunter S. Thompson's assistant on a collection to celebrate the Gonzo genius.</p>
+      <p>I started in summer 2005 as an editorial intern, and was soon brought on to the books department, where I worked on a collection of RS writing on <strong>Bob Dylan</strong> and worked alongside Hunter S. Thompson's assistant on a collection to celebrate the Gonzo genius.</p>
 
       <div class="role-gallery cols-1 reveal">
         <div class="gallery-item"><img src="https://images.squarespace-cdn.com/content/v1/5cae448c7a1fbd208cbe1ce0/1559622295857-VDK82Y21IMX9O4Q4RE0M/Screen+Shot+2019-06-03+at+9.23.22+PM.png" alt="Rolling Stone"  />
@@ -3428,12 +3500,12 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
     <div class="role-body">
       <div class="role-intro">
         <div class="role-intro-text">
-          <p>I joined the NYC-based boutique agency Night After Night in fall 2016 for a contract role as Creative Director, leading a team across two clients: Grammy-winning rock band Kings of Leon and Jameson Irish Whiskey. For Kings, this meant pushing the band's brand into new territory for their seventh album, <em>WALLS</em>.</p>
+          <p>I joined the NYC-based boutique agency Night After Night in fall 2016 as Creative Director, leading a team across two clients: Grammy-winning rock band Kings of Leon and Jameson Irish Whiskey. For Kings, this meant pushing the band's brand into new territory for their seventh album, <em>WALLS</em>.</p>
         </div>
         <div class="role-stats">
           <div><div class="role-stat-num">40M+</div><div class="role-stat-label">YouTube views on the WALLS video trilogy</div></div>
           <div><div class="role-stat-num">3</div><div class="role-stat-label">Music videos — narrative trilogy + live</div></div>
-          <div><div class="role-stat-num">7th</div><div class="role-stat-label">Album campaign for KOL</div></div>
+          <div><div class="role-stat-num">No. 1</div><div class="role-stat-label">Album hit top of the Billboard Chart</div></div>
         </div>
       </div>
 
@@ -3648,12 +3720,462 @@ body { animation: bodyFadeIn 0.7s ease forwards; }
   </div>
 </div>
 
+
+<!-- ████████████████████████████████████████
+     GOOGLE — PRODUCT MARKETING LEAD, GOOGLE HOME / NEST
+     ████████████████████████████████████████ -->
+<div id="page-google" class="page">
+  <div class="role-page">
+    <nav>
+      <a href="#" class="nav-logo" onclick="navigate('home');return false;">WSG</a>
+      <div class="nav-links">
+        <a href="#" onclick="navigate('home');return false;">← All Work</a>
+        <a href="#" onclick="navigate('about');return false;">About</a>
+        <a href="mailto:william.stephen.goodman@gmail.com">Contact</a>
+      </div>
+    </nav>
+    <div class="role-hero" style="background:linear-gradient(135deg,#0a1522 0%,#14294a 50%,#0a1522 100%);">
+      <div class="role-eyebrow" style="color:rgba(160,200,255,0.55);">GOOGLE HOME · NEST · JUNE 2026 – AUGUST 2026</div>
+      <h1 class="role-title" style="background:linear-gradient(90deg,#4285F4 0%,#EA4335 33%,#FBBC05 66%,#34A853 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Google Home.</h1>
+      <p class="role-subtitle">Product Marketing Lead. Brought in to build the foundational messaging framework for Gemini across Google Home's smart-home OEM partnerships — The Home Depot, Panasonic, Walmart, and other tier-one manufacturers.</p>
+      <div class="role-meta">
+        <div class="role-meta-item"><div class="role-meta-label" style="color:rgba(160,200,255,0.45);">Title</div><div class="role-meta-value" style="color:rgba(200,220,255,0.78);">Product Marketing Lead — Contract</div></div>
+        <div class="role-meta-item"><div class="role-meta-label" style="color:rgba(160,200,255,0.45);">Team</div><div class="role-meta-value" style="color:rgba(200,220,255,0.78);">Google Home / Nest</div></div>
+        <div class="role-meta-item"><div class="role-meta-label" style="color:rgba(160,200,255,0.45);">Discipline</div><div class="role-meta-value" style="color:rgba(200,220,255,0.78);">Positioning · Partner Marketing · Launch Narrative</div></div>
+      </div>
+    </div>
+
+    <div class="role-body">
+
+      <div class="role-intro">
+        <div class="role-intro-text">
+          <p>When Google Home needed to figure out how to talk about Gemini inside a partnership with The Home Depot, Panasonic, or Walmart — retailers and manufacturers with their own brand equity, frameworks, and view of what "AI in the home" should mean — they brought me in to build the messaging foundation.</p>
+          <p>The framework beneath both — the shared architecture of pillars, proof points, and audience cuts that every partner activation could plug into. So the Home Depot version and the Panasonic version and the Walmart version all felt like Google, and all felt like their own brand, at the same time.</p>
+          <p>The Google Home team worked in partnership with the Gemini master brand team, legal, and partner marketing teams to bring these foundational toolkits and playbooks to life.</p>
+        </div>
+        <div class="role-stats">
+          <div><div class="role-stat-num" style="background:linear-gradient(90deg,#4285F4,#34A853);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">4</div><div class="role-stat-label">Categories of shipped deliverable</div></div>
+          <div><div class="role-stat-num" style="background:linear-gradient(90deg,#EA4335,#FBBC05);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">3+</div><div class="role-stat-label">Tier-one OEM partners in-scope</div></div>
+          <div><div class="role-stat-num" style="background:linear-gradient(90deg,#FBBC05,#34A853);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">3mo</div><div class="role-stat-label">Embedded on Google Home / Nest PMM</div></div>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--rule);margin:8px 0 56px;"></div>
+
+      <!-- WHAT I SHIPPED -->
+      <div style="margin-bottom:56px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(240,242,245,0.35);margin-bottom:32px;display:flex;align-items:center;gap:12px;"><span style="width:24px;height:1px;background:rgba(240,242,245,0.25);display:inline-block;"></span>What I Shipped</div>
+
+        <div style="margin-bottom:36px;">
+          <h3 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(24px,2.8vw,36px);color:rgba(240,242,245,0.92);letter-spacing:0.02em;margin-bottom:12px;">01 · Messaging Framework</h3>
+          <p style="font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.75;color:rgba(240,242,245,0.65);">The core positioning architecture for Gemini inside Google Home's smart-home partnerships — pillars, proof points, audience cuts. The doc every downstream deliverable pulled from. Designed to hold up across partner categories that had almost nothing in common except a shared surface: the connected home.</p>
+        </div>
+
+        <div style="margin-bottom:36px;">
+          <h3 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(24px,2.8vw,36px);color:rgba(240,242,245,0.92);letter-spacing:0.02em;margin-bottom:12px;">02 · Partner Co-Marketing Collateral</h3>
+          <p style="font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.75;color:rgba(240,242,245,0.65);">Sales-enablement and partner-facing decks and one-sheets for The Home Depot, Panasonic, Walmart, and additional OEM partners. Each one calibrated to its partner's own brand voice while carrying the Google Home + Gemini narrative underneath.</p>
+        </div>
+
+        <div style="margin-bottom:36px;">
+          <h3 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(24px,2.8vw,36px);color:rgba(240,242,245,0.92);letter-spacing:0.02em;margin-bottom:12px;">03 · Launch &amp; Campaign Narrative</h3>
+          <p style="font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.75;color:rgba(240,242,245,0.65);">Named-campaign copy and launch narrative for partner-facing activations — the story arc a joint moment could hang on, translated across channels from partner press to retail floor.</p>
+        </div>
+
+        <div style="margin-bottom:8px;">
+          <h3 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(24px,2.8vw,36px);color:rgba(240,242,245,0.92);letter-spacing:0.02em;margin-bottom:12px;">04 · Product Marketing Strategy Input</h3>
+          <p style="font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.75;color:rgba(240,242,245,0.65);">Input into GTM approach, message hierarchy, and how the smart-home story extended into partner ecosystems. Bringing 20 years of content-systems thinking to a team building the next-generation home assistant story.</p>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--rule);margin:8px 0 56px;"></div>
+
+      <!-- HERO IMAGE -->
+      <div style="margin-bottom:56px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(240,242,245,0.35);margin-bottom:20px;display:flex;align-items:center;gap:12px;"><span style="width:24px;height:1px;background:rgba(240,242,245,0.25);display:inline-block;"></span>The Product</div>
+        <div style="width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#0a1522 0%,#14294a 100%);border:1px solid rgba(160,200,255,0.15);overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative;">
+          <img src="images/google-hero.png" alt="Bring home the magic of Gemini — Google Home" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="width:100%;height:100%;object-fit:cover;object-position:center;" />
+          <div style="display:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(160,200,255,0.5);text-align:center;padding:24px;flex-direction:column;gap:8px;">google-hero.png<br><span style="font-size:9px;opacity:0.6;">drop in /images/</span></div>
+        </div>
+        <div class="gallery-caption" style="margin-top:16px;">Google Home's public-facing hero for Gemini in the home. Foundation for how the story lands with consumers.</div>
+      </div>
+
+      <!-- PARTNERS -->
+      <div style="margin-bottom:56px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(240,242,245,0.35);margin-bottom:32px;display:flex;align-items:center;gap:12px;"><span style="width:24px;height:1px;background:rgba(240,242,245,0.25);display:inline-block;"></span>Named Partners</div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;">
+          <div style="padding:32px 24px;background:rgba(66,133,244,0.06);border:1px solid rgba(66,133,244,0.18);border-left:3px solid #4285F4;">
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(160,200,255,0.6);margin-bottom:10px;">Retail · Home Improvement</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,2.4vw,32px);color:rgba(240,242,245,0.92);letter-spacing:0.02em;margin-bottom:10px;">The Home Depot</div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.65;color:rgba(240,242,245,0.6);">Google Cloud x The Home Depot has already set the template for what a full-stack Google + retail giant activation looks like. My work built the Gemini-in-the-home layer on top of it.</p>
+          </div>
+          <div style="padding:32px 24px;background:rgba(234,67,53,0.06);border:1px solid rgba(234,67,53,0.18);border-left:3px solid #EA4335;">
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,180,175,0.6);margin-bottom:10px;">Consumer Electronics · OEM</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,2.4vw,32px);color:rgba(240,242,245,0.92);letter-spacing:0.02em;margin-bottom:10px;">Panasonic</div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.65;color:rgba(240,242,245,0.6);">A tier-one Japanese electronics partner with deep credibility in appliances and cameras. The messaging had to respect Panasonic's engineering heritage while framing Gemini as its next natural chapter.</p>
+          </div>
+          <div style="padding:32px 24px;background:rgba(251,188,5,0.06);border:1px solid rgba(251,188,5,0.18);border-left:3px solid #FBBC05;">
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,220,140,0.7);margin-bottom:10px;">Retail · Mass Market</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,2.4vw,32px);color:rgba(240,242,245,0.92);letter-spacing:0.02em;margin-bottom:10px;">Walmart</div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.65;color:rgba(240,242,245,0.6);">The mass-market reach test — a partner whose customer base is the American middle. The framework had to translate Gemini for shoppers who care about the outcome, not the model.</p>
+          </div>
+        </div>
+        <p style="font-family:'DM Serif Display',serif;font-style:italic;font-size:13px;color:rgba(240,242,245,0.42);margin-top:20px;">Additional tier-one OEM smart-home partners in-scope. Named partners referenced above with permission.</p>
+      </div>
+
+      <div style="border-top:1px solid var(--rule);margin:8px 0 56px;"></div>
+
+      <!-- IMAGE GALLERY -->
+      <div style="margin-bottom:56px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(240,242,245,0.35);margin-bottom:32px;display:flex;align-items:center;gap:12px;"><span style="width:24px;height:1px;background:rgba(240,242,245,0.25);display:inline-block;"></span>Case References</div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+          <div>
+            <div style="width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#0a1522 0%,#14294a 100%);border:1px solid rgba(160,200,255,0.15);overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;">
+              <img src="images/google-home-collage.png" alt="Google Home + Gemini product marketing" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="width:100%;height:100%;object-fit:cover;object-position:center;" />
+              <div style="display:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(160,200,255,0.5);text-align:center;padding:24px;flex-direction:column;gap:8px;">google-home-collage.png<br><span style="font-size:9px;opacity:0.6;">drop in /images/</span></div>
+            </div>
+            <div class="gallery-caption" style="margin-top:12px;">Gemini-in-the-home product surfaces — the consumer-facing story the partner narratives ladder up to.</div>
+          </div>
+          <div>
+            <div style="width:100%;aspect-ratio:16/9;background:linear-gradient(135deg,#f5f5f0 0%,#faf5e8 100%);border:1px solid rgba(240,242,245,0.15);overflow:hidden;position:relative;display:flex;align-items:center;justify-content:center;">
+              <img src="images/google-home-depot.png" alt="Google Cloud x The Home Depot" onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" style="width:100%;height:100%;object-fit:cover;object-position:center;" />
+              <div style="display:none;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(240,120,60,0.6);text-align:center;padding:24px;flex-direction:column;gap:8px;">google-home-depot.png<br><span style="font-size:9px;opacity:0.6;">drop in /images/</span></div>
+            </div>
+            <div class="gallery-caption" style="margin-top:12px;">The Google Cloud x Home Depot partnership set the pattern — my Google Home work extended it into the Gemini-in-the-home layer.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--rule);margin:8px 0 56px;"></div>
+
+      <!-- NOTE -->
+      <div style="margin-bottom:36px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(240,242,245,0.35);margin-bottom:20px;display:flex;align-items:center;gap:12px;"><span style="width:24px;height:1px;background:rgba(240,242,245,0.25);display:inline-block;"></span>Note on the Work</div>
+        <p style="font-family:'DM Serif Display',serif;font-size:18px;line-height:1.7;color:rgba(240,242,245,0.72);font-style:italic;max-width:780px;">Partnership marketing is a language problem. Google speaks Google. Home Depot speaks Home Depot. Panasonic speaks Panasonic. A framework that works has to be strict enough to hold a shared story together, and loose enough that every partner can still sound like themselves. That was the assignment. The team put it into market.</p>
+      </div>
+
+      <div class="role-continue">
+        <a href="#" class="prev" onclick="navigate('home');return false;">← All Work</a>
+        <a href="#" class="next" onclick="navigate('amazon-music');return false;">Amazon Music →</a>
+      </div>
+
+    </div>
+
+    <div class="contact-strip">
+      <div class="contact-strip-left">
+        <h2>Let's Build Something.</h2>
+        <p>Senior roles in product marketing, content strategy, and AI-adjacent creative leadership.</p>
+      </div>
+      <div class="contact-strip-links">
+        <a href="mailto:william.stephen.goodman@gmail.com" class="contact-btn primary">Email Billy</a>
+        <a href="https://www.linkedin.com/in/wsgoodman/" class="contact-btn" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+
+    <footer>
+      <div class="ft-name">© 2025 William S. Goodman</div>
+      <div class="ft-links">
+        <a href="https://williamsgoodman.com" target="_blank">Live Site</a>
+        <a href="mailto:william.stephen.goodman@gmail.com">Email</a>
+      </div>
+    </footer>
+  </div>
+</div>
+
+
+<!-- ████████████████████████████████████████
+     AI LABS — LANDING PAGE
+     ████████████████████████████████████████ -->
+<div id="page-labs" class="page">
+  <div class="role-page">
+    <nav>
+      <a href="#" class="nav-logo" onclick="navigate('home');return false;">WSG</a>
+      <div class="nav-links">
+        <a href="#" onclick="navigate('home');return false;">← Home</a>
+        <a href="#" onclick="navigate('about');return false;">About</a>
+        <a href="mailto:william.stephen.goodman@gmail.com">Contact</a>
+      </div>
+    </nav>
+    <div class="role-hero" style="background:linear-gradient(135deg,#02161c 0%,#063b3a 50%,#02161c 100%);">
+      <div class="role-eyebrow" style="color:rgba(125,249,158,0.55);">AI LABS · 2025 –</div>
+      <h1 class="role-title" style="background:linear-gradient(90deg,#7df99e,#38f9d7,#6fffe9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">AI Labs.</h1>
+      <p class="role-subtitle">Shipping AI products that I want to use myself. No frameworks chasing benchmarks. No prototypes that never leave the desktop. Real apps, in real hands, with the Claude API doing the work the user used to.</p>
+      <div class="role-meta">
+        <div class="role-meta-item">
+          <div class="role-meta-label" style="color:rgba(125,249,158,0.4);">Shipped</div>
+          <div class="role-meta-value" style="color:rgba(180,255,210,0.75);">Fuel — calorie counter</div>
+        </div>
+        <div class="role-meta-item">
+          <div class="role-meta-label" style="color:rgba(125,249,158,0.4);">In Build</div>
+          <div class="role-meta-value" style="color:rgba(180,255,210,0.75);">Rad Report · Conductor</div>
+        </div>
+        <div class="role-meta-item">
+          <div class="role-meta-label" style="color:rgba(125,249,158,0.4);">Stack</div>
+          <div class="role-meta-value" style="color:rgba(180,255,210,0.75);">Claude API · TypeScript · PWA</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="role-body">
+      <div class="role-intro">
+        <div class="role-intro-text">
+          <p>After three MIT certificates in generative AI, agentic AI, and AI product design, the question I kept coming back to was the same one: <em>what does it actually feel like to ship one of these things?</em></p>
+          <p>Labs is the answer. Each project here is a real, working product — shipped or shipping — built to test a specific thesis about where the Claude API genuinely changes the user experience, not just adds a chat box.</p>
+          <p>Start with Fuel. It's live on the web and installable on iPhone.</p>
+        </div>
+        <div class="role-stats">
+          <div>
+            <div class="role-stat-num" style="background:linear-gradient(90deg,#7df99e,#38f9d7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">3</div>
+            <div class="role-stat-label">Apps in active development</div>
+          </div>
+          <div>
+            <div class="role-stat-num" style="background:linear-gradient(90deg,#7df99e,#38f9d7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">1</div>
+            <div class="role-stat-label">Shipped and live</div>
+          </div>
+          <div>
+            <div class="role-stat-num" style="background:linear-gradient(90deg,#7df99e,#38f9d7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">2025</div>
+            <div class="role-stat-label">Year of focused AI building</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--rule);margin:8px 0 56px;"></div>
+
+      <!-- LABS CARDS -->
+      <div style="display:grid;grid-template-columns:1fr;gap:2px;background:rgba(125,249,158,0.06);">
+
+        <!-- FUEL -->
+        <div onclick="navigate('fuel')" style="background:#08080f;padding:48px 40px;border-left:3px solid rgba(125,249,158,0.6);cursor:pointer;transition:background 0.3s ease;display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:center;" onmouseover="this.style.background='#0a0e14'" onmouseout="this.style.background='#08080f'">
+          <div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(125,249,158,0.6);margin-bottom:14px;">01 · LIVE · CALORIE COUNTER</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,5vw,68px);color:rgba(240,242,245,0.95);letter-spacing:0.01em;line-height:1;margin-bottom:18px;">Fuel.</div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.65;color:rgba(240,242,245,0.7);margin-bottom:14px;">A calorie counter that uses Claude to identify food from a photo. Snap, tap, log. No accounts, no cloud, no friction. Your Anthropic API key stays on your device.</p>
+            <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.55;color:rgba(240,242,245,0.4);margin-bottom:24px;">PWA · Vanilla HTML/JS · Claude API · One HTML file, installable on iPhone via Add to Home Screen.</p>
+            <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(125,249,158,0.9);">View Project →</span>
+          </div>
+          <div style="aspect-ratio:9/16;max-height:380px;background:linear-gradient(135deg,#04140f 0%,#0a3b30 100%);border:1px solid rgba(125,249,158,0.15);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(125,249,158,0.45);text-align:center;padding:24px;">Fuel app preview<br><span style="font-size:9px;opacity:0.6;">drop fuel-hero.png in /images/</span></div>
+        </div>
+
+        <!-- RAD REPORT -->
+        <div style="background:#08080f;padding:48px 40px;border-left:3px solid rgba(255,180,120,0.45);display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:center;">
+          <div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,180,120,0.6);margin-bottom:14px;">02 · IN BUILD · AGENTIC NEWSROOM</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,5vw,68px);color:rgba(240,242,245,0.95);letter-spacing:0.01em;line-height:1;margin-bottom:18px;">Rad Report.</div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.65;color:rgba(240,242,245,0.7);margin-bottom:14px;">A agentic newsroom for the word "Rad." A team of Claude-powered agents — copywriter, editor, strategist, social manager — scans the web and social channels for every use of "rad," pitches the best to an editorial agent, writes them up as jokes in the Rad brand voice, then routes to a human-in-the-loop for approval before the weekly Rad Report newsletter goes out.</p>
+            <p style="font-family:'DM Serif Display',serif;font-style:italic;font-size:14px;line-height:1.55;color:rgba(255,180,120,0.85);margin-bottom:14px;">"Working with AI, we bring global radness to the masses."</p>
+            <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.55;color:rgba(240,242,245,0.4);margin-bottom:24px;">Multi-agent Claude workflow · Weekly newsletter · Human-in-the-loop approval.</p>
+            <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(240,242,245,0.3);">Coming Soon</span>
+          </div>
+          <div style="aspect-ratio:9/16;max-height:380px;background:linear-gradient(135deg,#1c0e04 0%,#3b1a08 100%);border:1px solid rgba(255,180,120,0.12);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,180,120,0.35);">In design</div>
+        </div>
+
+        <!-- CONDUCTOR -->
+        <div onclick="navigate('ai')" style="background:#08080f;padding:48px 40px;border-left:3px solid rgba(192,132,252,0.55);cursor:pointer;transition:background 0.3s ease;display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:center;" onmouseover="this.style.background='#0a0814'" onmouseout="this.style.background='#08080f'">
+          <div>
+            <div style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(192,132,252,0.7);margin-bottom:14px;">03 · IN BUILD · ARTIST PLATFORM</div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,5vw,68px);color:rgba(240,242,245,0.95);letter-spacing:0.01em;line-height:1;margin-bottom:18px;">Conductor.</div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:16px;line-height:1.65;color:rgba(240,242,245,0.7);margin-bottom:14px;">Every service a record label provides — distribution, royalties, sync licensing, booking, fan engagement — in one dashboard, under the artist's control. My applied thesis for MIT.</p>
+            <p style="font-family:'DM Sans',sans-serif;font-size:13px;line-height:1.55;color:rgba(240,242,245,0.4);margin-bottom:24px;">Next.js 14 · TypeScript · Supabase · Clerk · Anthropic API.</p>
+            <span style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(192,132,252,0.9);">View Case Study →</span>
+          </div>
+          <div style="aspect-ratio:9/16;max-height:380px;background:linear-gradient(135deg,#0e0418 0%,#1f0a38 100%);border:1px solid rgba(192,132,252,0.15);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(192,132,252,0.4);">SaaS in dev</div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="contact-strip">
+      <div class="contact-strip-left">
+        <h2>Want to build something?</h2>
+        <p>Open to senior roles in AI product, content strategy, and creative direction.</p>
+      </div>
+      <div class="contact-strip-links">
+        <a href="mailto:william.stephen.goodman@gmail.com" class="contact-btn primary">Email Billy</a>
+        <a href="https://www.linkedin.com/in/wsgoodman/" class="contact-btn" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+
+    <footer>
+      <div class="ft-name">© 2025 William S. Goodman</div>
+      <div class="ft-links">
+        <a href="https://williamsgoodman.com" target="_blank">Live Site</a>
+        <a href="mailto:william.stephen.goodman@gmail.com">Email</a>
+      </div>
+    </footer>
+  </div>
+</div>
+
+
+<!-- ████████████████████████████████████████
+     FUEL — CALORIE COUNTER (AI LABS)
+     ████████████████████████████████████████ -->
+<div id="page-fuel" class="page">
+  <div class="role-page">
+    <nav>
+      <a href="#" class="nav-logo" onclick="navigate('home');return false;">WSG</a>
+      <div class="nav-links">
+        <a href="#" onclick="navigate('labs');return false;">← All Labs</a>
+        <a href="#" onclick="navigate('about');return false;">About</a>
+        <a href="mailto:william.stephen.goodman@gmail.com">Contact</a>
+      </div>
+    </nav>
+    <div class="role-hero" style="background:linear-gradient(135deg,#02181a 0%,#053a30 50%,#02181a 100%);">
+      <div class="role-eyebrow" style="color:rgba(125,249,158,0.55);">AI LABS · CALORIE COUNTER · 2025</div>
+      <h1 class="role-title" style="background:linear-gradient(90deg,#7df99e,#38f9d7,#6fffe9);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Fuel.</h1>
+      <p class="role-subtitle">A calorie counter that uses Claude to identify food from a photo. Built to take the friction out of meal logging — and to test what happens when a daily-use utility offloads its hardest step to an LLM.</p>
+      <div class="role-meta">
+        <div class="role-meta-item">
+          <div class="role-meta-label" style="color:rgba(125,249,158,0.4);">Status</div>
+          <div class="role-meta-value" style="color:rgba(180,255,210,0.75);">Live · v1 shipped</div>
+        </div>
+        <div class="role-meta-item">
+          <div class="role-meta-label" style="color:rgba(125,249,158,0.4);">Stack</div>
+          <div class="role-meta-value" style="color:rgba(180,255,210,0.75);">PWA · Claude API · Vanilla HTML/JS</div>
+        </div>
+        <div class="role-meta-item">
+          <div class="role-meta-label" style="color:rgba(125,249,158,0.4);">Try It</div>
+          <div class="role-meta-value" style="color:rgba(180,255,210,0.75);"><a href="https://bgoods360.github.io/Fuel-Calorie-Counter" target="_blank" style="color:inherit;text-decoration:underline;text-decoration-color:rgba(125,249,158,0.4);">bgoods360.github.io/Fuel-Calorie-Counter</a></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="role-body">
+
+      <!-- CTAs -->
+      <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:56px;">
+        <a href="https://bgoods360.github.io/Fuel-Calorie-Counter" target="_blank" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:#02181a;background:linear-gradient(90deg,#7df99e,#38f9d7);padding:14px 22px;text-decoration:none;border:1px solid rgba(125,249,158,0.6);font-weight:600;">Try the Live App →</a>
+        <a href="https://bgoods360.github.io/Fuel-Calorie-Counter" target="_blank" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(125,249,158,0.9);background:transparent;padding:14px 22px;text-decoration:none;border:1px solid rgba(125,249,158,0.4);">Install on iPhone</a>
+        <a href="https://github.com/bgoods360/Fuel-Calorie-Counter" target="_blank" style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:rgba(240,242,245,0.7);background:transparent;padding:14px 22px;text-decoration:none;border:1px solid rgba(240,242,245,0.2);">View Source</a>
+      </div>
+
+      <!-- INTRO -->
+      <div class="role-intro">
+        <div class="role-intro-text">
+          <p>Calorie counting is friction. You eat something, then you have to type its name, scroll a database, pick a portion, log it. Most people quit by week two.</p>
+          <p>Fuel replaces the typing with a model that can see. Snap a photo of what's on your plate, tap <strong style="color:rgba(125,249,158,0.85);">AI Lookup</strong>, and Claude returns the food and an estimated calorie count. Verify, add to log, done — usually inside 5 seconds.</p>
+          <p>It's not a clinical tool. It's a daily-use utility built for the 80% case: rough numbers, low friction, no account, no cloud.</p>
+        </div>
+        <div class="role-stats">
+          <div>
+            <div class="role-stat-num" style="background:linear-gradient(90deg,#7df99e,#38f9d7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">~5s</div>
+            <div class="role-stat-label">From photo to logged entry</div>
+          </div>
+          <div>
+            <div class="role-stat-num" style="background:linear-gradient(90deg,#7df99e,#38f9d7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">0</div>
+            <div class="role-stat-label">Accounts. Servers. Trackers.</div>
+          </div>
+          <div>
+            <div class="role-stat-num" style="background:linear-gradient(90deg,#7df99e,#38f9d7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">1</div>
+            <div class="role-stat-label">HTML file. Installable as a PWA.</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--rule);margin:8px 0 56px;"></div>
+
+      <!-- SCREENSHOTS GRID -->
+      <div style="margin-bottom:56px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(240,242,245,0.35);margin-bottom:32px;display:flex;align-items:center;gap:12px;"><span style="width:24px;height:1px;background:rgba(240,242,245,0.25);display:inline-block;"></span>Inside the App</div>
+
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;">
+          <div style="aspect-ratio:9/19.5;background:linear-gradient(135deg,#04140f 0%,#0a3b30 100%);border:1px solid rgba(125,249,158,0.15);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(125,249,158,0.5);text-align:center;padding:18px;">Daily log<br><span style="font-size:8px;opacity:0.6;">fuel-log.png</span></div>
+          <div style="aspect-ratio:9/19.5;background:linear-gradient(135deg,#04140f 0%,#0a3b30 100%);border:1px solid rgba(125,249,158,0.15);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(125,249,158,0.5);text-align:center;padding:18px;">AI lookup<br><span style="font-size:8px;opacity:0.6;">fuel-ai-lookup.png</span></div>
+          <div style="aspect-ratio:9/19.5;background:linear-gradient(135deg,#04140f 0%,#0a3b30 100%);border:1px solid rgba(125,249,158,0.15);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(125,249,158,0.5);text-align:center;padding:18px;">Add to log<br><span style="font-size:8px;opacity:0.6;">fuel-add.png</span></div>
+          <div style="aspect-ratio:9/19.5;background:linear-gradient(135deg,#04140f 0%,#0a3b30 100%);border:1px solid rgba(125,249,158,0.15);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(125,249,158,0.5);text-align:center;padding:18px;">Settings<br><span style="font-size:8px;opacity:0.6;">fuel-settings.png</span></div>
+        </div>
+        <p style="font-family:'DM Serif Display',serif;font-style:italic;font-size:13px;color:rgba(240,242,245,0.4);margin-top:20px;text-align:center;">Drop screenshots in <code style="font-family:'DM Mono',monospace;color:rgba(125,249,158,0.7);">/images/</code> as <code style="font-family:'DM Mono',monospace;color:rgba(125,249,158,0.7);">fuel-log.png</code>, <code style="font-family:'DM Mono',monospace;color:rgba(125,249,158,0.7);">fuel-ai-lookup.png</code>, <code style="font-family:'DM Mono',monospace;color:rgba(125,249,158,0.7);">fuel-add.png</code>, <code style="font-family:'DM Mono',monospace;color:rgba(125,249,158,0.7);">fuel-settings.png</code> — I'll swap to img tags.</p>
+      </div>
+
+      <div style="border-top:1px solid var(--rule);margin:8px 0 56px;"></div>
+
+      <!-- HOW IT WORKS -->
+      <div style="margin-bottom:56px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(240,242,245,0.35);margin-bottom:32px;display:flex;align-items:center;gap:12px;"><span style="width:24px;height:1px;background:rgba(240,242,245,0.25);display:inline-block;"></span>How it works</div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:32px;">
+          <div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,2.5vw,32px);color:rgba(125,249,158,0.9);letter-spacing:0.02em;margin-bottom:12px;">01 · AI Lookup</div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.7;color:rgba(240,242,245,0.65);">Snap or pick a photo. Claude identifies the food and estimates calories. Verify the result, tap Add to Log. The model carries the weight; you stay in flow.</p>
+          </div>
+          <div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,2.5vw,32px);color:rgba(125,249,158,0.9);letter-spacing:0.02em;margin-bottom:12px;">02 · Frequent</div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.7;color:rgba(240,242,245,0.65);">Tap-to-log for the foods you eat constantly. Pulled from your recent entries — no setup required.</p>
+          </div>
+          <div>
+            <div style="font-family:'Bebas Neue',sans-serif;font-size:clamp(22px,2.5vw,32px);color:rgba(125,249,158,0.9);letter-spacing:0.02em;margin-bottom:12px;">03 · Manual</div>
+            <p style="font-family:'DM Sans',sans-serif;font-size:14px;line-height:1.7;color:rgba(240,242,245,0.65);">Type it yourself when you want precision — name, calories, done. The classic input is still a tap away.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--rule);margin:8px 0 56px;"></div>
+
+      <!-- PRIVACY + TECH -->
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:48px;margin-bottom:56px;">
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(125,249,158,0.7);margin-bottom:16px;">Privacy</div>
+          <h3 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(24px,2.8vw,36px);color:rgba(240,242,245,0.92);letter-spacing:0.02em;margin-bottom:16px;">Your data stays yours.</h3>
+          <p style="font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;color:rgba(240,242,245,0.65);">Your Anthropic API key lives in your device's local storage. It's never sent anywhere except Anthropic's API — not to me, not to a backend I run, not anywhere. There is no backend. No accounts, no analytics, no telemetry. The same posture you'd want from a health app, by default.</p>
+        </div>
+        <div>
+          <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(125,249,158,0.7);margin-bottom:16px;">Tech</div>
+          <h3 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(24px,2.8vw,36px);color:rgba(240,242,245,0.92);letter-spacing:0.02em;margin-bottom:16px;">One HTML file.</h3>
+          <p style="font-family:'DM Sans',sans-serif;font-size:15px;line-height:1.7;color:rgba(240,242,245,0.65);">Built as a Progressive Web App. Vanilla HTML, CSS, and JavaScript — no build step, no framework. Calls the Claude API directly for food recognition. Hosted on GitHub Pages. On iPhone, tap Share → Add to Home Screen and it installs like a native app, full-screen, with its own icon.</p>
+        </div>
+      </div>
+
+      <div style="border-top:1px solid var(--rule);margin:8px 0 56px;"></div>
+
+      <!-- INSTALL INSTRUCTIONS -->
+      <div style="background:linear-gradient(135deg,#04140f 0%,#0a3b30 100%);border:1px solid rgba(125,249,158,0.2);padding:40px;margin-bottom:56px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(125,249,158,0.7);margin-bottom:14px;">Install on iPhone</div>
+        <h3 style="font-family:'Bebas Neue',sans-serif;font-size:clamp(26px,3vw,40px);color:rgba(240,242,245,0.95);letter-spacing:0.02em;margin-bottom:24px;">Three steps. Thirty seconds.</h3>
+        <ol style="font-family:'DM Sans',sans-serif;font-size:15px;line-height:2;color:rgba(240,242,245,0.7);padding-left:20px;margin-bottom:24px;">
+          <li>On your iPhone, open Safari and visit <a href="https://bgoods360.github.io/Fuel-Calorie-Counter" target="_blank" style="color:rgba(125,249,158,0.9);text-decoration:underline;text-decoration-color:rgba(125,249,158,0.4);">bgoods360.github.io/Fuel-Calorie-Counter</a></li>
+          <li>Tap the Share button (the square with the up arrow), then scroll down and tap <strong style="color:rgba(125,249,158,0.85);">Add to Home Screen</strong></li>
+          <li>Open Fuel from your home screen. On first launch, add your Anthropic API key in Settings — it stays on your device.</li>
+        </ol>
+        <p style="font-family:'DM Serif Display',serif;font-style:italic;font-size:13px;color:rgba(240,242,245,0.5);">No App Store. No review queue. No gatekeepers between the code and your home screen.</p>
+      </div>
+
+      <!-- LAB NOTE -->
+      <div style="margin-bottom:36px;">
+        <div style="font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:rgba(240,242,245,0.35);margin-bottom:20px;display:flex;align-items:center;gap:12px;"><span style="width:24px;height:1px;background:rgba(240,242,245,0.25);display:inline-block;"></span>Lab Note</div>
+        <p style="font-family:'DM Serif Display',serif;font-size:18px;line-height:1.7;color:rgba(240,242,245,0.72);font-style:italic;max-width:780px;">Fuel was a thesis test: can a single Claude call replace an entire data-entry flow in a daily-use utility, without forcing the user to learn a new pattern? The answer was yes — and the more interesting finding was that the API key staying on-device made the privacy story write itself. No backend to defend, no terms-of-service to draft, no analytics dashboard to ignore. The simplest secure architecture turned out to be the only one I needed.</p>
+      </div>
+
+    </div>
+
+    <div class="contact-strip">
+      <div class="contact-strip-left">
+        <h2>Want to build something?</h2>
+        <p>Open to senior roles in AI product, content strategy, and creative direction.</p>
+      </div>
+      <div class="contact-strip-links">
+        <a href="mailto:william.stephen.goodman@gmail.com" class="contact-btn primary">Email Billy</a>
+        <a href="https://www.linkedin.com/in/wsgoodman/" class="contact-btn" target="_blank">LinkedIn</a>
+      </div>
+    </div>
+
+    <footer>
+      <div class="ft-name">© 2025 William S. Goodman</div>
+      <div class="ft-links">
+        <a href="https://williamsgoodman.com" target="_blank">Live Site</a>
+        <a href="mailto:william.stephen.goodman@gmail.com">Email</a>
+      </div>
+    </footer>
+  </div>
+</div>
+
+
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ══════════════════════════════════════════
 // ROUTING
 // ══════════════════════════════════════════
 const PAGE_MAP = {
   'home': 'page-home',
+  'google': 'page-google',
   'amazon-music': 'page-amazon-music',
   'amazon-devices': 'page-amazon-devices',
   'amazon-global': 'page-amazon-global',
@@ -3674,6 +4196,8 @@ const PAGE_MAP = {
   'amz-music-sports': 'page-amz-music-sports',
   'amz-music-country': 'page-amz-music-country',
   'tm-loho': 'page-tm-loho',
+  'labs': 'page-labs',
+  'fuel': 'page-fuel',
   'about': 'page-about',
 };
 
@@ -4190,14 +4714,17 @@ function rotateBubble() {
     const isMobile = window.innerWidth < 900;
     if (isMobile) {
       // Alternate sides on mobile — right side for even, left side for odd
+      // Mobile: bubble sits above Billy's head, tail pointing down at his
+      // face/shoulder. Alternate slight horizontal offset so it doesn't always
+      // anchor the same side.
       if (bubbleIndex % 2 === 0) {
-        b.style.left = '52%'; b.style.right = 'auto';
-        b.style.bottom = '58%';
+        b.style.left = '40%'; b.style.right = 'auto';
+        b.style.bottom = '95%';
         b.style.transform = 'scale(1)';
         b.classList.remove('bubble-left');
       } else {
-        b.style.right = '52%'; b.style.left = 'auto';
-        b.style.bottom = '58%';
+        b.style.right = '40%'; b.style.left = 'auto';
+        b.style.bottom = '95%';
         b.style.transform = 'scale(1)';
         b.classList.add('bubble-left');
       }
@@ -4531,9 +5058,10 @@ function billySpinEntrance() {
       bub.className = 'visible';
       bub.style.opacity = '1';
       if (window.innerWidth < 900) {
-        bub.style.left = '52%';
+        // Mobile: bubble above Billy's head, tail pointing down at face
+        bub.style.left = '40%';
         bub.style.right = 'auto';
-        bub.style.bottom = '58%';
+        bub.style.bottom = '95%';
         bub.style.transform = 'scale(1)';
         bub.classList.remove('bubble-left');
       } else {
@@ -4790,6 +5318,261 @@ function carouselPrev() { carouselIndex = (carouselIndex - 1 + CAROUSEL_ITEMS.le
 const dotsContainer = document.getElementById('carousel-dots');
 if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.createElement('div'); dot.className = 'video-carousel-dot' + (i === 0 ? ' active' : ''); dot.onclick = () => { carouselIndex = i; renderCarousel(i); }; dotsContainer.appendChild(dot); }); }
 
+/* ====== Seamless video loop via continuous opacity blending ======
+   Two video elements playing the same file, offset by half the
+   duration. Instead of binary "show A or show B" with a fade window,
+   opacity is ALWAYS proportional to each video's distance from its
+   loop seam. The video closer to its seam is faded out; the one
+   farther is faded in. No abrupt transitions possible. */
+(function initSeamlessVideoLoop() {
+  const videoA = document.getElementById('sky-img');
+  const videoB = document.getElementById('sky-img-b');
+  if (!videoA || !videoB) return;
+
+  function whenCanPlay(el) {
+    return new Promise(resolve => {
+      if (el.readyState >= 3) return resolve();
+      el.addEventListener('canplay', () => resolve(), { once: true });
+    });
+  }
+
+  function whenSeeked(el) {
+    return new Promise(resolve => {
+      const handler = () => { el.removeEventListener('seeked', handler); resolve(); };
+      el.addEventListener('seeked', handler);
+      setTimeout(() => { el.removeEventListener('seeked', handler); resolve(); }, 3000);
+    });
+  }
+
+  // Single-video fallback when dual-video crossfade isn't available
+  // (typically iOS Safari blocking the second autoplaying video).
+  // Dips the video opacity to 0 in a cosine curve around the loop
+  // seam, so the cut blends into the deep-space background color
+  // (#050510) instead of showing an abrupt content jump.
+  function runSingleVideoWithSeamDip(video, dur) {
+    const DIP_WINDOW = 0.45; // seconds before/after each seam
+    function tick() {
+      const t = video.currentTime;
+      const seamDist = Math.min(t, dur - t);
+      let op = 1;
+      if (seamDist < DIP_WINDOW) {
+        // Cosine ease: 0 at the seam, smoothly rising to 1 at DIP_WINDOW.
+        const f = seamDist / DIP_WINDOW;
+        op = 1 - Math.cos(f * Math.PI / 2);
+      }
+      video.style.opacity = op.toFixed(3);
+      requestAnimationFrame(tick);
+    }
+    requestAnimationFrame(tick);
+  }
+
+  async function initialize() {
+    try {
+      await Promise.all([whenCanPlay(videoA), whenCanPlay(videoB)]);
+      const dur = videoA.duration;
+      if (!isFinite(dur) || dur < 2) {
+        videoB.style.display = 'none';
+        if (isFinite(dur) && dur > 0) runSingleVideoWithSeamDip(videoA, dur);
+        return;
+      }
+
+      // Seek videoB to mid-duration and wait for the seek to actually
+      // complete before starting the crossfade tick — otherwise both
+      // videos might be at the same time when the tick first runs.
+      const seekedPromise = whenSeeked(videoB);
+      videoB.currentTime = dur / 2;
+      await seekedPromise;
+
+      await Promise.all([
+        videoA.play().catch(() => {}),
+        videoB.play().catch(() => {}),
+      ]);
+
+      // If videoB failed to autoplay (common on iOS Safari with two
+      // simultaneous videos), hide it and apply the single-video
+      // seam-dip mask to videoA so the loop cut still gets hidden.
+      if (videoB.paused) {
+        videoB.style.display = 'none';
+        runSingleVideoWithSeamDip(videoA, dur);
+        return;
+      }
+
+      // Continuous-blend crossfade — opacity always proportional to
+      // each video's distance from its loop seam. No discontinuities.
+      function tick() {
+        const tA = videoA.currentTime;
+        const tB = videoB.currentTime;
+        const seamDistA = Math.min(tA, dur - tA);
+        const seamDistB = Math.min(tB, dur - tB);
+        const total = seamDistA + seamDistB || 1;
+        const opA = seamDistA / total;
+        const opB = seamDistB / total;
+        videoA.style.opacity = opA.toFixed(3);
+        videoB.style.opacity = opB.toFixed(3);
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    } catch (e) {
+      console.warn('[sky-video] seamless loop init failed:', e);
+      videoB.style.display = 'none';
+      const dur = videoA.duration;
+      if (isFinite(dur) && dur > 0) runSingleVideoWithSeamDip(videoA, dur);
+    }
+  }
+
+  initialize();
+})();
+/* ====== end Seamless video loop ====== */
+
+/* ====== Parallax depth on scroll ======
+   Translates the fixed background layers at different rates so they
+   appear at different depths as you scroll. Foreground moves at 1x
+   (normal scroll); deeper layers move slower, creating parallax.
+   Respects prefers-reduced-motion. */
+(function initParallax() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  const layers = [
+    // sky-bg and sky-vignette intentionally NOT parallaxed — they're
+    // fixed-position 100vh elements, and translating them upward as
+    // the user scrolls leaves a gap at the bottom of the viewport
+    // that exposes the body's dark background as a growing black
+    // strip. Depth still comes from the canvas layers on top.
+    { id: 'twinkle-canvas',   rate: 0.12 }, // mid (gas clouds + shooters)
+    { id: 'starfield-canvas', rate: 0.18 }, // near (flying-forward stars)
+  ]
+    .map(l => ({ el: document.getElementById(l.id), rate: l.rate }))
+    .filter(l => l.el);
+
+  let rafId = null;
+  function update() {
+    const y = window.scrollY;
+    for (const layer of layers) {
+      // Negative translate so backgrounds appear to "lag" upward as
+      // foreground scrolls. Rate < 1 means slower than foreground = depth.
+      layer.el.style.transform = 'translateY(' + (-y * layer.rate).toFixed(2) + 'px)';
+    }
+    rafId = null;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (rafId) return;
+    rafId = requestAnimationFrame(update);
+  }, { passive: true });
+})();
+/* ====== end Parallax ====== */
+
+/* ====== GOODMAN character scramble on hover ======
+   Each .gchar letter cycles through random characters on mouseenter,
+   then settles back to its original character. Reads as an "alien
+   transmission decoding" effect that pairs with the deep-space aesthetic.
+   Disabled on touch devices (no hover). Does not interfere with the
+   existing per-letter sine-wave float animation since we only mutate
+   textContent, never transform/animation properties. */
+(function initGoodmanScramble() {
+  if (window.matchMedia('(hover: none)').matches) return;
+  const POOL = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789#$%&*+=?@';
+  const DURATION = 700;
+  const TICK = 50;
+  const chars = document.querySelectorAll('.gchar');
+  chars.forEach(el => {
+    const original = el.textContent;
+    let timer = null;
+    el.addEventListener('mouseenter', () => {
+      if (timer) return; // let the in-progress scramble finish
+      const stopAt = performance.now() + DURATION;
+      timer = setInterval(() => {
+        if (performance.now() >= stopAt) {
+          clearInterval(timer);
+          timer = null;
+          el.textContent = original;
+          return;
+        }
+        el.textContent = POOL[Math.floor(Math.random() * POOL.length)];
+      }, TICK);
+    });
+  });
+})();
+/* ====== end GOODMAN character scramble ====== */
+
+/* ====== Cursor starlight trail ======
+   Adds a fading particle trail behind the existing #cursor-dot.
+   Lives on its own canvas overlay so it doesn't interfere with anything
+   else. Skipped on touch devices. */
+(function initCursorTrail() {
+  if (window.matchMedia('(hover: none)').matches) return;
+  const canvas = document.createElement('canvas');
+  canvas.id = 'cursor-trail-canvas';
+  canvas.style.cssText = 'position:fixed;inset:0;pointer-events:none;z-index:9997;';
+  document.body.appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  let W = 0, H = 0, dpr = 1;
+  function resize() {
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = window.innerWidth;
+    H = window.innerHeight;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const particles = [];
+  const MAX_PARTICLES = 80;
+  const LIFE_MS = 600;
+
+  let lastX = 0, lastY = 0, hasMouse = false;
+  window.addEventListener('mousemove', e => {
+    const dx = e.clientX - lastX;
+    const dy = e.clientY - lastY;
+    const dist = Math.sqrt(dx*dx + dy*dy);
+    if (!hasMouse || dist > 3) {
+      // Spawn 1-2 particles per mousemove, with small random jitter
+      const count = Math.min(2, 1 + Math.floor(dist / 24));
+      for (let i = 0; i < count; i++) {
+        if (particles.length >= MAX_PARTICLES) particles.shift();
+        particles.push({
+          x: e.clientX + (Math.random() - 0.5) * 4,
+          y: e.clientY + (Math.random() - 0.5) * 4,
+          born: performance.now(),
+          size: 1.5 + Math.random() * 1.5,
+        });
+      }
+      lastX = e.clientX;
+      lastY = e.clientY;
+      hasMouse = true;
+    }
+    // Expose the cursor position for the starfield's cursor-attraction effect
+    window.__cursorX = e.clientX;
+    window.__cursorY = e.clientY;
+  });
+
+  let running = true;
+  document.addEventListener('visibilitychange', () => { running = !document.hidden; });
+
+  function frame(now) {
+    if (!running) { requestAnimationFrame(frame); return; }
+    ctx.clearRect(0, 0, W, H);
+    for (let i = particles.length - 1; i >= 0; i--) {
+      const p = particles[i];
+      const age = now - p.born;
+      if (age >= LIFE_MS) { particles.splice(i, 1); continue; }
+      const t = 1 - (age / LIFE_MS); // 1 → 0
+      const alpha = t * 0.75;
+      ctx.fillStyle = 'rgba(255, 255, 245, ' + alpha.toFixed(3) + ')';
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size * t, 0, Math.PI * 2);
+      ctx.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+/* ====== end Cursor starlight trail ====== */
+
 /* ====== Procedural starfield — flying forward, ambient, no loop ====== */
 (function initStarfield() {
   const canvas = document.getElementById('starfield-canvas');
@@ -4846,6 +5629,11 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
   let running = true;
   let last = performance.now();
 
+  // Cursor-attraction tuning. Stars near the cursor get a gentle nudge
+  // toward it, with inverse-falloff so the effect is local, not global.
+  const CURSOR_INFLUENCE_RADIUS = 220;   // px
+  const CURSOR_INFLUENCE_MAX_OFFSET = 14; // px max displacement when right at cursor
+
   function frame(now) {
     if (!running) { requestAnimationFrame(frame); return; }
     const dt = Math.min(48, now - last);
@@ -4857,6 +5645,11 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
     const cy = H / 2;
     const span = Math.max(W, H) * 0.65;
 
+    // Read cursor (exposed by cursor-trail IIFE). Falsy if no mouse yet.
+    const mx = window.__cursorX;
+    const my = window.__cursorY;
+    const hasCursor = !isMobile && typeof mx === 'number' && typeof my === 'number';
+
     for (let i = 0; i < STAR_COUNT; i++) {
       const s = stars[i];
       s.z -= BASE_SPEED * dt;
@@ -4865,13 +5658,30 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
         continue;
       }
       const scale = FOCAL / s.z;
-      const sx = cx + s.x * scale * span;
-      const sy = cy + s.y * scale * span;
+      let sx = cx + s.x * scale * span;
+      let sy = cy + s.y * scale * span;
 
       // Offscreen — respawn at far distance
       if (sx < -20 || sx > W + 20 || sy < -20 || sy > H + 20) {
         seedStar(s, false);
         continue;
+      }
+
+      // Cursor-attraction: only applies to near stars (depth-weighted) for
+      // perspective consistency. Stars closer to viewer feel more "pulled".
+      if (hasCursor) {
+        const dx = mx - sx;
+        const dy = my - sy;
+        const dist = Math.sqrt(dx * dx + dy * dy);
+        if (dist < CURSOR_INFLUENCE_RADIUS) {
+          const falloff = 1 - (dist / CURSOR_INFLUENCE_RADIUS); // 1 at cursor, 0 at edge
+          const depthWeight = 1 - s.z; // near stars react more
+          const pull = falloff * falloff * depthWeight * CURSOR_INFLUENCE_MAX_OFFSET;
+          if (dist > 0.5) {
+            sx += (dx / dist) * pull;
+            sy += (dy / dist) * pull;
+          }
+        }
       }
 
       const depthK = 1 - s.z; // 0 far → 1 near
@@ -4953,6 +5763,22 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
 
   // Visitor detection: fetch once on load, cache in sessionStorage,
   // update chips when result arrives. Non-blocking — page works without it.
+  // Phase 1 + 5 — apply visitor-tailored hero subtitle and bubble blurb
+  // when the detected visitor entry includes them.
+  function applyVisitorPersonalization(info) {
+    if (!info) return;
+    // Phase 1: swap the hero tagline lead line
+    if (info.heroSubtitle) {
+      const leadEl = document.getElementById('hero-tagline-lead');
+      if (leadEl) leadEl.textContent = info.heroSubtitle;
+    }
+    // Phase 5: inject visitor-tailored blurb into the speech-bubble rotation.
+    // Replace the 3rd default blurb so two stock messages still rotate alongside it.
+    if (info.bubbleBlurb && typeof BUBBLE_MESSAGES !== 'undefined' && Array.isArray(BUBBLE_MESSAGES)) {
+      BUBBLE_MESSAGES[2] = info.bubbleBlurb;
+    }
+  }
+
   async function loadVisitorContext() {
     let cached = null;
     try {
@@ -4961,6 +5787,7 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
     } catch (_) { /* ignore */ }
     if (cached !== null) {
       visitorInfo = cached || null;
+      applyVisitorPersonalization(visitorInfo);
       if (visitorInfo && visitorInfo.openers && visitorInfo.openers.length) {
         renderChips(visitorInfo.openers);
       } else {
@@ -4976,6 +5803,7 @@ if (dotsContainer) { CAROUSEL_ITEMS.forEach((_, i) => { const dot = document.cre
       const data = await resp.json();
       visitorInfo = data || null;
       try { sessionStorage.setItem('billy_visitor', JSON.stringify(data || null)); } catch (_) {}
+      applyVisitorPersonalization(visitorInfo);
       if (visitorInfo && visitorInfo.openers && visitorInfo.openers.length) {
         // Replace the default chips with company-tailored openers
         chipsContainer.classList.remove('visible');
