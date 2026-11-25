@@ -19,7 +19,7 @@ export const APPLICATIONS = [
         company: 'Adopt/Publicis',
         role: 'Director, Creative',
         applied: '2026-05-19',
-        expires: '2026-08-17',
+        expires: '2027-05-19',
         aliases: ['publicis groupe', 'publicis', 'adopt', 'adopt agency', 'publicis sapient'],
         roleFocus: ['creative direction at an agency', 'multi-client brand storytelling', 'agency-side creative leadership'],
         pitchAngle:
@@ -44,7 +44,7 @@ export const APPLICATIONS = [
         company: 'Expedia',
         role: 'Senior Manager, Integrated Marketing',
         applied: '2026-05-19',
-        expires: '2026-08-17',
+        expires: '2027-05-19',
         aliases: ['expedia group', 'expedia inc', 'expedia.com'],
         roleFocus: ['integrated marketing', 'cross-channel campaigns', 'travel + lifestyle brand'],
         pitchAngle:
@@ -68,7 +68,7 @@ export const APPLICATIONS = [
         company: 'Anthropic',
         role: 'Engineering Editorial Lead (reapplication)',
         applied: '2026-05-19',
-        expires: '2026-08-17',
+        expires: '2027-05-19',
         aliases: ['anthropic pbc'],
         roleFocus: ['editorial leadership at an AI lab', 'technical communications', 'editorial inside engineering culture'],
         pitchAngle:
@@ -93,7 +93,7 @@ export const APPLICATIONS = [
         company: 'Pinterest (Lead Creative Producer)',
         role: 'Lead Creative Producer, Editorial Content',
         applied: '2026-05-19',
-        expires: '2026-08-17',
+        expires: '2027-05-19',
         aliases: ['pinterest inc'],
         roleFocus: ['creative producing', 'editorial content at a visual discovery platform', 'taste-led storytelling'],
         pitchAngle:
@@ -117,7 +117,7 @@ export const APPLICATIONS = [
         company: 'SeatGeek',
         role: 'Head of PR & Communications',
         applied: '2026-05-19',
-        expires: '2026-08-17',
+        expires: '2027-05-19',
         aliases: ['seatgeek inc'],
         roleFocus: ['PR + communications', 'live event ticketing brand', 'cultural reposition'],
         pitchAngle:
@@ -141,7 +141,7 @@ export const APPLICATIONS = [
         company: 'Airbnb',
         role: 'Host Communications Strategy Lead',
         applied: '2026-05-19',
-        expires: '2026-08-17',
+        expires: '2027-05-19',
         aliases: ['airbnb inc'],
         roleFocus: ['host-facing communications strategy', 'B2B/SMB-facing comms', 'operator support'],
         pitchAngle:
@@ -165,7 +165,7 @@ export const APPLICATIONS = [
         company: 'Docusign',
         role: 'Head of Communications AI Systems & Social Production',
         applied: '2026-05-19',
-        expires: '2026-08-17',
+        expires: '2027-05-19',
         aliases: ['docusign inc'],
         roleFocus: ['communications', 'AI systems', 'social production at scale'],
         pitchAngle:
@@ -190,7 +190,7 @@ export const APPLICATIONS = [
         company: 'UnitedMasters (VP Marketing)',
         role: 'VP of Marketing',
         applied: '2026-05-19',
-        expires: '2026-08-17',
+        expires: '2027-05-19',
         aliases: ['united masters', 'unitedmasters inc'],
         roleFocus: ['marketing leadership at an artist services platform', 'growth marketing for independent artists', 'music industry marketing'],
         pitchAngle:
@@ -215,7 +215,7 @@ export const APPLICATIONS = [
         company: 'Apple',
         role: 'Owned Social Senior Strategist, XLOB (Cross-Line-of-Business)',
         applied: '2026-05-08',
-        expires: '2026-08-06',
+        expires: '2027-05-08',
         aliases: ['apple inc', 'apple computer'],
         roleFocus: ['owned social at scale', 'cross-product narrative', 'brand voice consistency across product lines'],
         pitchAngle:
@@ -239,7 +239,7 @@ export const APPLICATIONS = [
         company: 'Google',
         role: 'Senior Brand Marketing Manager, Brand Studio',
         applied: '2026-05-08',
-        expires: '2026-08-06',
+        expires: '2027-05-08',
         aliases: ['google llc', 'alphabet inc'],
         roleFocus: ['brand marketing at platform scale', 'brand studio practices', 'cultural-moment campaigns'],
         pitchAngle:
@@ -263,7 +263,7 @@ export const APPLICATIONS = [
         company: 'T-Mobile',
         role: 'Creative Director, Copy & Story',
         applied: '2026-05-08',
-        expires: '2026-08-06',
+        expires: '2027-05-08',
         aliases: ['t-mobile us', 't-mobile usa', 'tmobile'],
         roleFocus: ['copy leadership', 'narrative and story', 'cultural fluency at scale'],
         pitchAngle:
@@ -287,7 +287,7 @@ export const APPLICATIONS = [
         company: 'GitHub',
         role: 'Senior Director, Brand Strategy & Narrative',
         applied: '2026-05-08',
-        expires: '2026-08-06',
+        expires: '2027-05-08',
         aliases: ['github inc', 'microsoft corporation'],
         roleFocus: ['brand strategy at scale', 'narrative architecture', 'developer/builder culture'],
         pitchAngle:
@@ -311,7 +311,7 @@ export const APPLICATIONS = [
         company: 'Mozilla',
         role: 'Head of Editorial + Platforms',
         applied: '2026-05-08',
-        expires: '2026-08-06',
+        expires: '2027-05-08',
         aliases: ['mozilla foundation', 'mozilla corporation'],
         roleFocus: ['editorial leadership', 'platform thinking', 'mission-driven content', 'open-web values'],
         pitchAngle:
@@ -335,7 +335,7 @@ export const APPLICATIONS = [
         company: 'Runway',
         role: 'Creative Director',
         applied: '2026-05-08',
-        expires: '2026-08-06',
+        expires: '2027-05-08',
         aliases: ['runway ml', 'runwayml inc'],
         roleFocus: ['creative leadership at an AI video tools company', 'storytelling-meets-AI', 'video-native brand'],
         pitchAngle:
@@ -360,7 +360,7 @@ export const APPLICATIONS = [
         company: 'Suno (GM, Songkick)',
         role: 'GM, Songkick (Suno-acquired live music ticketing/discovery)',
         applied: '2026-05-08',
-        expires: '2026-08-06',
+        expires: '2027-05-08',
         aliases: ['suno inc', 'suno ai', 'songkick'],
         roleFocus: ['live music + ticketing leadership', 'AI music + live discovery integration', 'GM-level business ownership'],
         pitchAngle:
@@ -384,7 +384,7 @@ export const APPLICATIONS = [
         company: 'Suno (Director of Social Media)',
         role: 'Director of Social Media',
         applied: '2026-05-08',
-        expires: '2026-08-06',
+        expires: '2027-05-08',
         aliases: ['suno inc', 'suno ai'],
         roleFocus: ['social media leadership at an AI music platform', 'creator-first social', 'product-aware social'],
         pitchAngle:
@@ -408,7 +408,7 @@ export const APPLICATIONS = [
         company: 'UnitedMasters',
         role: 'Creative Director',
         applied: '2026-05-08',
-        expires: '2026-08-06',
+        expires: '2027-05-08',
         aliases: ['united masters', 'unitedmasters inc'],
         roleFocus: ['creative direction for an artist-services platform', 'artist storytelling at scale', 'brand work for independent music'],
         pitchAngle:
@@ -432,7 +432,7 @@ export const APPLICATIONS = [
         company: 'Microsoft',
         role: 'Director, Content Engineering, MAI',
         applied: '2026-05-08',
-        expires: '2026-08-06',
+        expires: '2027-05-08',
         aliases: ['microsoft corporation', 'microsoft ai', 'mai'],
         roleFocus: ['editorial strategy at scale', 'AI-powered content experiences', 'prompt-engineering guidance', 'cultural-moment editorial (World Cup, Met Gala, F1)', 'cross-functional with product + engineering'],
         pitchAngle:
@@ -457,7 +457,7 @@ export const APPLICATIONS = [
         company: 'Toast',
         role: 'Senior Director, Content & Audience Growth',
         applied: '2026-05-08',
-        expires: '2026-08-06',
+        expires: '2027-05-08',
         aliases: ['toast inc', 'toast tab'],
         roleFocus: ['content for audience growth', 'restaurant/SMB-facing content', 'editorial + growth marketing intersection'],
         pitchAngle:
@@ -481,7 +481,7 @@ export const APPLICATIONS = [
         company: 'Burton Snowboards',
         role: 'Creative Director',
         applied: '2026-05-01',
-        expires: '2026-07-30',
+        expires: '2027-05-01',
         aliases: ['burton', 'burton corporation', 'burton snowboards inc'],
         roleFocus: ['creative direction', 'brand storytelling', 'action sports authenticity', 'culture-driven brand building'],
         pitchAngle:
@@ -506,7 +506,7 @@ export const APPLICATIONS = [
         company: 'Cantina Labs',
         role: 'Head of Editorial',
         applied: '2026-04-15',
-        expires: '2026-07-14',
+        expires: '2027-04-15',
         aliases: ['cantina labs', 'cantinalabs', 'cantina-labs', 'cantina labs inc'],
         roleFocus: ['editorial leadership', 'social media', 'AI-augmented content', 'brand voice'],
         pitchAngle:
